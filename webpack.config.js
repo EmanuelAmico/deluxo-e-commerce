@@ -69,9 +69,9 @@ module.exports = {
         open: true,
         historyApiFallback: true,
         liveReload: true,
-        port: 3000,
+        port: 3001,
         proxy: {
-            '/': 'http://localhost:3001',
+            '/api': 'http://localhost:3001',
         },
     },
     plugins: [
