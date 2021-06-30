@@ -69,7 +69,7 @@ module.exports = {
         open: true,
         historyApiFallback: true,
         liveReload: true,
-        port: 3000,
+        port: 3001,
         proxy: {
             '/api': 'http://localhost:3001',
         },
