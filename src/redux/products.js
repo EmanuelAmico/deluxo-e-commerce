@@ -1,4 +1,5 @@
-/* //user actions
+/* 
+//user actions
 
 add-product
 delete-product
@@ -8,34 +9,30 @@ delete-product
 add-product
 delete-product
 post-product
-put-product //modifica */
+put-product // <--- modifica
+*/
 import { createReducer, createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 
+
 const initialState = {
-    
-        id: null,
-        name: null,
-        description: null,
-        price: null,
-        image: null,
-        stock: null,
-        color: null,
-        size: null,
-        gender: null,
-        thumbnail: null
-   
-};
+    products: [],
+    productSelected: {},
+}
 
-export const showProduct = createAsyncThunk('CREATEPRODUCT', () => {
-    return axios.get('https://localhost:3001/initialState')
+export const selectProduct = createAsyncThunk('SELECT_PRODUCT', (param, thunkAPI)=>{
+    return axios.get(`http://localhost:3001/products/${param}`)
     .then(res => res.data)
-  })
-
-const productReducer = createReducer(initialState, {
-    [showProduct] : (state, action) => {state = action.payload}  
 })
 
+export const showProduct = createAsyncThunk('SHOW_PRODUCT', () => {
+    return axios.get('http://localhost:3001/products')
+    .then(res => {console.log(res.data); return res.data})
+})
 
+const productReducer = createReducer(initialState, {
+    [showProduct.fulfilled] : (state, action) => {state.products = action.payload},
+    [selectProduct.fulfilled] : (state, action) => {state.productSelected = action.payload},
+})
 
 export default productReducer;
