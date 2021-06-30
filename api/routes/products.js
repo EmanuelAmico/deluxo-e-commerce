@@ -13,3 +13,4 @@ router.put("/:id", putProduct);
 
 router.get("/:id", deleteProduct)
 
+module.exports = router

@@ -11,7 +11,7 @@ app.use(express.json()) //Para los GET no hace falta pero para los POST sí :)
 app.use(express.urlencoded({ extended: false })); //Para que funcionen los formularios del front
 
 //Routes
-// app.use("/api", routes)
+app.use("/api", routes)
 
 // Error Middleware
 app.use((error, req, res, next) =>{
