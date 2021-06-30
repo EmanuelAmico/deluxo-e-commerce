@@ -10,12 +10,8 @@ app.use(morgan("dev"))
 app.use(express.json()) //Para los GET no hace falta pero para los POST sí :)
 app.use(express.urlencoded({ extended: false })); //Para que funcionen los formularios del front
 
-app.get("/", (req, res, next) => {
-  res.send("ok")
-})
-
 //Routes
-/* app.use("/api", routes) */
+// app.use("/api", routes)
 
 // Error Middleware
 app.use((error, req, res, next) =>{
@@ -27,7 +23,7 @@ app.use((error, req, res, next) =>{
 const deployServer = async () =>{
   try {
     await db.sync({ force: true })
-    const port = 3002
+    const port = 3001
     app.listen(port, () =>{
       console.log(`Server running on http://localhost/${port}`)
     })  
