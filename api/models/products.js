@@ -11,16 +11,6 @@ Products.init({
       notEmpty: true,
     },
   },
-  stock: {
-    type: S.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  },
-  price: {
-    type: S.INTEGER,
-    allowNull: false,
-    defaultValue: 0
-  },
   description: {
     type: S.STRING,
     allowNull: false,
@@ -28,12 +18,22 @@ Products.init({
       notEmpty: true,
     },
   },
+  price: {
+    type: S.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
   image: {
     type: S.STRING,
     allowNull: false,
     validate: {
       notEmpty: true,
     },
+  },
+  stock: {
+    type: S.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
   },
   color: {
     type: S.STRING,
