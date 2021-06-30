@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { showProduct } from '../redux/products'
 
 function LogIn() {
+
+
+    
+
     return (
         <div>
-            <div>LogIn</div>
+
+
+
+            
         </div>
     )
 }
