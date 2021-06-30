@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { useHistory } from "react-router-dom";
@@ -69,24 +68,6 @@ function LogIn() {
             Log in
        
           </button>
-=======
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { showProduct } from '../redux/products'
-
-function LogIn() {
-
-
-    
-
-    return (
-        <div>
-
-
-
-            
->>>>>>> pre-merge
         </div>
       </form>
     </div>
