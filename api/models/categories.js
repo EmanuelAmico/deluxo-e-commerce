@@ -4,17 +4,18 @@ const db = require("../db");
 class Categories extends S.Model {}
 
 Categories.init({
-    category_name: {
+    name: {
         type: S.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
         },
       },
-    icon: {
-        type: S.STRING,
-        allowNull: false,
-      },
+      /* NO SABEMOS SI INCLUIR EL INCON */
+    // icon: {
+    //     type: S.STRING,
+    //     allowNull: false,
+    //   },
 },{sequelize: db, modelName: "categories", timestamps: false})
 
 module.exports = Categories;

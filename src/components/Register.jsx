@@ -23,19 +23,19 @@ function  Register  ()  {
   });
   const { user_name, first_name, password, last_name, user_address, shipping_address, phone_number, email } = formRegisterValues;
 
-  const [emailMsg, setEmailMsg] = useState("")
-  
+
+  const [emailMsg, setEmailMsg] = useState("");
 
   const validateEmail = (e) => {
-      var email = e.target.value
+    var email = e.target.value;
 
-      if (validator.isEmail(email)){
-        setEmailMsg('Valid Email!')
-      } else {
-        setEmailMsg('enter valid Email!')
-      }
-    handleInputChange(e)
-  }
+    if (validator.isEmail(email)) {
+      setEmailMsg("Valid Email!");
+    } else {
+      setEmailMsg("enter valid Email!");
+    }
+    handleInputChange(e);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,7 +48,6 @@ function  Register  ()  {
       .catch(error => {
         console.log(error)
       })
-   
   };
 
   return (
@@ -145,7 +144,6 @@ function  Register  ()  {
       </form>
     </div>
   );
-};
+}
 
 export default Register;
-

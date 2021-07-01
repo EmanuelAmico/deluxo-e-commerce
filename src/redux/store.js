@@ -4,7 +4,7 @@ import logger from "redux-logger";
 //importacion de reducers
 import productReducer from './products';
 import userReducer from './users';
-
+import productsAddedToCartReducer from './productsAdded'
 
 const store = configureStore({
   /* middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger), */
@@ -12,6 +12,7 @@ const store = configureStore({
     //esto representa a la store de estados
     user: userReducer,
     products: productReducer,
+    productsAddedToCart: productsAddedToCartReducer,
   },
 });
 
