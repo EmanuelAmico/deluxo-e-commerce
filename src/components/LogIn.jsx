@@ -2,38 +2,39 @@ import React, { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { useHistory } from "react-router-dom";
 import validator from 'validator'
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { setUser } from '../redux/users';
+import axios from 'axios'
 
 function LogIn() {
   const history = useHistory();
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const [formLoginValues, handleInputChange] = useForm({
-    Email: "",
-    Password: "",
-    RemeberMe: ""
+    email: "",
+    password: "",
   });
-  const { Email, Password, RememberMe } = formLoginValues;
+  const { email, password } = formLoginValues;
   const [emailMsg, setEmailMsg] = useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('/api/login', { Email, Password })
-      .then(res => res.data)
-      .then(({ id, name, email, token }) => {
-        if(RememberMe)
-          localStorage.setItem('userToken', token)
-        dispatch(setUser({ ...user, id, name, email, token, isLoggedIn: true }))
-        alert("Se ha logueado con éxito.")
-        history.push('/')
-      })
-      .catch(error => {
-        //NOTE Sí el response status es del 300 en adelante cae acá el axios
-        if(error.response.status === 400 || 401)
-          alert("Credenciales inválidas")
-      })
+    axios.post('/api/routes/login', formLoginValues)
+    .then(res => res.data)
+    .then(({ id, name, email, token }) => {
+      if(rememberMe)
+        localStorage.setItem('userToken', token)
+      dispatch(setUser({ ...user, id, name, email, token, isLoggedIn: true }))
+      alert("Se ha logueado con éxito.")
+      history.push('/')
+    })
+    .catch(error => {
+      //NOTE Sí el response status es del 300 en adelante cae acá el axios
+      if(error.response.status === 400 || 401)
+        alert("Credenciales inválidas")
+    }) 
   };
+
 
   const validateEmail = (e) => {
     var email = e.target.value;
@@ -60,7 +61,7 @@ function LogIn() {
               type="text"
               name="Email"
               placeholder="Email"
-              value={Email}
+              value={email}
               onChange={(e) => validateEmail(e)}
               required
             />
@@ -72,7 +73,7 @@ function LogIn() {
               type="password"
               name="Password"
               placeholder="Password"
-              value={Password}
+              value={password}
               onChange={handleInputChange}
               required
             />
