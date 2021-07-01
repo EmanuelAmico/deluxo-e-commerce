@@ -4,8 +4,11 @@ import {useHistory } from "react-router-dom";
 import validator from 'validator'
 
 
+
 function  Register  ()  {
 const history = useHistory()
+
+
   const [formRegisterValues, handleInputChange] = useForm({
     Name: "",
     Email:"",
@@ -29,9 +32,6 @@ const history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    console.log('submit')
-   
     history.push("/login")
   };
 
@@ -87,3 +87,5 @@ const history = useHistory()
 };
 
 export default Register;
+
+

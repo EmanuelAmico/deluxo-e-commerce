@@ -2,20 +2,37 @@ import React, { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { useHistory } from "react-router-dom";
 import validator from 'validator'
-
+import {useDispatch} from "react-redux"
+import { setUser } from '../redux/users';
 
 function LogIn() {
   const history = useHistory();
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
   const [formLoginValues, handleInputChange] = useForm({
     Email: "",
     Password: "",
+    RemeberMe: ""
   });
-  const { Email, Password } = formLoginValues;
+  const { Email, Password, RememberMe } = formLoginValues;
   const [emailMsg, setEmailMsg] = useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push("/");
+    axios.post('/api/login', { Email, Password })
+      .then(res => res.data)
+      .then(({ id, name, email, token }) => {
+        if(RememberMe)
+          localStorage.setItem('userToken', token)
+        dispatch(setUser({ ...user, id, name, email, token, isLoggedIn: true }))
+        alert("Se ha logueado con éxito.")
+        history.push('/')
+      })
+      .catch(error => {
+        //NOTE Sí el response status es del 300 en adelante cae acá el axios
+        if(error.response.status === 400 || 401)
+          alert("Credenciales inválidas")
+      })
   };
 
   const validateEmail = (e) => {
