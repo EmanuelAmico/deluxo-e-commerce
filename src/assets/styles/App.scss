@@ -19,25 +19,3 @@ body {
   background: $main-color;
   color: white;
 }
-
-
-
-.wrapper{
-  background-color: blue;
-}
-
-ul{
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  display: flex;
-  flex-flow: row wrap;
-}
-li{
-  flex: auto;
-  background-color: red;
-  width: 50%;
-}
-img{
-  width: 50%;
-}

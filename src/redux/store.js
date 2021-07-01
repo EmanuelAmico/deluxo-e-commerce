@@ -7,7 +7,7 @@ import userReducer from './users';
 
 
 const store = configureStore({
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  /* middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger), */
   reducer: { 
     //esto representa a la store de estados
     user: userReducer,
