@@ -6,16 +6,16 @@ const ShopcartItems = require("./shopCartItems");
 const Users = require("./users");
 
 // Relaciones
-Products.hasMany(Categories)
-Shopcarts.belongsToMany(Products, {through: {model: ShopcartItems}})
-Users.hasMany(Orders)
-Orders.hasOne(Shopcarts)
+Products.hasMany(Categories);
+Shopcarts.belongsToMany(Products, { through: ShopcartItems, uniqueKey: true });
+Users.hasMany(Orders);
+Orders.hasOne(Shopcarts);
 
 module.exports = {
   Categories,
   Orders,
   Products,
   Shopcarts,
-  ShopcartItems, 
+  ShopcartItems,
   Users,
-}
+};

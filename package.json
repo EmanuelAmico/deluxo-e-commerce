@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon api/server.js & webpack serve --mode development --env development",
-    "server": "nodemon api/server.js",
+    "server": "nodemon --inspect api/server.js",
     "client": "webpack serve --mode development --env development",
     "client-and-fake-api": "json-server -p 3001 fakeApi.json & webpack serve --mode development --env development",
     "build": "webpack --mode  production"
