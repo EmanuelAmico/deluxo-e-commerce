@@ -1,4 +1,4 @@
-const { Products } = require("../models");
+const { Products, Categories } = require("../models");
 
 const getProducts = (req, res, next) => {
   Products.findAll()
@@ -12,9 +12,39 @@ const getProductsId = (req, res, next) => {
   );
 };
 
-const postProduct = (req, res, next) => {
-  Products.create(req.body).then((product) => res.status(201).send(product));
-};
+const postProduct = async (req, res, next) => {
+  try {
+    const producto = {
+      name: req.body.name,
+      price: req.body.price,
+      description: req.body.description,
+      stock: req.body.stock,
+      image: req.body.image,
+      color: req.body.color,
+      size: req.body.size,
+      genre: req.body.genre,
+      thumbnail: req.body.thumbnail,
+    };
+    console.log(req.body)
+    const categorias = req.body.categories.split(" ");
+    const productoCreado = await Products.create(producto);
+    for (const categoria of categorias) {
+      console.log(categoria)
+      const [categoriaCreada, created] = await Categories.findOrCreate({
+        where: {
+          name: categoria,
+        },
+        default: {
+          name: categoria
+        }
+      });
+      productoCreado.addCategory(categoriaCreada);
+    }
+    res.status(201).send(productoCreado);
+  } catch (error) {
+    next(error);
+  }
+}
 
 const putProduct = (req, res, next) => {
   Products.update(req.body, {
