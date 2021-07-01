@@ -5,9 +5,9 @@ const { getProductsId,getProducts, postProduct, putProduct, deleteProduct } = re
 
 router.get("/", getProducts);
 
-router.get("/:id", getProductsId);
-
 router.post("/", postProduct);
+
+router.get("/:id", getProductsId);
 
 router.put("/:id", putProduct);
 
