@@ -5,24 +5,17 @@ const postLoginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await Users.findOne({ where: { email } });
-    if (user) return res.status(400).send("User doesn't exists");
+    if (!user) return res.status(400).send("User doesn't exists");
     if (!user.validPassword(password))
       return res.status(401).send("Invalid pass");
-    //const token = jwt.sign({ userId: user.id }, "plataforma5");
-    //const { id, name } = user;
-    //return res.status(200).send({ id, name, email, token });
+    const token = jwt.sign({ userId: user.id }, "plataforma5");
+    const { id, full_name, user_name, first_name, last_name, user_address, shipping_address, phone_number } = user;
+    return res.status(200).send({ id, email, full_name, user_name, first_name, last_name, user_address, shipping_address, phone_number, token });
   } catch(error) {
     next(error)
   }
 };
 
-/*
-const postLogoutUser = async (req,res,next) => {
-  try {
-    
-  }
-}
-*/
 module.exports = {
     postLoginUser
 };

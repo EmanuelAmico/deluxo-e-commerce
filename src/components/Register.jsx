@@ -1,17 +1,28 @@
 import React, { useState } from "react";
 import { useForm } from "../hooks/useForm";
-import { useHistory } from "react-router-dom";
-import validator from "validator";
+import {useHistory } from "react-router-dom";
+import validator from 'validator'
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/users";
 
-function Register() {
-  const history = useHistory();
+
+function  Register  ()  {
+  const history = useHistory()
+  const dispatch = useDispatch()
 
   const [formRegisterValues, handleInputChange] = useForm({
-    name: "",
-    email: "",
-    password: "",
+    user_name: "",
+    first_name: "",
+    last_name: "",
+    user_address:"",
+    shipping_address:"",
+    phone_number:"",
+    email:"",
+    password:"",
   });
-  const { name, email, password } = formRegisterValues;
+  const { user_name, first_name, password, last_name, user_address, shipping_address, phone_number, email } = formRegisterValues;
+
 
   const [emailMsg, setEmailMsg] = useState("");
 
@@ -28,53 +39,107 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push("/login");
+    axios.post('/api/register', formRegisterValues)
+      .then(user => {
+        console.log("holaaaaaaa")
+        alert("El usuario se creo con éxito.")
+        history.push("/login")
+      })
+      .catch(error => {
+        console.log(error)
+      })
   };
 
   return (
     <div className="registerBody">
       <form className="registerForm" onSubmit={handleSubmit}>
-        <div className="formContainer">
-          <div className="welcome-text">Welcome !</div>
+      <div className='formContainer'>
+        <div className="welcome-text">Welcome !</div>
 
-          <div className="createAcc">Register</div>
+        <div className="createAcc">Register</div>
 
-          <div className="emailInput">
-            <input
-              type="text"
-              name="Name"
-              placeholder="Name"
-              value={name}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+        <div className="emailInput">
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+            value={first_name}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
 
-          <div className="emailInput">
-            <input
-              type="text"
-              name="Email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => validateEmail(e)}
-              required
-            />
-            <br />
-            <span>{emailMsg}</span>
-          </div>
-          <div className="passInput">
-            <input
-              type="password"
-              name="Password"
-              placeholder="Password"
-              value={password}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <button type="submit" className="registerBtn">
-            Register
-          </button>
+        <div className="emailInput">
+          <input
+            type="text"
+            name="email"
+            placeholder="Email"
+            value={email}
+            onChange={ (e) => validateEmail(e)}
+           
+            required
+          />
+          <br />
+          <span>{emailMsg}</span>
+        </div>
+        <div className="passInput">
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={password}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="passInput">
+        <input
+            name="user_name"
+            placeholder="User Name"
+            value={user_name}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="passInput">
+        <input
+            name="last_name"
+            placeholder="Last Name"
+            value={last_name}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="passInput">
+        <input
+            name="user_address"
+            placeholder="User address"
+            value={user_address}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="passInput">
+        <input
+            name="shipping_address"
+            placeholder="Shipping Address"
+            value={shipping_address}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="passInput">
+        <input
+            name="phone_number"
+            placeholder="Phone Number"
+            value={phone_number}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <button type="submit" className="registerBtn" >
+          Register
+        </button>
         </div>
       </form>
     </div>

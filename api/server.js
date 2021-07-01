@@ -14,11 +14,12 @@ app.use(express.urlencoded({ extended: false })); //Para que funcionen los formu
 app.use("/api", routes);
 
 // Error Middleware
-app.use((error, req, res, next) => {
-  console.log("Ha ocurrido un error y entré al error middleware:");
-  console.log(error);
-  res.sendStatus(500);
-});
+app.use((error, req, res, next) =>{
+  console.log("Ha ocurrido un error y entré al error middleware:")
+  console.log(error)
+  res.sendStatus(500)
+})
+
 
 const deployServer = async () => {
   try {
