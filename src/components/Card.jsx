@@ -15,6 +15,8 @@ function Card({match}) {
             <div className='singleProduct'>
 
                 <img src={productSelected.image} alt='productito'></img>
+                <button>Agregar al carrito</button>
+                <button>Ir al Checkout</button>
 
             </div>
         </div>
