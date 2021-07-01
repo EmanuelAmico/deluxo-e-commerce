@@ -22,10 +22,10 @@ function LogIn() {
     e.preventDefault();
     axios.post('/api/routes/login', formLoginValues)
     .then(res => res.data)
-    .then(({ id, name, email, token }) => {
+    .then(({ id, full_name, email, token }) => {
       if(rememberMe)
         localStorage.setItem('userToken', token)
-      dispatch(setUser({ ...user, id, name, email, token, isLoggedIn: true }))
+      dispatch(setUser({ ...user, id, name: full_name, email, token, isLoggedIn: true }))
       alert("Se ha logueado con éxito.")
       history.push('/')
     })
@@ -60,7 +60,7 @@ function LogIn() {
           <div className="emailInput">
             <input
               type="text"
-              name="Email"
+              name="email"
               placeholder="Email"
               value={email}
               onChange={(e) => validateEmail(e)}
@@ -72,7 +72,7 @@ function LogIn() {
           <div className="passInput">
             <input
               type="password"
-              name="Password"
+              name="password"
               placeholder="Password"
               value={password}
               onChange={handleInputChange}
