@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { useHistory } from "react-router-dom";
 import validator from 'validator'
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector } from "react-redux"
 import { setUser } from '../redux/users';
 
 function LogIn() {
@@ -17,6 +17,7 @@ function LogIn() {
   const { Email, Password, RememberMe } = formLoginValues;
   const [emailMsg, setEmailMsg] = useState("")
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('/api/login', { Email, Password })

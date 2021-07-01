@@ -20,7 +20,7 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/products" component={Carousel} />
           <Route
-            path="/products/:id"
+            path="/products/:productId"
             component={Card}
           />
         </Switch>

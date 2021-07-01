@@ -1,22 +1,35 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useRouteMatch } from 'react-router-dom';
+import "../assets/styles/components/Card.scss"
+import { selectProduct, showProduct } from '../redux/products';
 
-
-function Card({match}) {
+function Card() {
 
     const { productSelected } = useSelector(store => store.products);
 
+    const match = useRouteMatch()
+    const dispatch = useDispatch()
+
     useEffect(() => {
-        console.log(productSelected)
+        if(!Object.keys(productSelected).length) {
+          const { productId } = match.params 
+          dispatch(selectProduct(productId))
+        }
     }, [])
 
     return (
         <div>
-            <div className='singleProduct'>
+            <div className='card-product'>
 
-                <img src={productSelected.image} alt='productito'></img>
-                <button>Agregar al carrito</button>
-                <button>Ir al Checkout</button>
+                <div className='card-img' >
+                <img src={productSelected.image} alt='t-shirt'></img>
+                </div>
+                
+                <div className='card-description'>
+                    <h3>{productSelected.name}</h3>
+                    <p>{productSelected.description}</p>
+                </div>
 
             </div>
         </div>

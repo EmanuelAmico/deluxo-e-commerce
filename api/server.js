@@ -15,7 +15,7 @@ app.use("/api", routes)
 
 // Error Middleware
 app.use((error, req, res, next) =>{
-  console.log(red("Ha ocurrido un error y entré al error middleware:"))
+  console.log("Ha ocurrido un error y entré al error middleware:")
   console.log(error)
   res.sendStatus(500)
 })
