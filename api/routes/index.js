@@ -5,11 +5,9 @@ const loginRoutes = require("./login")
 const registerRoutes = require("./register")
 const usersRoutes = require("./users")
 
-
 router.use("/products", productsRoutes)
-router.use("./users", usersRoutes)
-router.use("./login", loginRoutes)
-router.use("./register", registerRoutes)
-
+router.use("/users", usersRoutes)
+router.use("/login", loginRoutes)
+router.use("/register", registerRoutes)
 
 module.exports = router;
