@@ -1,21 +1,14 @@
-const express = require("express")
-const router = express.Router()
-const { Shopcarts, Products } = require("../models")
+// const express = require("express")
+// const router = express.Router()
+// const { Shopcarts, Products } = require("../models")
+// const { getShopcarts, postShopcart} = require ("../controllers")
 
-router.get('/', async (req, res, next) => {
-  const shopcarts = await Shopcarts.findAll()
-  res.status(200).send(shopcarts)
-})
+// router.get('/', getShopcarts)
 
-router.post('/', async (req, res, next) => {
-  const shopcart = req.body
-  const newShopcart = await Shopcarts.create(shopcart)
-  const products = await Products.findAll()
-  const relation = await newShopcart.addProducts(products)
-  console.log(newShopcart)
-  /* const relation = await newShopcart.addProduct(product) */
-  console.log("relation ->", relation)
-  res.status(201).send(newShopcart)
-}) 
+// router.post('/', postShopcart)
 
-module.exports = router
+// // http://localhost:3001/shopcarts/1/products/2
+// router.delete('/:shopcartId/products/:productId', deleteShopcart)
+// router.put('/:shopcartId/products/:productId', putShopcart)
+
+// module.exports = router

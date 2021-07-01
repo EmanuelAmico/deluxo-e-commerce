@@ -29,15 +29,7 @@ const postProduct = async (req, res, next) => {
     const categorias = req.body.categories.split(" ");
     const productoCreado = await Products.create(producto);
     for (const categoria of categorias) {
-      console.log(categoria)
-      const [categoriaCreada, created] = await Categories.findOrCreate({
-        where: {
-          name: categoria,
-        },
-        default: {
-          name: categoria
-        }
-      });
+      const categoriaCreada = await Categories.create({ name: categoria });
       productoCreado.addCategory(categoriaCreada);
     }
     res.status(201).send(productoCreado);
