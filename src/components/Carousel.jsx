@@ -17,21 +17,29 @@ const Carousel = () => {
 
 
   return (
-    <div>
+    
 
-      {products.map((product) => (
-
-        <Link onClick={()=> dispatch(selectProduct(product.id))} to={`/products/${product.id}`}>
-
-          <div key={product.id} >
-            <img src={product.image} alt="productImg" ></img>
-          </div>
-          
-        </Link>
-               
-      ))}
+    <div className='wrapper'>
       
+      <ul>
+
+        {products.map((product) => (
+          
+          <Link onClick={()=> dispatch(selectProduct(product.id))} to={`/products/${product.id}`}>
+
+            <li>
+              <figure>
+                <img src={product.image} alt='remera'></img>
+              </figure>
+            </li>
+            
+          </Link>
+                
+        ))}
+      
+      </ul>
     </div>
+    
   )
 }
 
