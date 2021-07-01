@@ -27,7 +27,7 @@ Users.init({
       notEmpty: true,
     },
   },
-  fullName: {
+  full_name: {
     type: S.VIRTUAL,
     get() {
       return `${this.first_name} ${this.last_name}`;

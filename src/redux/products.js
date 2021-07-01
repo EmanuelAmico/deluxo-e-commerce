@@ -20,6 +20,7 @@ const initialState = {
     productSelected: {},
 }
 
+
 export const selectProduct = createAsyncThunk('SELECT_PRODUCT', (param, thunkAPI)=>{
     return axios.get(`http://localhost:3001/products/${param}`)
     .then(res => res.data)
