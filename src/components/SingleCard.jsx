@@ -26,9 +26,10 @@ function SingleCard() {
                 <img className='cardImg' src={productSelected.image} alt='t-shirt'></img>
                 </div>
                 
-                <div className='card-description'>
+                <div className='cardDescription'>
                     <h3>{productSelected.name}</h3>
                     <p>{productSelected.description}</p>
+                    
                 </div>
 
             

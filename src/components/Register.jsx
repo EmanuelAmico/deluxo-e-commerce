@@ -5,6 +5,7 @@ import validator from 'validator'
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/users";
+import '../assets/styles/components/Register.scss'
 
 
 function  Register  ()  {

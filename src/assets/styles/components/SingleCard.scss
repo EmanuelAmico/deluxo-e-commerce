@@ -1,9 +1,18 @@
 .singleCardContainer{
     display: flex;
     flex-flow: row wrap;
-    background-color: red;
+    justify-content: flex-start;
+    align-items: flex-start;
+    
 }
 .cardImg {
     height: 500px;
+}
+.cardDescription{
+    display: flex;
+    flex-flow: column wrap;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 

@@ -5,6 +5,8 @@ import validator from 'validator'
 import {useDispatch, useSelector} from "react-redux"
 import { setUser } from '../redux/users';
 import axios from 'axios'
+import '../assets/styles/components/LogIn.scss'
+
 
 function LogIn() {
   const history = useHistory();
@@ -46,14 +48,14 @@ function LogIn() {
   };
 
   return (
-    <div className="registerBody">
-      <form className="registerForm" onSubmit={handleSubmit}>
-        <div className="formContainer">
-          <div className="welcome-text">Welcome !</div>
+    <div className="loginBody">
+      <form className="loginForm" onSubmit={handleSubmit}>
+        <div className="loginFormContainer">
+          <div className="login-welcome-text">Welcome !</div>
 
-          <div className="createAcc">Log in to access your account.</div>
+          <div className="loginCreateAcc">Log in to access your account.</div>
 
-          <div className="emailInput">
+          <div className="loginEmailInput">
             <input
               type="text"
               name="email"
@@ -65,7 +67,7 @@ function LogIn() {
           </div>
           <br />
           <span>{emailMsg}</span>
-          <div className="passInput">
+          <div className="loginPassInput">
             <input
               type="password"
               name="password"
@@ -78,7 +80,7 @@ function LogIn() {
 
           <button
             type="submit"
-            className="registerBtn"
+            className="loginBtn"
           >
             Log in
        
