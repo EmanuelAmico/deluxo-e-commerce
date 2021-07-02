@@ -50,7 +50,7 @@ function Header() {
             ? <button onClick={handleLogOut}> Logout </button>
             : <>
                 <Link to="/login"> Login </Link>
-                <Link to="register">Register</Link>
+                <Link to="/register">Register</Link>
               </>
         }
         <Link to='/products'>Products</Link>
