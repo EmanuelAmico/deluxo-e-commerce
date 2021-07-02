@@ -15,6 +15,7 @@ const editUser = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
   try {
+    console.log(req.tokenPayload)
     const { userId } = req.tokenPayload;
     const user = await Users.findOne({
       where: { id: userId },
