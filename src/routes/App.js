@@ -21,7 +21,7 @@ const App = () => {
           <Route exact path="/products" component={Carousel} />
           <Route
             path="/products/:productId"
-            component={Card}
+            component={SingleCard}
           />
         </Switch>
       </Layout>

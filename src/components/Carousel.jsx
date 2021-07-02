@@ -6,30 +6,35 @@ import Card from "./Card";
 import "../assets/styles/components/Carousel.scss";
 
 const Carousel = () => {
-  const { products } = useSelector((store) => store.products);
+  const { products } = useSelector(state => state.products)
   const dispatch = useDispatch();
   const history = useHistory()
+
 
   useEffect(() => {
     dispatch(showProduct());
   }, []);
 
 
-
   return (
     <div className="wrapper">
-      <div className="row">
-        {products.map((product) => (
-          <div>
-          <Link onClick={() => dispatch(selectProduct(product.id))} to={`/products/${product.id}`}>
-            <div className="col">
-              <img className='img-product' src={product.image} alt="remera"></img>
+      <div className='even-columns'>
+        
+          {products.map( product => (
+            <div>
+              <Link onClick={()=> dispatch(selectProduct(product.id))} to={`/products/${product.id}`} key={product.id} >
+                <div className="col">
+                    <Card product={product} />
+                </div>
+              </Link>
+              <div className='btn-group'>
+                <button>Add to cart</button>
+                <button>View Product</button>
+              </div>
             </div>
-          </Link>
-          <button>Agregar al carrito</button>
-          <button>Sacar del carrito</button>
-          </div>
-        ))}
+            ))}
+           
+           
       </div>
     </div>
   );
