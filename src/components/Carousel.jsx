@@ -11,12 +11,14 @@ const Carousel = () => {
   const { products } = useSelector(state => state.products)
   const dispatch = useDispatch();
   const history = useHistory()
+  const productsInCart = useSelector(state => state.productsAddedToCart)
 
 
   useEffect(() => {
     dispatch(showProduct());
   }, []);
 
+  
 
   return (
     <div className="wrapper">
@@ -30,8 +32,8 @@ const Carousel = () => {
                 </div>
               </Link>
               <div className='btn-group'>
-                <button>Add to cart</button>
-                <button>View Product</button>
+                <button onClick={() => dispatch(setProductsAddedToCart([...productsInCart, product]))}>Add to cart</button>
+                {/* <button>View Product</button> */}
               </div>
             </div>
             ))}
