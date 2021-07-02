@@ -4,6 +4,8 @@ import { showProduct, selectProduct } from "../redux/products";
 import { Link, useHistory } from "react-router-dom";
 import Card from "./Card";
 import "../assets/styles/components/Carousel.scss";
+import {setProductsAddedToCart} from "../redux/productsAdded"
+
 
 const Carousel = () => {
   const { products } = useSelector(state => state.products)

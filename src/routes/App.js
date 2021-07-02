@@ -9,6 +9,9 @@ import Layout from "../components/Layout";
 import SingleCard from "../components/SingleCard";
 import "../assets/styles/App.scss";
 import Card from "../components/Card";
+import ShoppingCart from "../components/ShopingCart"
+
+
 
 const App = () => {
   return (
@@ -23,6 +26,7 @@ const App = () => {
             path="/products/:productId"
             component={SingleCard}
           />
+          <Route exact path="/cart" component={ShoppingCart} />
         </Switch>
       </Layout>
     </BrowserRouter>
