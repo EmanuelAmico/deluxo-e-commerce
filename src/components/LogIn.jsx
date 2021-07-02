@@ -25,7 +25,7 @@ function LogIn() {
       localStorage.setItem('token', user.token)
       dispatch(setUser({...user, isLoggedIn: true}))
       alert("Se ha logueado con éxito")
-      history.push('/')
+      history.push('/products')
     } catch (error) {
       if(error.response.status === 400 || 401)
         alert("Credenciales inválidas")

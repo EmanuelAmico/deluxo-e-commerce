@@ -42,6 +42,7 @@ function  Register  ()  {
       e.preventDefault()
       await axios.post('/api/register', formRegisterValues)
       alert("El usuario se ha creado con éxito.")
+      history.push('/login')
     } catch (error) {
       console.log(error)
     }
@@ -66,6 +67,16 @@ function  Register  ()  {
           />
         </div>
 
+        <div className="passInput">
+        <input
+            name="last_name"
+            placeholder="Last Name"
+            value={last_name}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+                  
         <div className="emailInput">
           <input
             type="text"
@@ -79,6 +90,17 @@ function  Register  ()  {
           <br />
           <span>{emailMsg}</span>
         </div>
+        
+        <div className="passInput">
+        <input
+            name="user_name"
+            placeholder="User Name"
+            value={user_name}
+            onChange={handleInputChange}
+            required
+          />
+        </div>            
+                    
         <div className="passInput">
         <input
             type="password"
@@ -89,24 +111,8 @@ function  Register  ()  {
             required
           />
         </div>
-        <div className="passInput">
-        <input
-            name="user_name"
-            placeholder="User Name"
-            value={user_name}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="passInput">
-        <input
-            name="last_name"
-            placeholder="Last Name"
-            value={last_name}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+        
+        
         <div className="passInput">
         <input
             name="user_address"
