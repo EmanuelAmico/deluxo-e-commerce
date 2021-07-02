@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { useHistory } from "react-router-dom";
 import validator from 'validator'
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import { setUser } from '../redux/users';
 import axios from 'axios'
 
 function LogIn() {
   const history = useHistory();
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
   const [formLoginValues, handleInputChange] = useForm({
     email: "",
     password: "",
@@ -18,23 +17,20 @@ function LogIn() {
   const [emailMsg, setEmailMsg] = useState("")
 
   
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post('/api/routes/login', formLoginValues)
-    .then(res => res.data)
-    .then(({ id, name, email, token }) => {
-      if(rememberMe)
-        localStorage.setItem('userToken', token)
-      dispatch(setUser({ ...user, id, name, email, token, isLoggedIn: true }))
-      alert("Se ha logueado con éxito.")
+  const handleSubmit = async e => {
+    try {
+      e.preventDefault()
+      const res = await axios.post('/api/login', formLoginValues)
+      const user = res.data
+      localStorage.setItem('token', user.token)
+      dispatch(setUser({...user, isLoggedIn: true}))
+      alert("Se ha logueado con éxito")
       history.push('/')
-    })
-    .catch(error => {
-      //NOTE Sí el response status es del 300 en adelante cae acá el axios
+    } catch (error) {
       if(error.response.status === 400 || 401)
         alert("Credenciales inválidas")
-    }) 
-  };
+    }
+  }
 
 
   const validateEmail = (e) => {
@@ -60,7 +56,7 @@ function LogIn() {
           <div className="emailInput">
             <input
               type="text"
-              name="Email"
+              name="email"
               placeholder="Email"
               value={email}
               onChange={(e) => validateEmail(e)}
@@ -72,7 +68,7 @@ function LogIn() {
           <div className="passInput">
             <input
               type="password"
-              name="Password"
+              name="password"
               placeholder="Password"
               value={password}
               onChange={handleInputChange}

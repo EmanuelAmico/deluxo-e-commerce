@@ -51,7 +51,7 @@ Users.init({
     },
   },
   phone_number: {
-    type: S.INTEGER,
+    type: S.BIGINT,
     allowNull: false,
     unique: true,
     validate: {

@@ -28,7 +28,7 @@ export const selectProduct = createAsyncThunk('SELECT_PRODUCT', (param, thunkAPI
 
 export const showProduct = createAsyncThunk('SHOW_PRODUCT', () => {
     return axios.get('http://localhost:3001/products')
-    .then(res => {console.log(res.data); return res.data})
+    .then(res => res.data)
 })
 
 const productReducer = createReducer(initialState, {

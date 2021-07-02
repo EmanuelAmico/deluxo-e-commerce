@@ -1,24 +1,19 @@
+
 .wrapper{
-  /* border: 4px solid blue; */
-  width: 100vw;
-  height: 100vh;
-}
-
-.row{
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.col{
-    /* border: 4px solid red; */
-    width: 250px;
-    height: 300px;
-}
-
-.img-product {
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-}
+  background-color: blue;
+ }
+ 
+ .even-columns {
+   display: flex;
+   flex-flow: row wrap;
+   justify-content: center;
+   align-items: center;
+   
+ }
+ .col {
+   width: 371px;
+   height: 441px;
+   flex-basis: 100%;
+   padding: 2em;
+ }
+ 

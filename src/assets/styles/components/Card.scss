@@ -1,9 +1,9 @@
-.card-product {
-    display: flex;
-    flex-flow: row wrap;
-
+.img-product {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
-.car-img{
-    height: 550px;
-    width: 400px;
+.btn-group{
+    display: flex;
+    justify-content:space-evenly;
 }

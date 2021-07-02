@@ -1,9 +1,14 @@
 import { createReducer, createAction} from "@reduxjs/toolkit";
 
 const initialState = {
-  name: null,
-  email: null,
   id: null,
+  email: null,
+  full_name: null,
+  first_name: null,
+  last_name: null,
+  user_address: null,
+  shipping_address: null,
+  phone_number: null,
   token: localStorage.getItem('token'),
   isLoggedIn: false,
 }
@@ -11,7 +16,7 @@ const initialState = {
 export const setUser = createAction('SETUSER')
 
 const userReducer = createReducer(initialState, {
-  [setUser.fulfilled] : (state, action) => action.payload
+  [setUser] : (state, action) => action.payload
 })
 
 
