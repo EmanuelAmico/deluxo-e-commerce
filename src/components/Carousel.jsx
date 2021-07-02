@@ -32,8 +32,10 @@ const Carousel = () => {
                 </div>
               </Link>
               <div className='btn-group'>
-                <button onClick={() => dispatch(setProductsAddedToCart([...productsInCart, product]))}>Add to cart</button>
-                {/* <button>View Product</button> */}
+                <button>Add to cart</button>
+                <Link onClick={()=> dispatch(selectProduct(product.id))} to={`/products/${product.id}`} key={product.id} >
+                  <button>View Product</button>
+                </Link>
               </div>
             </div>
             ))}
