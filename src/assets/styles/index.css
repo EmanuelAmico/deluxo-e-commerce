@@ -23,48 +23,7 @@ body {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
       monospace;
   }
-  header {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-content: flex-start;
-    align-items: center;
-    width: 100%;
-    height: 70px;
-    background: linear-gradient(to right, #001838 0%, #1a0939 100%);
-    position: sticky;
-      top: 0;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 15px 20px -10px;
-  }
-  
-  .logo {
-    flex-grow: 1;
-    margin-left: .5em;
-    padding: 1em;
-  }
-  
-  .logo a{
-    text-transform: uppercase;
-    font-size: 1.25em;
-    font-weight: 200;
-    color:inherit;
-    text-decoration: none;
-  
-  }
-  .links{
-    margin-left: 1em;
-    margin-right: 1em;
-  }
-  
-  .links a {
-    color: #dec7f1;
-    padding: 1em;
-    text-decoration: none;
-    font-weight: 100;
-  }
-  .links a:hover{
-    color:  #9552cc;
-  }
+
   
   .searchBox{
     /* margin-right: .75em;
@@ -172,17 +131,7 @@ body {
   }
   
   
-  footer{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    position:absolute;
-    left:0;
-    bottom:0;
-    right:0;
-    width: 100%;
-  }
+  
   
   .footerIcons{
     margin-left: 1em;
@@ -203,78 +152,8 @@ body {
   
   
   
-  .registerBody{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2em;
-  }
-  .registerForm{
-    margin-top: 2em;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-    border-radius: 20px;
-    width: 50%;
-  }
-  .formContainer{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .welcome-text{
-    font-size: 1.5em;
-    font-weight: 100;
-    margin-bottom: 1em;
-    margin-top: 1em;
-  }
-  .createAcc{
-    font-size: 1em;
-    font-weight: 100;
-    margin-bottom: 2em;
   
-  }
   
-  .formInput{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .emailInput, .passInput{
-    width:50%;
-    border-bottom: 1.5px solid #452d7a;
-    margin-bottom: 1.5em;
-  }
-  .registerBtn{
-    color: #dec7f1;
-    background-color: transparent;
-    border: 1.5px solid #452d7a;
-    border-radius: 15px;
-    outline: none;
-    padding: .5em;
-    font-family: inherit;
-    font-size: inherit;
-    margin-top: 2em;
-    margin-bottom: 1em;
-    width:30%;
-  }
-  
-  .registerBtn:hover{
-    color:  #9552cc;
-    border: 1.5px solid #dec7f1;
-  }
-  .redirectLogIn {
-    margin-bottom: 1em;
-  }
-  .redirectLogIn a{
-    text-decoration: none;
-    color: inherit;
-  }
-  .redirectLogIn a:hover{
-    color:  #9552cc;
-  }
   
   .moviesFound {
     display: flex;

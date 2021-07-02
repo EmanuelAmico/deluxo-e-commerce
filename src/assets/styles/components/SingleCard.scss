@@ -1,9 +1,18 @@
-.card-product {
+.singleCardContainer{
     display: flex;
     flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    
+}
+.cardImg {
+    height: 500px;
+}
+.cardDescription{
+    display: flex;
+    flex-flow: column wrap;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
 
-}
-.car-img{
-    height: 550px;
-    width: 400px;
-}
