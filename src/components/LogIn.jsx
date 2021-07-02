@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { useHistory } from "react-router-dom";
 import validator from 'validator'
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import { setUser } from '../redux/users';
 import axios from 'axios'
 import '../assets/styles/components/LogIn.scss'
