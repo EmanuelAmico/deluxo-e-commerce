@@ -37,17 +37,14 @@ function  Register  ()  {
     handleInputChange(e);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post('/api/register', formRegisterValues)
-      .then(user => {
-        console.log("holaaaaaaa")
-        alert("El usuario se creo con éxito.")
-        history.push("/login")
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault()
+      await axios.post('/api/register', formRegisterValues)
+      alert("El usuario se ha creado con éxito.")
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (
