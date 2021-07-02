@@ -6,6 +6,7 @@ import { setUser } from "../redux/users";
 
 function Header() {
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
 
   useEffect(async ()=> {
     try {
@@ -24,6 +25,8 @@ function Header() {
     }
   }, [])
 
+
+
   return (
     <header>
       <div className="links">
@@ -31,6 +34,7 @@ function Header() {
         <Link to="register">Register</Link>
         <Link to='/products'>Productos</Link>
       </div>
+      <p>Bienvenido: {}</p>
     </header>
   );
 }

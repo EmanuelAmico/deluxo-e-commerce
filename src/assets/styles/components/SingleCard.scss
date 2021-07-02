@@ -1,9 +1,9 @@
-.card-product {
+.singleCardContainer{
     display: flex;
     flex-flow: row wrap;
+    background-color: red;
+}
+.cardImg {
+    height: 500px;
+}
 
-}
-.car-img{
-    height: 550px;
-    width: 400px;
-}

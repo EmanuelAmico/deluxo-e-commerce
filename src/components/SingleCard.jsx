@@ -19,11 +19,11 @@ function SingleCard() {
     }, [])
 
     return (
-        <div>
-            <div className='card-product'>
+        <div className='singleCardContainer'>
+            
 
-                <div className='card-img' >
-                <img src={productSelected.image} alt='t-shirt'></img>
+                <div className='cardImgWrapper' >
+                <img className='cardImg' src={productSelected.image} alt='t-shirt'></img>
                 </div>
                 
                 <div className='card-description'>
@@ -31,7 +31,7 @@ function SingleCard() {
                     <p>{productSelected.description}</p>
                 </div>
 
-            </div>
+            
         </div>
     )
 }
