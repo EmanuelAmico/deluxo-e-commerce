@@ -10,7 +10,7 @@ const getShopcarts = async (req, res, next) => {
   }
 };
 
-const postShopcart = async (req, res, next) => {
+/* const postShopcart = async (req, res, next) => {
   try {
     const productsInfoArray = req.body;
     const productsIds = productsInfoArray.map(product => product.id)
@@ -30,16 +30,16 @@ const postShopcart = async (req, res, next) => {
       }
       return result
     })
-    /* console.log(finalProducts) */
+    console.log(finalProducts)
     finalProducts = finalProducts.flat()
-    /* console.log(finalProducts) */
+    // console.log(finalProducts)
 
     const pricesArray = []
     finalProducts.forEach(product => {
       pricesArray.push(product.price)
     });
     const total_price = pricesArray.reduce((accumulator, price) => accumulator + price )
-    /* console.log("total_price ->", total_price) */
+    // console.log("total_price ->", total_price)
     const shopcart = await Shopcarts.create({ total_price })
     const shopcartFull = await shopcart.addProducts(finalProducts, { ignoreDuplicates: true }) //ignoreDuplicates no funciona cuando individualHooks está true :( #bug
     console.log("shopcartFull", shopcartFull)
@@ -47,7 +47,7 @@ const postShopcart = async (req, res, next) => {
   } catch (error) {
     next(error)
   }
-};
+}; */
 
 
 
@@ -67,28 +67,30 @@ const postShopcart = async (req, res, next) => {
       }
     })
 
-    const pricesArray = []
-    products.forEach(product => {
-      pricesArray.push(product.price)
-    });
+    const prices = products.map(product => product.price);
+    console.log("prices ->", prices)
+    console.log("productsQuantities ->", productsQuantities)
+   /*  const total_price = prices.reduce((accumulator, price, i) => accumulator + price * productsQuantities[i])
+    //FIXME no tiene sentidoooooooooooooooooooo aaaaaaaaaaaaaaaaaaaa, no se usar reducer >:(
+    console.log("total_price ->", total_price) */
+    const total_price = prices.map((price, i) => price * productsQuantities[i]).reduce((accumulator, price) => accumulator + price)
+    console.log("total_price ->", total_price)
 
-    const total_price = pricesArray.reduce((accumulator, price) => accumulator + price )
-
-    /* console.log("total_price ->", total_price) */
-
-    const shopcart = await Shopcarts.create({ total_price })
-    const shopcartFull = await shopcart.addProducts(products) //ignoreDuplicates no funciona cuando individualHooks está true :( #bug
-    console.log("shopcartFull", shopcartFull)
-    shopcartFull.forEach(async (shopcartItem, i) => {
+    const emptyShopcart = await Shopcarts.create({ total_price })
+    const shopcart = await emptyShopcart.addProducts(products)
+    console.log("shopcart with products but wrong quantity ->", shopcart)
+    shopcart.forEach(async (shopcartItem, i) => {
       try {
-        shopcartItem.quantity = productsQuantities[i]
-        await shopcartItem.save()
+        if(shopcartItem.quantity !== productsQuantities[i]){
+          shopcartItem.quantity = productsQuantities[i]
+          await shopcartItem.save()
+        }
       } catch (error) {
         console.log(error)
       }
     });
-    console.log("shopcartFull after ->", shopcartFull)
-    res.status(201).send(shopcartFull);
+    console.log("final shopcart ->", shopcart)
+    res.status(201).send(shopcart);
   } catch (error) {
     next(error)
   }
