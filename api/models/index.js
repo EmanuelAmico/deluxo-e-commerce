@@ -7,7 +7,7 @@ const Users = require("./users");
 
 // Relaciones
 Products.hasMany(Categories);
-Shopcarts.belongsToMany(Products, { through: ShopcartItems, uniqueKey: true });
+Shopcarts.belongsToMany(Products, { through: ShopcartItems, uniqueKey: false });
 Users.hasMany(Orders);
 Orders.hasOne(Shopcarts);
 

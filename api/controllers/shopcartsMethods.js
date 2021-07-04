@@ -32,7 +32,7 @@ const postShopcart = async (req, res, next) => {
     })
     /* console.log(finalProducts) */
     finalProducts = finalProducts.flat()
-    console.log(finalProducts)
+    /* console.log(finalProducts) */
 
     const pricesArray = []
     finalProducts.forEach(product => {
@@ -41,12 +41,60 @@ const postShopcart = async (req, res, next) => {
     const total_price = pricesArray.reduce((accumulator, price) => accumulator + price )
     /* console.log("total_price ->", total_price) */
     const shopcart = await Shopcarts.create({ total_price })
-    const shopcartFull = await shopcart.addProducts(products)
+    const shopcartFull = await shopcart.addProducts(finalProducts, { ignoreDuplicates: true }) //ignoreDuplicates no funciona cuando individualHooks está true :( #bug
+    console.log("shopcartFull", shopcartFull)
     res.status(201).send(shopcartFull);
   } catch (error) {
     next(error)
   }
 };
+
+
+
+
+
+
+const postShopcart = async (req, res, next) => {
+  try {
+    const productsInfoArray = req.body;
+    const productsIds = productsInfoArray.map(product => product.id)
+    const productsQuantities = productsInfoArray.map(product => product.quantity)
+    const products = await Products.findAll({
+      where: {
+        id: {
+          [Op.or] : productsIds
+        }
+      }
+    })
+
+    const pricesArray = []
+    products.forEach(product => {
+      pricesArray.push(product.price)
+    });
+
+    const total_price = pricesArray.reduce((accumulator, price) => accumulator + price )
+
+    /* console.log("total_price ->", total_price) */
+
+    const shopcart = await Shopcarts.create({ total_price })
+    const shopcartFull = await shopcart.addProducts(products) //ignoreDuplicates no funciona cuando individualHooks está true :( #bug
+    console.log("shopcartFull", shopcartFull)
+    shopcartFull.forEach(async (shopcartItem, i) => {
+      try {
+        shopcartItem.quantity = productsQuantities[i]
+        await shopcartItem.save()
+      } catch (error) {
+        console.log(error)
+      }
+    });
+    console.log("shopcartFull after ->", shopcartFull)
+    res.status(201).send(shopcartFull);
+  } catch (error) {
+    next(error)
+  }
+};
+
+
 
 const putShopCart = async (req, res, next) => {
   const {shopcartId, productId} = req.body
