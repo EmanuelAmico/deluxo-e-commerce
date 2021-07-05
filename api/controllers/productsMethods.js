@@ -105,6 +105,8 @@ const putProduct = async (req, res, next) => {
   }
 };
 
+//Error si quiero modificar algo con lo mismo -> 
+
 //---------------------- DELETE ---------------------------//
 
 const deleteProduct = async (req, res, next) => {
