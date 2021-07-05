@@ -6,7 +6,6 @@ import {
 
 
 export const setProductsAddedToCart = createAction("SET_PRODUCT_ADDED");
-export const removeProductsAddedToCart = createAction("REMOVE_PRODUCT_ADDED");
 
 const productsAddedToCartReducer = createReducer([], {
 

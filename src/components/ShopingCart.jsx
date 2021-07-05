@@ -1,42 +1,38 @@
-
 import React from "react";
-// import "../assets/styles/components/cart.css";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { setProductsAddedToCart } from "../redux/productsAdded";
 
 export default function ShoppingCart() {
   const productsInCart = useSelector((state) => state.productsAddedToCart);
-  console.log(productsInCart);
 
-  // function total() {
-  //   let totalPrice = 0;
-  //   productsInCart.map((product) => {
-  //     totalPrice += product.price * 2;
-  //   });
-  //   return totalPrice
-  // }
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   function total() {
-    let totalPrice = 0
+    let totalPrice = 0;
     productsInCart.map((product) => {
-      totalPrice += product.price * product.quantity
-    })
-    return totalPrice
+      totalPrice += product.price * product.quantity;
+    });
+    return totalPrice;
   }
+
+  // function decrease (product) {
+  //   product.quantity -= 1
+  // }
+  // function increment (product) {
+  //   product.quantity += 1
+  // }
 
   const handleRemoveCartItem = (id) => {
-    const products = productsInCart.filter(product => product.id !== id)
-    dispatch(setProductsAddedToCart(products))
-  }
+    const products = productsInCart.filter((product) => product.id !== id);
+    dispatch(setProductsAddedToCart(products));
+  };
 
   return (
-    <div className="container mt-2">
+    <div className="container mt-2 text-primary">
       <div className="row mt-3">
-        <table className="table  text-center">
+        <table className="table  text-center text-light bg-dark">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -58,15 +54,15 @@ export default function ShoppingCart() {
                 <td>{product.price}</td>
                 <td>
                   <button
-                    /* onClick={() => decrease(i)} */
-                    className="btn btn-primary btn-sm"
+                    /* onClick={() => decrease(product)} */
+                    className="btn btn-primary btn-lg"
                   >
                     -
                   </button>
                   {/* {product.quantity} */}
                   <button
-                    // onClick={() => increase(i)}
-                    className="btn btn-primary btn-sm"
+                    // onClick={() => increase(product)}
+                    className="btn btn-primary btn-lg"
                     size="sm"
                   >
                     +
@@ -76,7 +72,7 @@ export default function ShoppingCart() {
                 <td>
                   <button
                     onClick={() => handleRemoveCartItem(product.id)}
-                    className="btn btn-danger"
+                    className="btn btn-danger btn-lg"
                   >
                     Remove
                   </button>
@@ -87,6 +83,13 @@ export default function ShoppingCart() {
         </table>
       </div>
       <div className="row">
+        {productsInCart.length ? (
+          <Link className="btn btn-danger btn-lg" to={"/checkout"}>
+            Checkout
+          </Link>
+        ) : null}
+      </div>
+      <div className="row">
         <div className="col text-center">
           <h4>TOTAL: {`$ ${total()}`}</h4>
         </div>
@@ -94,14 +97,3 @@ export default function ShoppingCart() {
     </div>
   );
 }
-
-// function removetocart(item) {
-//   products.map((i) => {
-//     if (i.id == item.id) {
-//       i.cart = false
-//     }
-//   })
-//   setCart(cart2)
-
-// }
-
