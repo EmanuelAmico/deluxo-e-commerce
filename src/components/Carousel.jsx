@@ -18,13 +18,17 @@ const Carousel = () => {
 
   function addProduct (product) {
     const alreadyInCart = productsInCart.map(productInCart => productInCart.id == product.id)
-    // alreadyInCart -> [false, false, false, false, false]
+    // alreadyInCart -> [false, false, false, true, false]
     if (alreadyInCart.includes(true)) {
-      console.log("estoy entrandooooooooooooo")
       const i = alreadyInCart.indexOf(true)
-      const productsInCartCopy = [...productsInCart]
-      console.log(productsInCartCopy)
+      const productsInCartCopy = []
+      productsInCart.forEach(product => {
+        productsInCartCopy.push({...product})
+      });
+      // const productsInCartCopy = [...productsInCart] si lo hago de esta forma los objetos de adentro del arreglo son inmutables, tengo que de alguna forma recrear tambien los objetos de adentro, no solo el arreglo...
+      /* console.log(productsInCartCopy)
       console.log("i ->", i)
+      console.log("quantity already in cart ->", productsInCartCopy[i].quantity) */
       productsInCartCopy[i].quantity++
       dispatch(setProductsAddedToCart(productsInCartCopy))   
     } else {
