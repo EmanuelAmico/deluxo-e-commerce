@@ -18,13 +18,16 @@ const Carousel = () => {
 
   function addProduct (product) {
     const alreadyInCart = productsInCart.map(productInCart => productInCart.id == product.id)
+    // alreadyInCart -> [false, false, false, false, false]
     if (alreadyInCart.includes(true)) {
+      console.log("estoy entrandooooooooooooo")
       const i = alreadyInCart.indexOf(true)
       const productsInCartCopy = [...productsInCart]
+      console.log(productsInCartCopy)
+      console.log("i ->", i)
       productsInCartCopy[i].quantity++
       dispatch(setProductsAddedToCart(productsInCartCopy))   
-    }
-    else {
+    } else {
       const productCopy = {...product, quantity: 1}
       dispatch(setProductsAddedToCart([...productsInCart, productCopy]))   
     }
@@ -34,11 +37,10 @@ const Carousel = () => {
     <div className="wrapper">
       <div className="even-columns">
         {products.map((product) => (
-          <div>
+          <div key={product.id}>
             <Link
               onClick={() => dispatch(selectProduct(product.id))}
               to={`/products/${product.id}`}
-              key={product.id}
             >
               <div className="col">
                 <Card product={product} />
