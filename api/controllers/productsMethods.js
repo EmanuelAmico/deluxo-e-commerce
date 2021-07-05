@@ -1,16 +1,66 @@
 const { Products, Categories } = require("../models");
+const { Op } = require("sequelize");
 
-const getProducts = (req, res, next) => {
-  Products.findAll()
-    .then((products) => res.status(200).send(products))
-    .catch(next);
+//---------------------- GET ---------------------------//
+
+
+const getProducts = async (req, res, next) => {
+  try {
+    const products = await Products.findAll()
+    res.status(200).send(products)
+  } catch (error) {
+    next(error)
+  }
 };
 
-const getProductsId = (req, res, next) => {
-  Products.findByPk(req.params.id).then((product) =>
+const getProductsId = async (req, res, next) => {
+  try {
+    const product = await Products.findByPk(req.params.id)
     res.status(200).send(product)
-  );
+  } catch (error) {
+    next(error)
+  }
 };
+
+// http://localhost:3001/products?category=pantuflas
+const getProductsByCategory = async (req, res, next) => {
+  try {
+    //El req.query -> { category: 'pantuflas' }
+    const { category } = req.query
+    const products = await Products.findAll({
+      include : {
+        model : Categories,
+        where: {
+          name : category
+        }
+      }
+    })
+    res.status(200).send(products)
+  } catch (error) {
+    next(error)
+  }
+}
+
+// nombre del producto: "Remera Mandalorian" -> "<Tipo de prenda> <Busqueda>"
+// http://localhost:3001/products?search=remera
+const getProductsBySearch = async (req,res,next) => {
+  try {
+    const { key } = req.query
+    const products = await Products.findAll({
+      where: {
+        name: {
+          [Op.substring] : key
+        }
+      }
+    })
+    res.status(200).send(products)
+  } catch (error) {
+    next(error)
+  }
+}
+
+//---------------------- POST ---------------------------//
+
 
 const postProduct = async (req, res, next) => {
   try {
@@ -37,19 +87,38 @@ const postProduct = async (req, res, next) => {
   }
 }
 
-const putProduct = (req, res, next) => {
-  Products.update(req.body, {
-    where: { id: req.params.id },
-    returning: true,
-    plain: true,
-  }).then((user) => res.status(200).send(user));
+//---------------------- PUT ---------------------------//
+
+
+const putProduct = async (req, res, next) => {
+  try {
+    const product = await Products.update(req.body,{
+      where: { id: req.params.id },
+      returning: true,
+    })
+    const updated = product[0] //Es un 0 sí no se encontró
+    if(!updated)
+      res.status(404).send("Product not found")
+    res.status(200).send(product)
+  } catch (error) {
+    next(error)    
+  }
 };
 
-const deleteProduct = (req, res, next) => {
-  Products.destroy({
-    where: { id: req.params.id },
-  }).then(() => res.status(204));
+//---------------------- DELETE ---------------------------//
+
+const deleteProduct = async (req, res, next) => {
+  try {
+    const destroy = await Products.destroy({
+      where : {id : req.params.id}
+    })
+    res.status(204).send(destroy)
+  } catch (error) {
+    next(error)
+  }
 };
+
+
 
 module.exports = {
   getProducts,
@@ -57,4 +126,6 @@ module.exports = {
   postProduct,
   putProduct,
   deleteProduct,
+  getProductsByCategory,
+  getProductsBySearch
 };
