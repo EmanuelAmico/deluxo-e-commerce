@@ -3,7 +3,8 @@ import React from "react";
 // import "../assets/styles/components/cart.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setProductsAddedToCart } from "../redux/productsAdded";
 
 export default function ShoppingCart() {
   const productsInCart = useSelector((state) => state.productsAddedToCart);
@@ -17,12 +18,19 @@ export default function ShoppingCart() {
   //   return totalPrice
   // }
 
+  const dispatch = useDispatch()
+
   function total() {
     let totalPrice = 0
     productsInCart.map((product) => {
       totalPrice += product.price * product.quantity
     })
     return totalPrice
+  }
+
+  const handleRemoveCartItem = (id) => {
+    const products = productsInCart.filter(product => product.id !== id)
+    dispatch(setProductsAddedToCart(products))
   }
 
   return (
@@ -67,7 +75,7 @@ export default function ShoppingCart() {
 
                 <td>
                   <button
-                    // onClick={() => removetocart(i)}
+                    onClick={() => handleRemoveCartItem(product.id)}
                     className="btn btn-danger"
                   >
                     Remove
