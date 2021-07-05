@@ -1,52 +1,99 @@
-import React from 'react';
-import '../assets/styles/components/cart.css'
-import { useSelector } from "react-redux"
 
+import React from "react";
+// import "../assets/styles/components/cart.css";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function ShoppingCart(props) {
-//   const { cartItems, onAdd, onRemove } = props;
-const productsInCart = useSelector(state => state.productsAddedToCart)
+import { useSelector } from "react-redux";
 
-  let totalPrice = "$50";
+export default function ShoppingCart() {
+  const productsInCart = useSelector((state) => state.productsAddedToCart);
+  console.log(productsInCart);
+
+  // function total() {
+  //   let totalPrice = 0;
+  //   productsInCart.map((product) => {
+  //     totalPrice += product.price * 2;
+  //   });
+  //   return totalPrice
+  // }
+
+  function total() {
+    let totalPrice = 0
+    productsInCart.map((product) => {
+      totalPrice += product.price * product.quantity
+    })
+    return totalPrice
+  }
 
   return (
-    <aside className="block col-1 cart">
-      <h2>Cart Items</h2>
-      <div>
-        {productsInCart.length === 0 && <div>Cart is empty</div>}
-        {productsInCart.map((item) => (
-          <div key={item.id} className="row products">
-            <div className="col-2" >{item.name}</div>
-            <div className="col-2" >{item.price}</div>
-            <div className="col-2">
-              <button onClick={() => console.log("menos")} className="remove">
-                -
-              </button>{' '}
-              <button onClick={() => console.log("mas")} className="add">
-                +
-              </button>
-            </div>
+    <div className="container mt-2">
+      <div className="row mt-3">
+        <table className="table  text-center">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Product</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            {productsInCart.map((product, index) => (
+              <tr key={product.id}>
+                <th scope="row">{index + 1}</th>
+                <th scope="row">
+                  <img src={product.image} style={{ width: "4rem" }} />
+                </th>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>
+                  <button
+                    /* onClick={() => decrease(i)} */
+                    className="btn btn-primary btn-sm"
+                  >
+                    -
+                  </button>
+                  {/* {product.quantity} */}
+                  <button
+                    // onClick={() => increase(i)}
+                    className="btn btn-primary btn-sm"
+                    size="sm"
+                  >
+                    +
+                  </button>
+                </td>
 
-          </div>
-        ))}
-
-        {productsInCart.length !== 0 && (
-          <>
-            <hr></hr>
-            <div className="row total">
-              <div className="col-2">Total Price</div>
-              <div className="col-1 text-right">${totalPrice}</div>
-            </div>
-
-            <hr />
-            <div className="row">
-              <button onClick={() => alert('Implementar Checkout!')}>
-                Checkout
-              </button>
-            </div>
-          </>
-        )}
+                <td>
+                  <button
+                    // onClick={() => removetocart(i)}
+                    className="btn btn-danger"
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </aside>
+      <div className="row">
+        <div className="col text-center">
+          <h4>TOTAL: {`$ ${total()}`}</h4>
+        </div>
+      </div>
+    </div>
   );
 }
+
+// function removetocart(item) {
+//   products.map((i) => {
+//     if (i.id == item.id) {
+//       i.cart = false
+//     }
+//   })
+//   setCart(cart2)
+
+// }
+
