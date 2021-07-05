@@ -6,7 +6,12 @@ const { Op } = require("sequelize");
 
 const getProducts = async (req, res, next) => {
   try {
-    const products = await Products.findAll()
+    const products = await Products.findAll({
+      include: {
+        model: Categories,
+        attributes: ["name"]
+      }
+    })
     res.status(200).send(products)
   } catch (error) {
     next(error)
@@ -16,6 +21,8 @@ const getProducts = async (req, res, next) => {
 const getProductsId = async (req, res, next) => {
   try {
     const product = await Products.findByPk(req.params.id)
+    if(!product)
+      res.status(404).send("Product doesn't exists")
     res.status(200).send(product)
   } catch (error) {
     next(error)
@@ -27,6 +34,8 @@ const getProductsByCategory = async (req, res, next) => {
   try {
     //El req.query -> { category: 'pantuflas' }
     const { category } = req.query
+    if(!category)
+      res.status(400).send("Not valid query!")
     const products = await Products.findAll({
       include : {
         model : Categories,
@@ -46,6 +55,8 @@ const getProductsByCategory = async (req, res, next) => {
 const getProductsBySearch = async (req,res,next) => {
   try {
     const { key } = req.query
+    if(!key)
+      res.status(400).send("Not valid query!")
     const products = await Products.findAll({
       where: {
         name: {
@@ -64,24 +75,20 @@ const getProductsBySearch = async (req,res,next) => {
 
 const postProduct = async (req, res, next) => {
   try {
-    const producto = {
-      name: req.body.name,
-      price: req.body.price,
-      description: req.body.description,
-      stock: req.body.stock,
-      image: req.body.image,
-      color: req.body.color,
-      size: req.body.size,
-      genre: req.body.genre,
-      thumbnail: req.body.thumbnail,
-    };
-    const categorias = req.body.categories.split(" ");
-    const productoCreado = await Products.create(producto);
-    for (const categoria of categorias) {
-      const categoriaCreada = await Categories.create({ name: categoria });
-      productoCreado.addCategory(categoriaCreada);
+    const { name, description, price, image, stock, color, size, genre, thumbnail } = req.body
+    const product = { name, price, description, stock, image, color, size, genre, thumbnail }
+    const categories = req.body.categories.split(" ");
+    const [createdProduct, wasCreated] = await Products.findOrCreate({
+      where: product,
+      defaults: product
+    });
+    if(!wasCreated)
+      return res.status(302).send("Product already exists.")
+    for (const category of categories) {
+      const createdCategory = await Categories.create({ name: category });
+      createdProduct.addCategory(createdCategory);
     }
-    res.status(201).send(productoCreado);
+    res.status(201).send(createdProduct);
   } catch (error) {
     next(error);
   }
@@ -111,10 +118,10 @@ const putProduct = async (req, res, next) => {
 
 const deleteProduct = async (req, res, next) => {
   try {
-    const destroy = await Products.destroy({
+    const destroyedProduct = await Products.destroy({
       where : {id : req.params.id}
     })
-    res.status(204).send(destroy)
+    destroyedProduct ? res.sendStatus(204) : res.sendStatus(404)
   } catch (error) {
     next(error)
   }
@@ -131,3 +138,6 @@ module.exports = {
   getProductsByCategory,
   getProductsBySearch
 };
+
+
+//FIXME Revisar los return para que salgan de la funcion en los errores y no se ejecute lo de abajo e.e

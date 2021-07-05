@@ -3,19 +3,20 @@ const router = express.Router();
 
 const { getProductsId,getProducts, postProduct, putProduct, deleteProduct, getProductsByCategory, getProductsBySearch } = require("../controllers");
 
-// http://localhost:3001/api/products/filter?category=pantuflas
+//---------------------- GET -------------------------//
 router.get("/search", getProductsBySearch)
 router.get("/filter", getProductsByCategory)
-
+router.get("/:id", getProductsId);
 router.get("/", getProducts);
 
+//---------------------- POST ------------------------//
 router.post("/", postProduct);
 
-router.get("/:id", getProductsId);
-
-
+//---------------------- PUT -------------------------//
 router.put("/:id", putProduct);
 
-router.get("/:id", deleteProduct)
+//-------------------- DELETE ------------------------//
+router.delete("/:id", deleteProduct)
+
 
 module.exports = router
