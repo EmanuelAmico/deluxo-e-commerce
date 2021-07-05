@@ -12,7 +12,7 @@ Products.init({
     },
   },
   description: {
-    type: S.STRING,
+    type: S.TEXT,
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -24,7 +24,7 @@ Products.init({
     defaultValue: 0
   },
   image: {
-    type: S.STRING,
+    type: S.TEXT,
     allowNull: false,
     validate: {
       notEmpty: true,
