@@ -15,13 +15,12 @@ Products.init({
   description: {
     type: S.TEXT,
     allowNull: false,
-    unique: true,
     validate: {
       notEmpty: true,
     },
   },
   price: {
-    type: S.INTEGER,
+    type: S.FLOAT,
     allowNull: false,
     defaultValue: 0
   },
@@ -60,7 +59,7 @@ Products.init({
     },
   },
   thumbnail: {
-    type: S.STRING,
+    type: S.TEXT,
     allowNull: false,
     unique: true,
   }

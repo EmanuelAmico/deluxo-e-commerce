@@ -22,12 +22,12 @@ const initialState = {
 
 
 export const selectProduct = createAsyncThunk('SELECT_PRODUCT', (param, thunkAPI)=>{
-    return axios.get(`http://localhost:3001/products/${param}`)
+    return axios.get(`/api/products/${param}`)
     .then(res => res.data)
 })
 
 export const showProduct = createAsyncThunk('SHOW_PRODUCT', () => {
-    return axios.get('http://localhost:3001/products')
+    return axios.get('/api/products')
     .then(res => res.data)
 })
 
