@@ -75,21 +75,73 @@ const getProductsBySearch = async (req,res,next) => {
 
 const postProduct = async (req, res, next) => {
   try {
-    const { name, description, price, image, stock, color, size, genre, thumbnail } = req.body
-    const product = { name, price, description, stock, image, color, size, genre, thumbnail }
-    const categories = req.body.categories.split(" ");
-    const [createdProduct, wasCreated] = await Products.findOrCreate({
-      where: product,
-      defaults: product
-    });
-    if(!wasCreated)
-      return res.status(302).send("Product already exists.")
-    for (const category of categories) {
-      const createdCategory = await Categories.create({ name: category });
-      createdProduct.addCategory(createdCategory);
-    }
-    res.status(201).send(createdProduct);
+    if(!Array.isArray(req.body) && typeof req.body === "object") {
+      const { name, description, price, image, stock, color, size, genre, thumbnail } = req.body
+      const product = { name, price, description, stock, image, color, size, genre, thumbnail }
+      const categories = req.body.categories.split(" ");
+      const [createdProduct, wasCreated] = await Products.findOrCreate({
+        where: product,
+        defaults: product
+      });
+      if(!wasCreated)
+        return res.status(302).send("Product already exists.")
+      for (const category of categories) {
+        const createdCategory = await Categories.create({ name: category });
+        createdProduct.addCategory(createdCategory);
+      }
+      res.status(201).send(createdProduct);
+    } else if (Array.isArray(req.body)) {
+      const products = req.body.map(product => {
+        const { name, description, price, image, stock, color, size, genre, thumbnail } = product
+        return { name, description, price, image, stock, color, size, genre, thumbnail }
+      })
+      const categoriesArrayOfArrays = req.body.map(product => product.categories.split(" ").map(category => ( { name: category } )))
+      const builtProducts = []
+      const wasIndeedBuild = [] // -> [false, false, true, false]
+      for(const product of products) {
+        const [builtProduct, wasBuild] = await Products.findOrBuild({
+          where: product,
+          defaults: product
+        });
+        if(wasBuild) {
+          builtProducts.push(builtProduct)
+          wasIndeedBuild.push(true)
+        } else {
+          wasIndeedBuild.push(false)
+        }
+      }
+      /* console.log(builtProducts) */
+      if(wasIndeedBuild.includes(false))
+        return res.status(302).send({ERROR: 'Already exists!!', ...products[wasIndeedBuild.indexOf(false)]})
+      const createdProducts = []
+      for(const product of builtProducts) {
+        const createdProduct = await product.save()
+        createdProducts.push(createdProduct)
+      }
+      const createdCategoriesArrayOfArrays = []
+      for(const categoriesArray of categoriesArrayOfArrays) {
+        const createdCategoriesArray = []
+        for(const category of categoriesArray) {
+          const newCategory = await Categories.create(category)
+          createdCategoriesArray.push(newCategory)
+        }
+        createdCategoriesArrayOfArrays.push(createdCategoriesArray)
+      }
+      /* console.log(createdCategoriesArrayOfArrays) */
+      for(let i=0; i<createdProducts.length; i++) {
+        for(const category of createdCategoriesArrayOfArrays[i]) {
+          /* console.log("categoryyyyy ->", category) */
+          await createdProducts[i].addCategory(category)
+        }
+      }
+      res.status(201).send(createdProducts)
+    } else res.sendStatus(400)
   } catch (error) {
+    /* console.log({ error }) */
+    if(error.message === "Validation error") {
+      const errors = error.errors.map(errorInstance => ({ ERROR: 'Validation error!!', message: errorInstance.message, instance: errorInstance.instance }))
+      return res.status(400).send(errors) //Si no pongo return hace el next(error)
+    }
     next(error);
   }
 }
