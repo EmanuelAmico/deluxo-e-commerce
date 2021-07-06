@@ -25,7 +25,6 @@ const postProduct = async (req, res, next) => {
       genre: req.body.genre,
       thumbnail: req.body.thumbnail,
     };
-    console.log(req.body)
     const categorias = req.body.categories.split(" ");
     const productoCreado = await Products.create(producto);
     for (const categoria of categorias) {

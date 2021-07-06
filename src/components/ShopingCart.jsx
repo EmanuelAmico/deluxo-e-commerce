@@ -1,52 +1,99 @@
-import React from 'react';
-import '../assets/styles/components/cart.css'
-import { useSelector } from "react-redux"
+import React from "react";
 
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { setProductsAddedToCart } from "../redux/productsAdded";
 
-export default function ShoppingCart(props) {
-//   const { cartItems, onAdd, onRemove } = props;
-const productsInCart = useSelector(state => state.productsAddedToCart)
+export default function ShoppingCart() {
+  const productsInCart = useSelector((state) => state.productsAddedToCart);
 
-  let totalPrice = "$50";
+  const dispatch = useDispatch();
+
+  function total() {
+    let totalPrice = 0;
+    productsInCart.map((product) => {
+      totalPrice += product.price * product.quantity;
+    });
+    return totalPrice;
+  }
+
+  // function decrease (product) {
+  //   product.quantity -= 1
+  // }
+  // function increment (product) {
+  //   product.quantity += 1
+  // }
+
+  const handleRemoveCartItem = (id) => {
+    const products = productsInCart.filter((product) => product.id !== id);
+    dispatch(setProductsAddedToCart(products));
+  };
 
   return (
-    <aside className="block col-1 cart">
-      <h2>Cart Items</h2>
-      <div>
-        {productsInCart.length === 0 && <div>Cart is empty</div>}
-        {productsInCart.map((item) => (
-          <div key={item.id} className="row products">
-            <div className="col-2" >{item.name}</div>
-            <div className="col-2" >{item.price}</div>
-            <div className="col-2">
-              <button onClick={() => console.log("menos")} className="remove">
-                -
-              </button>{' '}
-              <button onClick={() => console.log("mas")} className="add">
-                +
-              </button>
-            </div>
+    <div className="container mt-2 text-primary">
+      <div className="row mt-3">
+        <table className="table  text-center text-light bg-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Product</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            {productsInCart.map((product, index) => (
+              <tr key={product.id}>
+                <th scope="row">{index + 1}</th>
+                <th scope="row">
+                  <img src={product.image} style={{ width: "4rem" }} />
+                </th>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>
+                  <button
+                    /* onClick={() => decrease(product)} */
+                    className="btn btn-primary btn-lg"
+                  >
+                    -
+                  </button>
+                  {/* {product.quantity} */}
+                  <button
+                    // onClick={() => increase(product)}
+                    className="btn btn-primary btn-lg"
+                    size="sm"
+                  >
+                    +
+                  </button>
+                </td>
 
-          </div>
-        ))}
-
-        {productsInCart.length !== 0 && (
-          <>
-            <hr></hr>
-            <div className="row total">
-              <div className="col-2">Total Price</div>
-              <div className="col-1 text-right">${totalPrice}</div>
-            </div>
-
-            <hr />
-            <div className="row">
-              <button onClick={() => alert('Implementar Checkout!')}>
-                Checkout
-              </button>
-            </div>
-          </>
-        )}
+                <td>
+                  <button
+                    onClick={() => handleRemoveCartItem(product.id)}
+                    className="btn btn-danger btn-lg"
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </aside>
+      <div className="row">
+        {productsInCart.length ? (
+          <Link className="btn btn-danger btn-lg" to={"/checkout"}>
+            Checkout
+          </Link>
+        ) : null}
+      </div>
+      <div className="row">
+        <div className="col text-center">
+          <h4>TOTAL: {`$ ${total()}`}</h4>
+        </div>
+      </div>
+    </div>
   );
 }
