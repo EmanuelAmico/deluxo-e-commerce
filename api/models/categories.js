@@ -16,6 +16,6 @@ Categories.init({
     //     type: S.STRING,
     //     allowNull: false,
     //   },
-},{sequelize: db, modelName: "categories", timestamps: false})
+},{ sequelize: db, modelName: "categories", timestamps: false })
 
 module.exports = Categories;
