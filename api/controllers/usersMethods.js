@@ -13,6 +13,15 @@ const editUser = async (req, res, next) => {
   }
 };
 
+const getAllUsers = async (req,res,next) => {
+  try {
+    const users = await Users.findAll()
+      res.status(200).send(users)
+  } catch (error) {
+    next(error)
+  }
+}
+
 const getUser = async (req, res, next) => {
   try {
     const { userId } = req.tokenPayload;
@@ -29,4 +38,5 @@ const getUser = async (req, res, next) => {
 module.exports = {
   editUser,
   getUser,
+  getAllUsers
 };
