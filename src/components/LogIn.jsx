@@ -3,7 +3,7 @@ import { useForm } from "../hooks/useForm";
 import { useHistory } from "react-router-dom";
 import validator from 'validator'
 import {useDispatch} from "react-redux"
-import { setUser } from '../redux/users';
+import { setUser } from '../redux/user';
 import axios from 'axios'
 import '../assets/styles/components/LogIn.scss'
 

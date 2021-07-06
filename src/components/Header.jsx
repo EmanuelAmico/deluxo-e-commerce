@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { setUser } from "../redux/users";
+import { setUser } from "../redux/user";
 import '../assets/styles/components/Header.scss'
 
 function Header() {
@@ -50,7 +50,7 @@ function Header() {
             ? <button onClick={handleLogOut}> Logout </button>
             : <>
                 <Link to="/login"> Login </Link>
-                <Link to="register">Register</Link>
+                <Link to="/register">Register</Link>
               </>
         }
         <Link to='/products'>Products</Link>

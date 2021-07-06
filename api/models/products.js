@@ -7,13 +7,15 @@ Products.init({
   name: {
     type: S.STRING,
     allowNull: false,
+    unique: true,
     validate: {
       notEmpty: true,
     },
   },
   description: {
-    type: S.STRING,
+    type: S.TEXT,
     allowNull: false,
+    unique: true,
     validate: {
       notEmpty: true,
     },
@@ -24,8 +26,9 @@ Products.init({
     defaultValue: 0
   },
   image: {
-    type: S.STRING,
+    type: S.TEXT,
     allowNull: false,
+    unique: true,
     validate: {
       notEmpty: true,
     },
@@ -59,6 +62,7 @@ Products.init({
   thumbnail: {
     type: S.STRING,
     allowNull: false,
+    unique: true,
   }
 }, { sequelize: db, modelName: 'products' })
 

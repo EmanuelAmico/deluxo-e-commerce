@@ -10,6 +10,7 @@ import SingleCard from "../components/SingleCard";
 import "../assets/styles/App.scss";
 import Card from "../components/Card";
 import ShoppingCart from "../components/ShopingCart"
+import Checkout from "../components/Checkout"
 
 
 
@@ -21,11 +22,9 @@ const App = () => {
           <Route exact path="/login" component={LogIn} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/products" component={Carousel} />
-          <Route
-            path="/products/:productId"
-            component={SingleCard}
-          />
+          <Route path="/products/:productId" component={SingleCard}/>
           <Route exact path="/cart" component={ShoppingCart} />
+          <Route exact path="/checkout" component={Checkout} />
           <Redirect to={"/products"} />
         </Switch>
       </Layout>

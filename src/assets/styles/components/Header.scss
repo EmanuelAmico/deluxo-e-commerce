@@ -1,3 +1,8 @@
+@import "../Vars.scss";
+@import "../Media.scss"; 
+
+
+
 header {
     display: flex;
     flex-direction: row;
@@ -6,7 +11,7 @@ header {
     align-items: center;
     width: 100%;
     height: 70px;
-    background: linear-gradient(to right, #001838 0%, #1a0939 100%);
+    background: $secondary-color;
     position: sticky;
       top: 0;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 15px 20px -10px;
@@ -39,5 +44,18 @@ header {
     font-weight: 100;
   }
   .links a:hover{
+    color:  #9552cc;
+  }
+
+  .links button {
+    color: #dec7f1;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 1em;
+    text-decoration: none;
+    font-weight: 100;
+  }
+  .links button:hover{
     color:  #9552cc;
   }
