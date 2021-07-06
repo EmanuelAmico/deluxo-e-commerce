@@ -42,14 +42,14 @@ const Carousel = () => {
       <div className="even-columns">
         {products.map((product) => (
           <div key={product.id}>
-            <Link
+            {/* <Link
               onClick={() => dispatch(selectProduct(product.id))}
               to={`/products/${product.id}`}
-            >
+            > */}
               <div className="col">
                 <Card product={product} />
               </div>
-            </Link>
+            {/* </Link> */}
             <div className="btn-group">
               <button
                 onClick={() => addProduct(product)}
