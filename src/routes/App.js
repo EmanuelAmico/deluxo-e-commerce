@@ -11,6 +11,7 @@ import "../assets/styles/App.scss";
 import Card from "../components/Card";
 import ShoppingCart from "../components/ShopingCart"
 import Checkout from "../components/Checkout"
+import User from "../components/User"
 
 
 
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/products/:productId" component={SingleCard}/>
           <Route exact path="/cart" component={ShoppingCart} />
           <Route exact path="/checkout" component={Checkout} />
+          <Route exact path="/user" component={User} />
           <Redirect to={"/products"} />
         </Switch>
       </Layout>
