@@ -50,14 +50,15 @@ function Header() {
             ? <button onClick={handleLogOut}> Logout </button>
             : <>
                 <Link to="/login"> Login </Link>
-                <Link to="register">Register</Link>
+                <Link to="/register">Register</Link>
               </>
         }
-        <Link to='/products'>Productos</Link>
+        <Link to='/products'>Products</Link>
+        <Link to='/cart'>Shopping Cart</Link>
       </div>
       {
         user.isLoggedIn
-          ? <p>Bienvenido: {user.full_name}</p>
+          ? <p>Welcome: {user.full_name}</p>
           : null
       }
     </header>
