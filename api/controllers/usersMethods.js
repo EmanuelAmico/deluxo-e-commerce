@@ -6,7 +6,7 @@ const editUser = async (req, res, next) => {
       where: { id: req.params.id },
       returning: true,
       plain: true,
-    });
+    }); 
     res.status(200).send(user);
   } catch (err) {
     next(err);
