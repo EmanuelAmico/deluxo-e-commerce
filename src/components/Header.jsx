@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { setUser } from "../redux/users";
+import { setUser } from "../redux/user";
 import '../assets/styles/components/Header.scss'
 
 function Header() {

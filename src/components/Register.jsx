@@ -4,7 +4,7 @@ import {useHistory } from "react-router-dom";
 import validator from 'validator'
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/users";
+import { setUser } from "../redux/user";
 import '../assets/styles/components/Register.scss'
 
 
