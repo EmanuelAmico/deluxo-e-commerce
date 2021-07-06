@@ -6,6 +6,7 @@ import { setProductsAddedToCart } from "../redux/productsAdded";
 
 export default function ShoppingCart() {
   const productsInCart = useSelector((state) => state.productsAddedToCart);
+  const user = useSelector((state) => state.user)
 
   const dispatch = useDispatch();
 
@@ -17,14 +18,38 @@ export default function ShoppingCart() {
     return totalPrice;
   }
 
-  // function decrease (product) {
-  //   product.quantity -= 1
-  // }
-  // function increment (product) {
-  //   product.quantity += 1
-  // }
+  function decrease (product) {
+    const productsInCartCopy = []
+    productsInCart.forEach(product => {
+      productsInCartCopy.push({...product})
+    });
+    productsInCartCopy.forEach(copyProduct => {
+      if (copyProduct.id == product.id) {
+        if(copyProduct.quantity === 1)
+          handleRemoveCartItem(copyProduct.id)
+        if (copyProduct.quantity > 1) {
+          copyProduct.quantity -= 1
+          dispatch(setProductsAddedToCart(productsInCartCopy))
+        }
+      }
+    })
+  }
+
+  function increase (product) {
+    const productsInCartCopy = []
+    productsInCart.forEach(product => {
+      productsInCartCopy.push({...product})
+    });
+    productsInCartCopy.forEach(copyProduct => {
+      if (copyProduct.id == product.id) {
+        copyProduct.quantity += 1
+      }
+    })
+    dispatch(setProductsAddedToCart(productsInCartCopy))
+  }
 
   const handleRemoveCartItem = (id) => {
+    console.log("ESTOY ENTRANDOOOOO")
     const products = productsInCart.filter((product) => product.id !== id);
     dispatch(setProductsAddedToCart(products));
   };
@@ -54,14 +79,14 @@ export default function ShoppingCart() {
                 <td>{product.price}</td>
                 <td>
                   <button
-                    /* onClick={() => decrease(product)} */
+                    onClick={() => decrease(product)}
                     className="btn btn-primary btn-lg"
                   >
                     -
                   </button>
-                  {/* {product.quantity} */}
+                  {product.quantity}
                   <button
-                    // onClick={() => increase(product)}
+                    onClick={() => increase(product)}
                     className="btn btn-primary btn-lg"
                     size="sm"
                   >
@@ -84,7 +109,7 @@ export default function ShoppingCart() {
       </div>
       <div className="row">
         {productsInCart.length ? (
-          <Link className="btn btn-danger btn-lg" to={"/checkout"}>
+          <Link className="btn btn-danger btn-lg" to={user.isLoggedIn ? "/checkout" : "/login"}>
             Checkout
           </Link>
         ) : null}
