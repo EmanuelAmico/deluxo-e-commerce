@@ -1,8 +1,9 @@
 .singleCardContainer{
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
+    
+    align-items: center;
+    justify-content: center;
     
 }
 .cardImg {
@@ -12,7 +13,7 @@
     display: flex;
     flex-flow: column wrap;
     text-align: center;
-    align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
