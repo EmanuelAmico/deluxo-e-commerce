@@ -23,7 +23,7 @@ app.use((error, req, res, next) =>{
 
 const deployServer = async () => {
   try {
-    await db.sync({ force: false });
+    await db.sync({ force: true });
     const port = 3001;
     app.listen(port, () => {
       console.log(`Server running on http://localhost/${port}`);
