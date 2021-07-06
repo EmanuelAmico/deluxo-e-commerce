@@ -2,10 +2,10 @@ const { Users } = require("../models");
 
 const editUser = async (req, res, next) => {
   try {
-    console.log("BODYYYYY", req.body);
     const user = await Users.update(req.body, {
       where: { id: req.params.id },
       returning: true,
+      hooks:false,
     }); 
     const updated = user[0] //Es un 0 sí no se encontró
     if(!updated)
