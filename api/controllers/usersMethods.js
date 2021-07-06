@@ -38,12 +38,12 @@ const getUser = async (req, res, next) => {
   }
 };
 
-const deleteAdmin = async (req, res, next) => {
+const deleteUser = async (req, res, next) => {
   try {
   const destroyedUser = await Users.destroy({
     where:{id : req.params.id}
   })   
-  destroyedProduct ? res.sendStatus(204) : res.sendStatus(404)
+  destroyedUser ? res.sendStatus(204) : res.sendStatus(404)
   } catch (error) {
     next(error)
   }
@@ -53,5 +53,5 @@ module.exports = {
   editUser,
   getUser,
   getAllUsers,
-  deleteAdmin
+  deleteUser
 };

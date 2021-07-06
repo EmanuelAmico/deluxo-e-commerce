@@ -3,7 +3,7 @@ const router = express.Router();
 const checkLogIn = require("../middlewares/auth");
 
 
-const { editUser, getUser, getAllUsers, deleteAdmin } = require("../controllers");
+const { editUser, getUser, getAllUsers, deleteUser } = require("../controllers");
 
 //---------------------- GET -------------------------//
 router.get("/me", checkLogIn, getUser);
@@ -13,6 +13,6 @@ router.get("/", getAllUsers)
 router.put("/:id", editUser);
 
 //---------------------- DELET -------------------------//
-router.delete("/:id", deleteAdmin );
+router.delete("/:id", deleteUser );
 
 module.exports = router
