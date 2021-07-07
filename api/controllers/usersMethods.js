@@ -5,9 +5,12 @@ const editUser = async (req, res, next) => {
     const user = await Users.update(req.body, {
       where: { id: req.params.id },
       returning: true,
-      plain: true,
-    });
-    res.status(200).send(user);
+      hooks:false,
+    }); 
+    const updated = user[0] //Es un 0 sí no se encontró
+    if(!updated)
+      res.status(404).send("User not found")
+    res.status(200).send(user)
   } catch (err) {
     next(err);
   }
@@ -35,8 +38,20 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res, next) => {
+  try {
+  const destroyedUser = await Users.destroy({
+    where:{id : req.params.id}
+  })   
+  destroyedUser ? res.sendStatus(204) : res.sendStatus(404)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   editUser,
   getUser,
-  getAllUsers
+  getAllUsers,
+  deleteUser
 };

@@ -13,14 +13,14 @@ function Card({ product }) {
 
   return (
     <div
-      id="carouselExampleIndicators"
+      id={`product-${product.id}`}
       className="carousel slide"
       data-bs-ride="carousel"
     >
       <div className="carousel-indicators">
         <button
           type="button"
-          data-bs-target="#carouselExampleIndicators"
+          data-bs-target={`#product-${product.id}`}
           data-bs-slide-to="0"
           className="active"
           aria-current="true"
@@ -28,13 +28,13 @@ function Card({ product }) {
         ></button>
         <button
           type="button"
-          data-bs-target="#carouselExampleIndicators"
+          data-bs-target={`#product-${product.id}`}
           data-bs-slide-to="1"
           aria-label="Slide 2"
         ></button>
         <button
           type="button"
-          data-bs-target="#carouselExampleIndicators"
+          data-bs-target={`#product-${product.id}`}
           data-bs-slide-to="2"
           aria-label="Slide 3"
         ></button>
@@ -62,7 +62,7 @@ function Card({ product }) {
       <button
         className="carousel-control-prev"
         type="button"
-        data-bs-target="#carouselExampleIndicators"
+        data-bs-target={`#product-${product.id}`}
         data-bs-slide="prev"
       >
         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -71,7 +71,7 @@ function Card({ product }) {
       <button
         className="carousel-control-next"
         type="button"
-        data-bs-target="#carouselExampleIndicators"
+        data-bs-target={`#product-${product.id}`}
         data-bs-slide="next"
       >
         <span className="carousel-control-next-icon" aria-hidden="true"></span>

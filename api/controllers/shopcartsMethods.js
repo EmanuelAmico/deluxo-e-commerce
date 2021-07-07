@@ -1,9 +1,13 @@
 const { Op } = require("sequelize");
-const { Shopcarts, Products } = require("../models");
+const { Shopcarts, Products, ShopcartItems } = require("../models");
 
 const getShopcarts = async (req, res, next) => {
   try {
-    const shopcarts = await Shopcarts.findAll();
+    const shopcarts = await Shopcarts.findAll({
+      include: {
+        model: Products
+      }
+    });
     res.status(200).send(shopcarts);
   } catch (error) {
     next(error)
@@ -25,7 +29,6 @@ const postShopcart = async (req, res, next) => {
 
     const prices = products.map(product => product.price);
     const total_price = prices.map((price, i) => price * productsQuantities[i]).reduce((accumulator, price) => accumulator + price)
-
     const emptyShopcart = await Shopcarts.create({ total_price })
     const shopcart = await emptyShopcart.addProducts(products)
     shopcart.forEach(async (shopcartItem, i) => {
@@ -49,12 +52,17 @@ const postShopcart = async (req, res, next) => {
 
 const putShopCartProduct = async (req, res, next) => {
   try {
-    const { shopcartId, productId } = req.body
+    const { shopcartId, productId } = req.params
+    const { quantity } = req.body
+    const product = await Products.findByPk(productId)
     const shopCart = await Shopcarts.findByPk(shopcartId)
-    const product = await shopCart.hasProduct({
-      where: {id: productId}
+    const shopcart_item = await ShopcartItems.findOne({
+      where: { productId }
     })
-    res.status(200).send(shopcarts);
+    console.log(shopcart_item)
+    shopcart_item.quantity = quantity
+    await shopcart_item.save()
+    res.status(200).send(shopcart_item);
   } catch (error) {
     next(error)
   }
