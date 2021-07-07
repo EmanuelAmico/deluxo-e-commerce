@@ -29,8 +29,8 @@ const Checkout = () => {
       })
       localStorage.removeItem('shopcartId')
       dispatch(setOrder({}))
-      alert("Order Completada")
-      /* history.push('/') */
+      alert("Order Completed")
+      history.push('/')
     } catch (error) {
       console.log(error)
     }

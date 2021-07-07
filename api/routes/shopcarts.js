@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const { getShopcarts, postShopcart, deleteShopcartProduct, putShopCartProduct, deleteShopCart, getShopcart } = require ("../controllers")
+const { getShopcarts, postShopcart, deleteShopcartProduct, putShopCartProduct, deleteShopCart, getShopcart, putShopcart } = require ("../controllers")
 
 //---------------------- GET ---------------------------//
 router.get('/', getShopcarts)
@@ -12,6 +12,7 @@ router.post('/', postShopcart)
 //---------------------- PUT ---------------------------//
 /* http://localhost:3001/shopcarts/1/products/2 */
 router.put('/:shopcartId/products/:productId', putShopCartProduct )
+router.put('/:shopCartId', putShopcart)
 
 //-------------------- DELETE ---------------------------//
 router.delete('/:shopcartId/products/:productId', deleteShopcartProduct )

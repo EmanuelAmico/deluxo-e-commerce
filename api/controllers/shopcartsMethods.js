@@ -20,6 +20,8 @@ const getShopcart = async (req, res, next) => {
     const shopCart = await Shopcarts.findOne({
       where: { id },
     });
+    if(!shopCart)
+      return res.status(400).send("Shopcart not found")
     const products = await shopCart.getProducts()
     res.status(200).send(products);
   } catch (error) {
@@ -101,6 +103,60 @@ const putShopCartProduct = async (req, res, next) => {
   }
 };
 
+const putShopcart = async (req, res, next) => {
+  try {
+    const { shopCartId } = req.params
+    const modifications = req.body
+    const shopcart = await Shopcarts.findByPk(shopCartId)
+    if(!shopcart)
+      return res.status(400).send("Shopcart not found!")
+    const shopcartItems = await ShopcartItems.findAll({ where: { shopCartId } })
+    shopcartItems.forEach(async (shopcartItem, i) => {
+      try {
+        shopcartItem.quantity = modifications[i].quantity
+        if(modifications[i].quantity === 0) {
+          const product = await Products.findByPk(shopcartItem.productId)
+          await shopcart.removeProduct(product)
+        }
+        await shopcartItem.save()
+      } catch (error) {
+        next(error)
+      }
+    });
+    res.status(200).send(shopcartItems)
+  } catch (error) {
+    next(error)
+  }
+}
+
+/* const putShopcart = async (req, res, next) => {
+  try {
+    const { shopcartId } = req.params
+    const modifications = req.body
+    const shopcart = await Shopcarts.findByPk(shopcartId)
+    if(!shopcart)
+      return res.status(400).send("Shopcart not found!")
+    const products = await shopcart.getProducts()
+    products.forEach(async (product, i) => {
+      try {
+        const { quantity } = modifications[i]
+        product.quantity = quantity
+        if(quantity === 0) {
+          await shopcart.removeProduct(product)
+        }
+      } catch (error) {
+        next(error)
+      }
+    });
+    console.log(products)
+    const modifiedProducts = await shopcart.setProducts(products)
+    res.status(200).send(modifiedProducts)
+  } catch (error) {
+    next(error)
+  }
+} */
+
+
 const deleteShopcartProduct = async (req, res, next) => {
   try {
     const { shopcartId, productId } = req.params
@@ -136,8 +192,9 @@ const deleteShopCart = async (req, res, next) => {
 module.exports = {
   getShopcarts,
   getShopcart,
-  postShopcart,
   putShopCartProduct,
+  putShopcart,
+  postShopcart,
   deleteShopcartProduct,
   deleteShopCart,
 };

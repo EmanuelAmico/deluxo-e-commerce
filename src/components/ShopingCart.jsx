@@ -13,17 +13,15 @@ export default function ShoppingCart() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!productsInCart.length)
+    if(localStorage.getItem('shopcartId'))
       dispatch(productsAddedToCartFromDb(localStorage.getItem('shopcartId')))
   }, [])
 
   const total = function total() {
     let totalPrice = 0;
-    console.log("estoy adentro de laa funcion total()", productsInCart)
     productsInCart.map((product) => {
       totalPrice += product.price * product.quantity;
     });
-    console.log(totalPrice)
     return totalPrice;
   }
 
@@ -66,16 +64,21 @@ export default function ShoppingCart() {
     try {
       if(!user.isLoggedIn)
         history.push("/login")
+      if(localStorage.getItem('shopcartId')) {
+        await axios.put('/api/shopcarts', productsInCart)
+        dispatch(setOrder({state: 'toPay', payment_method: "Cash", total_price: total(), products: productsInCart}))
+        return history.push("/checkout")
+      }
       /* Genera Carrito nuevo */
       const res = await axios.post('/api/shopcarts', productsInCart)
-      const shopcart = res.datatotal
+      const shopcart = res.data
       const shopcartId = shopcart[0].shopCartId
       localStorage.setItem('shopcartId', shopcartId)
       dispatch(setProductsAddedToCart([]))
       dispatch(setOrder({state: 'toPay', payment_method: "Cash", total_price: total(), products: productsInCart}))
       history.push("/checkout")
     } catch (error) {
-      console.log(error)
+      console.log({error})
     }
   }
 
