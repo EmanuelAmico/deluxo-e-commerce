@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const { getShopcarts, postShopcart, deleteShopcartProduct, putShopCartProduct } = require ("../controllers")
+const { getShopcarts, postShopcart, deleteShopcartProduct, putShopCartProduct, deleteShopCart } = require ("../controllers")
 
 //---------------------- GET ---------------------------//
 router.get('/', getShopcarts)
@@ -14,5 +14,6 @@ router.put('/:shopcartId/products/:productId', putShopCartProduct )
 
 //-------------------- DELETE ---------------------------//
 router.delete('/:shopcartId/products/:productId', deleteShopcartProduct )
+router.delete('/:shopcartId', deleteShopCart)
 
 module.exports = router

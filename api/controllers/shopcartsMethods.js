@@ -54,12 +54,12 @@ const putShopCartProduct = async (req, res, next) => {
   try {
     const { shopcartId, productId } = req.params
     const { quantity } = req.body
-    if( quantity < 0 )
-      return res.status(400).send("Quantity cannot be negative")
-    const product = await Products.findByPk(productId)
+    if( quantity <= 0 )
+      return res.status(400).send("Quantity cannot be zero or negative")
+      const product = await Products.findByPk(productId)
       if(!product)
         return res.status(400).send("Product not found")
-    const shopCart = await Shopcarts.findByPk(shopcartId)
+      const shopCart = await Shopcarts.findByPk(shopcartId)
       if(!shopCart)
         return res.status(400).send("Shopcart not found")
     const shopcart_item = await ShopcartItems.findOne({
@@ -67,7 +67,8 @@ const putShopCartProduct = async (req, res, next) => {
     })
     if(quantity === shopcart_item.quantity)
       return res.status(304).send("Quantity was not modified")
-/*     console.log("SHOP CART ITEM.QUANTITY", shopcart_item.quantity)
+/*     
+    console.log("SHOP CART ITEM.QUANTITY", shopcart_item.quantity)
     console.log("QUANTITY", quantity)
     console.log("PARAMS", req.params)
     console.log("TOTAL PRICE", shopCart.total_price)
@@ -87,19 +88,33 @@ const putShopCartProduct = async (req, res, next) => {
   }
 };
 
-
 const deleteShopcartProduct = async (req, res, next) => {
   try {
-    const { shopcartId, productId } = req.body
+    const { shopcartId, productId } = req.params
     //sin user
-    const shopcart = await Shopcarts.findByPk(shopcartId)
-    const product = await shopcart.getProducts({
-      where: {
-        id: productId,
-      }
-    })
-    await product.destroy()
-    res.sendStatus(200)
+    const shopCart = await Shopcarts.findByPk(shopcartId)
+    if(!shopCart)
+      return res.status(400).send("Shopcart not found")
+    const product = await shopCart.getProducts({ where: { id: productId } })
+    console.log("product ->", product)
+    if(!product.length)
+      return res.status(400).send("Product not found")
+    await shopCart.removeProduct(product)
+    res.sendStatus(204)
+  } catch (error) {
+    next(error)
+  }
+}
+
+const deleteShopCart = async (req, res, next) => {
+  try {
+    const {shopcartId} = req.params
+    const shopCart = await Shopcarts.findByPk(shopcartId)
+    if (!shopCart) {
+      return res.status(400).send("ShopCart not found")
+    }
+    await shopCart.destroy()
+    res.sendStatus(204)
   } catch (error) {
     next(error)
   }
@@ -110,4 +125,5 @@ module.exports = {
   postShopcart,
   putShopCartProduct,
   deleteShopcartProduct,
+  deleteShopCart,
 };
