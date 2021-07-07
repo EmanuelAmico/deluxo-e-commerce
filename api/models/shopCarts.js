@@ -5,7 +5,7 @@ class Shopcarts extends S.Model {}
 
 Shopcarts.init({
   total_price: {
-    type: S.INTEGER,
+    type: S.FLOAT,
     allowNull: false,
     validate: {
       min: 1
