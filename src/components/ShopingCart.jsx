@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { setProductsAddedToCart } from "../redux/productsAdded";
+import { Link, useHistory } from "react-router-dom";
+import { productsAddedToCartFromDb, setProductsAddedToCart } from "../redux/productsAdded";
+import { setOrder } from "../redux/order";
+import axios from 'axios'
 
 export default function ShoppingCart() {
   const productsInCart = useSelector((state) => state.productsAddedToCart);
   const user = useSelector((state) => state.user)
-
+  const history = useHistory()
   const dispatch = useDispatch();
 
-  function total() {
+  useEffect(() => {
+    if(!productsInCart.length)
+      dispatch(productsAddedToCartFromDb(localStorage.getItem('shopcartId')))
+  }, [])
+
+  const total = function total() {
     let totalPrice = 0;
+    console.log("estoy adentro de laa funcion total()", productsInCart)
     productsInCart.map((product) => {
       totalPrice += product.price * product.quantity;
     });
+    console.log(totalPrice)
     return totalPrice;
   }
 
@@ -49,10 +58,26 @@ export default function ShoppingCart() {
   }
 
   const handleRemoveCartItem = (id) => {
-    console.log("ESTOY ENTRANDOOOOO")
     const products = productsInCart.filter((product) => product.id !== id);
     dispatch(setProductsAddedToCart(products));
   };
+
+  const handleOnClickCheckOut = async () => {
+    try {
+      if(!user.isLoggedIn)
+        history.push("/login")
+      /* Genera Carrito nuevo */
+      const res = await axios.post('/api/shopcarts', productsInCart)
+      const shopcart = res.datatotal
+      const shopcartId = shopcart[0].shopCartId
+      localStorage.setItem('shopcartId', shopcartId)
+      dispatch(setProductsAddedToCart([]))
+      dispatch(setOrder({state: 'toPay', payment_method: "Cash", total_price: total(), products: productsInCart}))
+      history.push("/checkout")
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="container mt-2 text-primary">
@@ -109,9 +134,7 @@ export default function ShoppingCart() {
       </div>
       <div className="row">
         {productsInCart.length ? (
-          <Link className="btn btn-danger btn-lg" to={user.isLoggedIn ? "/checkout" : "/login"}>
-            Checkout
-          </Link>
+          <button className="btn btn-danger btn-lg" onClick={handleOnClickCheckOut}>Checkout</button>
         ) : null}
       </div>
       <div className="row">

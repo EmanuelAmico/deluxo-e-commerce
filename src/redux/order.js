@@ -1,10 +1,10 @@
 import { createReducer, createAction} from "@reduxjs/toolkit";
 
 const initialState = {
-  state: null,
-  payment_method: null,
-  total_price: null,
-  products: [],
+  // state: null,
+  // payment_method: null,
+  // total_price: null,
+  // products: [],
 }
 
 export const setOrder = createAction('SET_ORDER')

@@ -1,9 +1,16 @@
-const { Orders, Users, Shopcarts } = require("../models")
+const { Orders, Users, Shopcarts, Products } = require("../models")
 
 
 const getOrders = async (req, res, next) => {
   try {
-    const orders = await Orders.findAll()
+    const orders = await Orders.findAll({
+      include: {
+        model: Shopcarts,
+        include: {
+          model: Products,
+        }
+      }
+    })
     res.status(200).send(orders)
   } catch (error) {
     next(error)

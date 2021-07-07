@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const { getShopcarts, postShopcart, deleteShopcartProduct, putShopCartProduct, deleteShopCart } = require ("../controllers")
+const { getShopcarts, postShopcart, deleteShopcartProduct, putShopCartProduct, deleteShopCart, getShopcart } = require ("../controllers")
 
 //---------------------- GET ---------------------------//
 router.get('/', getShopcarts)
+router.get('/:id', getShopcart)
 
 //---------------------- POST ---------------------------//
 router.post('/', postShopcart)

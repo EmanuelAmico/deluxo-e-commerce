@@ -14,6 +14,19 @@ const getShopcarts = async (req, res, next) => {
   }
 };
 
+const getShopcart = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const shopCart = await Shopcarts.findOne({
+      where: { id },
+    });
+    const products = await shopCart.getProducts()
+    res.status(200).send(products);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const postShopcart = async (req, res, next) => {
   try {
     const productsInfoArray = req.body;
@@ -122,6 +135,7 @@ const deleteShopCart = async (req, res, next) => {
 
 module.exports = {
   getShopcarts,
+  getShopcart,
   postShopcart,
   putShopCartProduct,
   deleteShopcartProduct,

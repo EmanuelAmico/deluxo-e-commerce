@@ -1,18 +1,39 @@
 import { product } from "prelude-ls";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import logo from "../assets/static/img/deluxo-48.png"
 import { Link } from "react-router-dom"
+import axios from "axios";
+import { setOrder } from "../redux/order";
 
 const Checkout = () => {
 
+  let dispatch = useDispatch()
+
   const order = useSelector(state => state.order)
+  const user = useSelector(state => state.user)
 
   const history = useHistory()
 
-  const handlePay = (paymentMethod) => {
-    history.push('/')
+  const handlePay = async () => {
+    try {
+      axios.post("/api/orders", {
+        payment_method: order.payment_method,
+        shopcartId: localStorage.getItem('shopcartId')
+      }, 
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
+      localStorage.removeItem('shopcartId')
+      dispatch(setOrder({}))
+      alert("Order Completada")
+      /* history.push('/') */
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -35,12 +56,12 @@ const Checkout = () => {
                 <th scope="row">
                   {order.products.length}
                 </th>
-                <td>{order.total_price}</td>
+                <td>{`$ ${order.total_price}`}</td>
                 <td>{order.payment_method}</td>
                 <td>{order.state}</td>
                 <td>
                   <button
-                    onClick={() => handlePay(paymentMethod)}
+                    onClick={handlePay}
                     className="btn btn-danger btn-lg"
                   >
                     Pay
@@ -51,12 +72,12 @@ const Checkout = () => {
         </table>
       </div>
       <div className="row">
-        <Link
+        <button
             className="btn btn-danger btn-lg"
-            to={"/"}
+            onClick={handlePay}
           >
             Pay
-          </Link>
+          </button>
       </div>
       <div className="row">
         <div className="col text-center">
