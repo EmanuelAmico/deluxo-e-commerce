@@ -150,6 +150,7 @@ const postProduct = async (req, res, next) => {
 
 
 const putProduct = async (req, res, next) => {
+  console.log(req.body)
   try {
     const product = await Products.update(req.body,{
       where: { id: req.params.id },
