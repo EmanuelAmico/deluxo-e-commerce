@@ -30,16 +30,25 @@ const Products = () => {
                     <tr key={product.id}>
                       <th scope="row">{index + 1}</th>
     
-                      <td>{"product.image"}</td>
+                      <td>{'product.image'}</td>
+                      <td>{product.name}</td>    
                       <td>{product.price}</td>    
-                      {/* <td>
+                      <td>
+                        <button
+                          className="btn btn-primary btn-lg"
+                          onClick={() => handleClick(index, user)}
+                        >
+                          Edit
+                        </button>
+                      </td>
+                      <td>
                         <button
                           className="btn btn-danger btn-lg"
                           onClick={() => handleClick(index, user)}
                         >
-                          {`${user.is_admin ? " Set User" : "Set Admin"} `}
+                          Delete
                         </button>
-                      </td> */}
+                      </td>
                     </tr>
                 )}
           </tbody>
