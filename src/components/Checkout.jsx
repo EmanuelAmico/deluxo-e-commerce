@@ -60,7 +60,7 @@ const Checkout = () => {
               <th scope="col">Total price</th>
               <th scope="col">Payment Method</th>
               <th scope="col">State</th>
-              <th scope="col">Pay</th>
+              <th scope="col">Payment</th>
             </tr>
           </thead>
           <tbody>
@@ -95,7 +95,7 @@ const Checkout = () => {
             className="btn btn-danger btn-lg"
             onClick={handlePay}
           >
-            Payment
+            Pay
           </button>
       </div>
       <div className="row">
