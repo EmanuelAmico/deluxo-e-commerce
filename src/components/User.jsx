@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function User() {
   const user = useSelector((state) => state.user);
+
   return (
     <div className="container text-dark">
       <div className="row">
