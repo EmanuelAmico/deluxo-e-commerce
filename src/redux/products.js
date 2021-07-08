@@ -26,6 +26,20 @@ export const selectProduct = createAsyncThunk('SELECT_PRODUCT', (param, thunkAPI
     .then(res => res.data)
 })
 
+export const selectProductsByCategory = createAsyncThunk('SELECT_PRODUCTS_BY_CATEGORY', (category)=>{
+    return axios.get(`/api/products/filter?category=${category}`)
+    .then(res => res.data)
+    .then(filteredProducts => {
+        const products = {
+            products: [],
+            selectedProduct: {}
+        }
+        products.products.push(...filteredProducts)
+        return products
+    })
+})
+
+
 export const showProduct = createAsyncThunk('SHOW_PRODUCT', () => {
     return axios.get('/api/products')
     .then(res => res.data)
@@ -34,6 +48,7 @@ export const showProduct = createAsyncThunk('SHOW_PRODUCT', () => {
 const productReducer = createReducer(initialState, {
     [showProduct.fulfilled] : (state, action) => {state.products = action.payload},
     [selectProduct.fulfilled] : (state, action) => {state.productSelected = action.payload},
+    [selectProductsByCategory.fulfilled]: (state, action) => action.payload
 })
 
 export default productReducer;

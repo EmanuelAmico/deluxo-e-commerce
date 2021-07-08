@@ -113,6 +113,45 @@ const putShopcart = async (req, res, next) => {
     const shopcartItems = await ShopcartItems.findAll({ where: { shopCartId } })
     shopcartItems.forEach(async (shopcartItem, i) => {
       try {
+        const product = await Products.findByPk(shopcartItem.productId)
+        console.log("shopcartItem.quantity ->", shopcartItem.quantity)
+        console.log('modifications[i].quantity ->', modifications[i].quantity)
+        console.log({antes: shopcart.total_price})
+        const total_price = shopcartItem.quantity > modifications[i].quantity
+                              ? shopcart.total_price - product.price * (shopcartItem.quantity - modifications[i].quantity)
+                              : shopcart.total_price + product.price * (modifications[i].quantity - shopcartItem.quantity)
+        if(modifications[i].quantity === 0) {
+          await shopcart.removeProduct(product)
+        } else {
+          shopcartItem.quantity = modifications[i].quantity
+        }
+        shopcart.total_price = total_price
+        await shopcart.save()
+        console.log({despues: shopcart.total_price})
+        await shopcartItem.save()
+      } catch (error) {
+        next(error)
+      }
+    });
+    res.status(200).send(shopcartItems)
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+
+
+/* const putShopcart = async (req, res, next) => {
+  try {
+    const { shopCartId } = req.params
+    const modifications = req.body
+    const shopcart = await Shopcarts.findByPk(shopCartId)
+    if(!shopcart)
+      return res.status(400).send("Shopcart not found!")
+    const shopcartItems = await ShopcartItems.findAll({ where: { shopCartId } })
+    shopcartItems.forEach(async (shopcartItem, i) => {
+      try {
         shopcartItem.quantity = modifications[i].quantity
         if(modifications[i].quantity === 0) {
           const product = await Products.findByPk(shopcartItem.productId)
@@ -127,34 +166,8 @@ const putShopcart = async (req, res, next) => {
   } catch (error) {
     next(error)
   }
-}
-
-/* const putShopcart = async (req, res, next) => {
-  try {
-    const { shopcartId } = req.params
-    const modifications = req.body
-    const shopcart = await Shopcarts.findByPk(shopcartId)
-    if(!shopcart)
-      return res.status(400).send("Shopcart not found!")
-    const products = await shopcart.getProducts()
-    products.forEach(async (product, i) => {
-      try {
-        const { quantity } = modifications[i]
-        product.quantity = quantity
-        if(quantity === 0) {
-          await shopcart.removeProduct(product)
-        }
-      } catch (error) {
-        next(error)
-      }
-    });
-    console.log(products)
-    const modifiedProducts = await shopcart.setProducts(products)
-    res.status(200).send(modifiedProducts)
-  } catch (error) {
-    next(error)
-  }
 } */
+
 
 
 const deleteShopcartProduct = async (req, res, next) => {
