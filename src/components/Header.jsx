@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { setUser } from "../redux/user";
 import "../assets/styles/components/Header.scss";
 
+
+
 function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -49,7 +51,7 @@ function Header() {
       <div className="links">
         {user.isLoggedIn ? (
           <button onClick={handleLogOut}> Logout </button>
-        ) : (
+          ) : (
           <>
             <Link to="/login"> Login </Link>
             <Link to="/register">Register</Link>

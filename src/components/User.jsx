@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 export default function User() {
   const user = useSelector((state) => state.user);
-  console.log(user);
   return (
     <div className="container text-dark">
       <div className="row">
@@ -26,13 +25,13 @@ export default function User() {
         </div>
       </div>
       <div>
-        {!user.isAdmin ? (
-          <Link className="btn btn-primary" to={"/"}>
-            User
+        {user.is_admin ? (
+          <Link className="btn btn-primary" to={"/userslist"}>
+            Users
           </Link>
         ) : null}
-        {!user.isAdmin ? (
-          <Link className="btn btn-primary" to={"/"}>
+        {user.is_admin ? (
+          <Link className="btn btn-primary" to={"/productslist"}>
             Product
           </Link>
         ) : null}

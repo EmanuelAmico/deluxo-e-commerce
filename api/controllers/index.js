@@ -4,6 +4,7 @@ const usersMethods = require("./usersMethods")
 const loginMethods = require("./loginMethods")
 const shopcartsMethods = require("./shopcartsMethods")
 const categoriesMethods = require("./categoriesMethods")
+const orderMethods = require("./ordersMethods")
 
 module.exports =  {
     ...productsMethods,
@@ -12,4 +13,5 @@ module.exports =  {
     ...loginMethods,
     ...shopcartsMethods,
     ...categoriesMethods,
+    ...orderMethods
 }

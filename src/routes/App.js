@@ -12,6 +12,9 @@ import Card from "../components/Card";
 import ShoppingCart from "../components/ShopingCart"
 import Checkout from "../components/Checkout"
 import User from "../components/User"
+import Users from "../components/Users";
+import Products from "../components/Products"
+
 
 
 
@@ -27,6 +30,8 @@ const App = () => {
           <Route exact path="/cart" component={ShoppingCart} />
           <Route exact path="/checkout" component={Checkout} />
           <Route exact path="/user" component={User} />
+          <Route exact path="/userslist" component={Users} />
+          <Route exact path="/productslist" component={Products} />
           <Redirect to={"/products"} />
         </Switch>
       </Layout>
