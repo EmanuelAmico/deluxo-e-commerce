@@ -32,7 +32,7 @@ export const selectProductsByCategory = createAsyncThunk('SELECT_PRODUCTS_BY_CAT
     .then(filteredProducts => {
         const products = {
             products: [],
-            selectedProduct: {}
+            productSelected: {}
         }
         products.products.push(...filteredProducts)
         return products
