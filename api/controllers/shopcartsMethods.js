@@ -114,9 +114,9 @@ const putShopcart = async (req, res, next) => {
     shopcartItems.forEach(async (shopcartItem, i) => {
       try {
         const product = await Products.findByPk(shopcartItem.productId)
-        console.log("shopcartItem.quantity ->", shopcartItem.quantity)
+        /* console.log("shopcartItem.quantity ->", shopcartItem.quantity)
         console.log('modifications[i].quantity ->', modifications[i].quantity)
-        console.log({antes: shopcart.total_price})
+        console.log({antes: shopcart.total_price}) */
         const total_price = shopcartItem.quantity > modifications[i].quantity
                               ? shopcart.total_price - product.price * (shopcartItem.quantity - modifications[i].quantity)
                               : shopcart.total_price + product.price * (modifications[i].quantity - shopcartItem.quantity)
@@ -127,7 +127,7 @@ const putShopcart = async (req, res, next) => {
         }
         shopcart.total_price = total_price
         await shopcart.save()
-        console.log({despues: shopcart.total_price})
+        /* console.log({despues: shopcart.total_price}) */
         await shopcartItem.save()
       } catch (error) {
         next(error)
@@ -178,7 +178,7 @@ const deleteShopcartProduct = async (req, res, next) => {
     if(!shopCart)
       return res.status(400).send("Shopcart not found")
     const product = await shopCart.getProducts({ where: { id: productId } })
-    console.log("product ->", product)
+    // console.log("product ->", product)
     if(!product.length)
       return res.status(400).send("Product not found")
     await shopCart.removeProduct(product)

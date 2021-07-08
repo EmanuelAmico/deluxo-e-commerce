@@ -55,9 +55,15 @@ export default function ShoppingCart() {
     dispatch(setProductsAddedToCart(productsInCartCopy))
   }
 
-  const handleRemoveCartItem = (id) => {
-    const products = productsInCart.filter((product) => product.id !== id);
-    dispatch(setProductsAddedToCart(products));
+  const handleRemoveCartItem = async (id) => {
+    try {
+      const products = productsInCart.filter((product) => product.id !== id);
+      if(productsInCart[0].shop_cart_items)
+        await axios.delete(`/api/shopcarts/${localStorage.getItem('shopcartId')}/products/${id}`)
+      dispatch(setProductsAddedToCart(products));
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const handleOnClickCheckOut = async () => {
