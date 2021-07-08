@@ -1,48 +1,52 @@
-import React from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import {  } from "../redux/products";
-
+import React, { useEffect }  from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { showProduct } from "../redux/products";
 
 const Products = () => {
-    return (
-        <div className="container mt-2 text-primary">
-          <div className="row mt-3">
-            <table className="table  text-center text-light bg-dark">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Username</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Permisos</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user, index) =>
-                  userLogin.user_name !== user.user_name ? (
-                    <tr key={user.id}>
+  const { products } = useSelector((state) => state.products);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(showProduct());
+  }, []);
+
+  return (
+    <div className="container mt-2 text-primary">
+      <div className="row mt-3">
+        <table className="table  text-center text-light bg-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Product</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product, index) =>
+                    <tr key={product.id}>
                       <th scope="row">{index + 1}</th>
     
-                      <td>{user.user_name}</td>
-                      <td>{user.email}</td>
-                      <td>{`${user.is_admin ? "Admin" : "User"} `}</td>
-    
-                      <td>
+                      <td>{"product.image"}</td>
+                      <td>{product.price}</td>    
+                      {/* <td>
                         <button
                           className="btn btn-danger btn-lg"
                           onClick={() => handleClick(index, user)}
                         >
                           {`${user.is_admin ? " Set User" : "Set Admin"} `}
                         </button>
-                      </td>
+                      </td> */}
                     </tr>
-                  ) : null
                 )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      );
-}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
 
-
-export default Products
+export default Products;
