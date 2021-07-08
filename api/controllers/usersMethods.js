@@ -1,4 +1,4 @@
-const { Users } = require("../models");
+const { Users, Shopcarts, Products } = require("../models");
 
 const editUser = async (req, res, next) => {
   try {
@@ -31,7 +31,14 @@ const getUserOrders = async (req, res, next) => {
     const user = await Users.findByPk(userId)
     if(!user)
       return res.status(404).send("User not found!")
-    const orders = await user.getOrders()
+    const orders = await user.getOrders({
+      include: {
+        model: Shopcarts,
+        include: {
+          model: Products,
+        }
+      }
+    })
     if(!orders.length)
       return res.status(400).send("There are not orders for this user!.")
     res.status(200).send(orders)
