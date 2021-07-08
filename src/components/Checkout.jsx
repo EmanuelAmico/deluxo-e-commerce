@@ -9,7 +9,7 @@ import { setOrder } from "../redux/order";
 
 const Checkout = () => {
 
-  let dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   const order = useSelector(state => state.order)
   const user = useSelector(state => state.user)
@@ -18,9 +18,8 @@ const Checkout = () => {
 
   const handlePay = async () => {
     try {
-      axios.post("/api/orders", {
-        payment_method: order.payment_method,
-        shopcartId: localStorage.getItem('shopcartId')
+      axios.put(`/api/orders/${localStorage.getItem('orderId')}`, {
+        state: 'fulfilled'
       }, 
       {
         headers: {
@@ -28,9 +27,23 @@ const Checkout = () => {
         }
       })
       localStorage.removeItem('shopcartId')
-      dispatch(setOrder({}))
+      localStorage.removeItem('orderId')
       alert("Order Completed")
-      history.push('/')
+      history.push('/products')
+      dispatch(setOrder({}))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleCancel = async () => {
+    try {
+      await axios.delete(`/api/orders/${localStorage.getItem('orderId')}`)
+      localStorage.removeItem('orderId')
+      localStorage.removeItem('shopcartId')
+      alert("Order was cancelled.")
+      history.push('/products')
+      dispatch(setOrder({}))
     } catch (error) {
       console.log(error)
     }
@@ -62,9 +75,15 @@ const Checkout = () => {
                 <td>
                   <button
                     onClick={handlePay}
-                    className="btn btn-danger btn-lg"
+                    className="btn btn-danger btn-lg me-2"
                   >
                     Pay
+                  </button>
+                  <button
+                    onClick={handleCancel}
+                    className="btn btn-danger btn-lg"
+                  >
+                    Cancel Order
                   </button>
                 </td>
               </tr>
@@ -76,7 +95,7 @@ const Checkout = () => {
             className="btn btn-danger btn-lg"
             onClick={handlePay}
           >
-            Pay
+            Payment
           </button>
       </div>
       <div className="row">

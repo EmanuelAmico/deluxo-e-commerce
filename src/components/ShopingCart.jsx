@@ -13,9 +13,9 @@ export default function ShoppingCart() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(localStorage.getItem('shopcartId') && !productsInCart.length)
-      dispatch(productsAddedToCartFromDb(localStorage.getItem('shopcartId')))
-  }, [])
+    if(!productsInCart.length && user.id)
+      dispatch(productsAddedToCartFromDb(user.id))
+  }, [user])
 
   const total = function total() {
     let totalPrice = 0;
@@ -70,9 +70,9 @@ export default function ShoppingCart() {
     try {
       if(!user.isLoggedIn)
         history.push("/login")
-      if(localStorage.getItem('shopcartId')) {
+      if(localStorage.getItem('orderId')) {
         await axios.put(`/api/shopcarts/${localStorage.getItem('shopcartId')}`, productsInCart)
-        dispatch(setOrder({state: 'toPay', payment_method: "Cash", total_price: total(), products: productsInCart}))
+        dispatch(setOrder({state: 'Payment pending', payment_method: "Cash", total_price: total(), products: productsInCart}))
         return history.push("/checkout")
       }
       /* Genera Carrito nuevo */
@@ -80,8 +80,15 @@ export default function ShoppingCart() {
       const shopcart = res.data
       const shopcartId = shopcart[0].shopCartId
       localStorage.setItem('shopcartId', shopcartId)
+      const response = await axios.post('/api/orders', {payment_method: "Cash", state: 'Payment pending', shopcartId}, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      const order = response.data
+      localStorage.setItem('orderId', order.id)
       dispatch(setProductsAddedToCart([]))
-      dispatch(setOrder({state: 'toPay', payment_method: "Cash", total_price: total(), products: productsInCart}))
+      dispatch(setOrder({state: 'Payment pending', payment_method: "Cash", total_price: total(), products: productsInCart}))
       history.push("/checkout")
     } catch (error) {
       console.log({error})
