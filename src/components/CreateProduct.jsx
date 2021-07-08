@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import axios from "axios"
 
-export default function EditProduct() {
+export default function CreateProduct() {
   const match = useRouteMatch();
   const history = useHistory();
 
@@ -15,19 +15,21 @@ export default function EditProduct() {
     color: "",
     size: "",
     genre: "",
+    thumbnail:"",
+    categories: ""
   });
 
-  const id = match.params.id;
+//   const id = match.params.id;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       form.price = parseFloat(form.price);
       form.stock = parseInt(form.stock);
-      await axios.put(`/api/products/${id}`, form);
-      alert("Product Edited");
+      await axios.post(`/api/products/`, form);
+      alert("Product Created");
     } catch (error) {
-      console.log(error);
+      console.log({error});
     }
   };
 
@@ -106,9 +108,25 @@ export default function EditProduct() {
             name="genre"
             onChange={handleInput}
           />
+          <label>Thumbnail</label>
+          <input
+            type="text"
+            placeholder="Enter image url"
+            className="form-control form-control-lg"
+            name="thumbnail"
+            onChange={handleInput}
+          />
+          <label>Categories</label>
+          <input
+            type="text"
+            placeholder="Enter category"
+            className="form-control form-control-lg"
+            name="categories"
+            onChange={handleInput}
+          />
           <hr />
           <div className="container">
-            <button className="btn btn-primary btn-lg">Edit</button>
+            <button className="btn btn-primary btn-lg">Create</button>
           </div>
         </div>
       </form>

@@ -26,14 +26,21 @@ export default function User() {
       </div>
       <div>
         {user.is_admin ? (
-          <Link className="btn btn-primary" to={"/userslist"}>
-            Users
+          <Link className="btn btn-primary btn-lg" to={"/userslist"}>
+            Edit Users
           </Link>
         ) : null}
         {user.is_admin ? (
-          <Link className="btn btn-primary" to={"/productslist"}>
-            Product
+          <Link className="btn btn-success btn-lg" to={"/productslist"}>
+            Edit Product
           </Link>
+        ) : null}
+        {user.is_admin ? (
+          <td>
+            <Link className="btn btn-secondary btn-lg" to={"/createproduct"}>
+              Create Product
+            </Link>
+          </td>
         ) : null}
       </div>
     </div>

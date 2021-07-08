@@ -23,9 +23,10 @@ const Products = () => {
     }
   };
 
-  const handleEditProduct = () => {
-    return history.push("/editproduct")
+  const handleEditProduct = (id) => {
+    return history.push(`/editproduct/${id}`)
   };
+
 
   return (
     <div className="container mt-2 text-primary">
@@ -53,11 +54,12 @@ const Products = () => {
                 <td>
                   <button
                     className="btn btn-primary btn-lg"
-                    onClick={() => handleEditProduct()}
+                    onClick={() => handleEditProduct(product.id)}
                   >
                     Edit
                   </button>
                 </td>
+
                 <td>
                   <button
                     className="btn btn-danger btn-lg"
