@@ -17,8 +17,6 @@ function SingleCard() {
     }
   }, []);
 
-  console.log(productSelected);
-
   return (
     <div className="container text-dark">
       <div className="row">
