@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { showProduct } from "../redux/products";
-import axios from 'axios'
-
+import axios from "axios";
 
 const Products = () => {
   const { products } = useSelector((state) => state.products);
 
   const dispatch = useDispatch();
+  const history = useHistory()
 
   useEffect(() => {
     dispatch(showProduct());
@@ -16,10 +17,14 @@ const Products = () => {
   const handleDeleteProduct = async (id) => {
     try {
       await axios.delete(`/api/products/${id}`);
-      dispatch(showProduct())
+      dispatch(showProduct());
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleEditProduct = () => {
+    return history.push("/")
   };
 
   return (
@@ -48,7 +53,7 @@ const Products = () => {
                 <td>
                   <button
                     className="btn btn-primary btn-lg"
-                    onClick={() => handleClick()}
+                    onClick={() => handleEditProduct()}
                   >
                     Edit
                   </button>
