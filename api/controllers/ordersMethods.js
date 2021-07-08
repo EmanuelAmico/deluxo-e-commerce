@@ -36,9 +36,33 @@ const postOrder = async (req, res, next) => {
   }
 }
 
+const putSpecificOrder = async (req, res, next) => {
+  try {
+    const { orderId } = req.params
+    const { state } = req.body
+    const order = await Orders.findByPk(orderId, {
+      include: {
+        model: Shopcarts,
+        include: {
+          model: Products,
+        }
+      }
+    })
+    if(!order)
+      return res.status(400).send("Order not found!")
+    if(order.state === state)
+      return res.status(304).send(order)
+    order.state = state
+    const modifiedOrder = await order.save()
+    res.status(200).send(modifiedOrder)
+  } catch (error) {
+    next(error)
+  }
+}
 
 
 module.exports = {
   getOrders,
-  postOrder
+  postOrder,
+  putSpecificOrder,
 }
