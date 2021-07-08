@@ -1,6 +1,8 @@
-import React, { useEffect }  from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showProduct } from "../redux/products";
+import axios from 'axios'
+
 
 const Products = () => {
   const { products } = useSelector((state) => state.products);
@@ -10,6 +12,15 @@ const Products = () => {
   useEffect(() => {
     dispatch(showProduct());
   }, []);
+
+  const handleDeleteProduct = async (id) => {
+    try {
+      await axios.delete(`/api/products/${id}`);
+      dispatch(showProduct())
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="container mt-2 text-primary">
@@ -21,36 +32,37 @@ const Products = () => {
               <th scope="col">Product</th>
               <th scope="col">Product Name</th>
               <th scope="col">Price</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            {products.map((product, index) =>
-                    <tr key={product.id}>
-                      <th scope="row">{index + 1}</th>
-    
-                      <td>{'product.image'}</td>
-                      <td>{product.name}</td>    
-                      <td>{product.price}</td>    
-                      <td>
-                        <button
-                          className="btn btn-primary btn-lg"
-                          onClick={() => handleClick(index, user)}
-                        >
-                          Edit
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-danger btn-lg"
-                          onClick={() => handleClick(index, user)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                )}
+            {products.map((product, index) => (
+              <tr key={product.id}>
+                <th scope="row">{index + 1}</th>
+                <td>
+                  <img src={product.image} style={{ width: "4rem" }} />
+                </td>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>
+                  <button
+                    className="btn btn-primary btn-lg"
+                    onClick={() => handleClick()}
+                  >
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-danger btn-lg"
+                    onClick={() => handleDeleteProduct(product.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
