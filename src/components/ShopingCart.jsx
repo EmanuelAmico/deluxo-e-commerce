@@ -13,7 +13,7 @@ export default function ShoppingCart() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(localStorage.getItem('shopcartId'))
+    if(localStorage.getItem('shopcartId') && !productsInCart.length)
       dispatch(productsAddedToCartFromDb(localStorage.getItem('shopcartId')))
   }, [])
 
@@ -65,7 +65,7 @@ export default function ShoppingCart() {
       if(!user.isLoggedIn)
         history.push("/login")
       if(localStorage.getItem('shopcartId')) {
-        await axios.put('/api/shopcarts', productsInCart)
+        await axios.put(`/api/shopcarts/${localStorage.getItem('shopcartId')}`, productsInCart)
         dispatch(setOrder({state: 'toPay', payment_method: "Cash", total_price: total(), products: productsInCart}))
         return history.push("/checkout")
       }
