@@ -24,7 +24,7 @@ const Products = () => {
   };
 
   const handleEditProduct = () => {
-    return history.push("/")
+    return history.push("/editproduct")
   };
 
   return (
