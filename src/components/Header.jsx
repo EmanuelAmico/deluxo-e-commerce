@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { setUser } from "../redux/user";
 import "../assets/styles/components/Header.scss";
 import { setProductsAddedToCart } from "../redux/productsAdded";
+import {setOrders} from "../redux/orders"
 
 
 
@@ -49,6 +50,7 @@ function Header() {
       })
     );
     dispatch(setProductsAddedToCart([]))
+    dispatch(setOrders([]))
     history.push('/products')
   };
 
