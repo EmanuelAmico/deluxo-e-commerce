@@ -3,9 +3,10 @@ const router = express.Router();
 const checkLogIn = require("../middlewares/auth");
 
 
-const { editUser, getUser, getAllUsers, deleteUser } = require("../controllers");
+const { editUser, getUser, getAllUsers, deleteUser, getUserOrders } = require("../controllers");
 
 //---------------------- GET -------------------------//
+router.get("/:userId/orders", checkLogIn, getUserOrders);
 router.get("/me", checkLogIn, getUser);
 router.get("/", getAllUsers)
 

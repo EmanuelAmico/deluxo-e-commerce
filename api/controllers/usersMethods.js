@@ -25,6 +25,21 @@ const getAllUsers = async (req,res,next) => {
   }
 }
 
+const getUserOrders = async (req, res, next) => {
+  try {
+    const { userId } = req.params
+    const user = await Users.findByPk(userId)
+    if(!user)
+      return res.status(404).send("User not found!")
+    const orders = await user.getOrders()
+    if(!orders.length)
+      return res.status(400).send("There are not orders for this user!.")
+    res.status(200).send(orders)
+  } catch (error) {
+    next(error)
+  }
+}
+
 const getUser = async (req, res, next) => {
   try {
     const { userId } = req.tokenPayload;
@@ -53,5 +68,6 @@ module.exports = {
   editUser,
   getUser,
   getAllUsers,
+  getUserOrders,
   deleteUser
 };
