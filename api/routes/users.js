@@ -6,7 +6,7 @@ const checkLogIn = require("../middlewares/auth");
 const { editUser, getUser, getAllUsers, deleteUser, getUserOrders } = require("../controllers");
 
 //---------------------- GET -------------------------//
-router.get("/:userId/orders", checkLogIn, getUserOrders);
+router.get("/:userId/orders", getUserOrders);
 router.get("/me", checkLogIn, getUser);
 router.get("/", getAllUsers)
 
