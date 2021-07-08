@@ -107,6 +107,7 @@ const putShopcart = async (req, res, next) => {
   try {
     const { shopCartId } = req.params
     const modifications = req.body
+    /* console.log(modifications) */
     const shopcart = await Shopcarts.findByPk(shopCartId)
     if(!shopcart)
       return res.status(400).send("Shopcart not found!")

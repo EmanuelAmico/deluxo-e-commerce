@@ -1,15 +1,17 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { setUser } from "../redux/user";
 import "../assets/styles/components/Header.scss";
+import { setProductsAddedToCart } from "../redux/productsAdded";
 
 
 
 function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const history = useHistory()
 
   useEffect(async () => {
     try {
@@ -30,6 +32,8 @@ function Header() {
 
   const handleLogOut = (e) => {
     localStorage.removeItem("token");
+    localStorage.removeItem("shopcartId")
+    localStorage.removeItem("orderId")
     dispatch(
       setUser({
         id: null,
@@ -44,6 +48,8 @@ function Header() {
         isLoggedIn: false,
       })
     );
+    dispatch(setProductsAddedToCart([]))
+    history.push('/products')
   };
 
   return (

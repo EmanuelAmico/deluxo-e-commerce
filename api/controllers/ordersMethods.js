@@ -30,7 +30,7 @@ const postOrder = async (req, res, next) => {
     const order = await Orders.create({ payment_method })
     const linkedShopcart = await order.setShop_cart(shopcart)
     await user.addOrder(order)
-    res.status(200).send(linkedShopcart)
+    res.status(201).send(linkedShopcart)
   } catch (error) {
     next(error)
   }
@@ -60,9 +60,27 @@ const putSpecificOrder = async (req, res, next) => {
   }
 }
 
+const deleteSpecificOrder = async (req, res, next) => {
+  try {
+    const { orderId } = req.params
+    const order = await Orders.findByPk(orderId)
+    if(!order)
+      return res.status(400).send("Order not found!")
+    const shopcart = await order.getShop_cart()
+    if(!shopcart)
+      return res.status(400).send("There is no shopcart linked to this order!.")
+    await shopcart.destroy()
+    await order.destroy()
+    res.sendStatus(204)
+  } catch (error) {
+    next(error)
+  }
+}
+
 
 module.exports = {
   getOrders,
   postOrder,
   putSpecificOrder,
+  deleteSpecificOrder,
 }
