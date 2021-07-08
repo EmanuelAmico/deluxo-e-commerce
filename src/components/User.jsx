@@ -18,13 +18,11 @@ export default function User() {
             <li className="list-group-item">
               <strong>Email:</strong> {user.email}
             </li>
-            <li className="list-group-item">
-              <strong>Orders:</strong>
-            </li>
           </ul>
         </div>
       </div>
       <div>
+        
         {user.is_admin ? (
           <Link className="btn btn-primary btn-lg" to={"/userslist"}>
             Edit Users
@@ -39,6 +37,13 @@ export default function User() {
           <td>
             <Link className="btn btn-secondary btn-lg" to={"/createproduct"}>
               Create Product
+            </Link>
+          </td>
+        ) : null}
+        {!user.is_admin ? (
+          <td>
+            <Link className="btn btn-secondary btn-lg" to={`/orders/${user.id}`}>
+              Order History
             </Link>
           </td>
         ) : null}

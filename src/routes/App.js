@@ -16,6 +16,7 @@ import Users from "../components/Users";
 import Products from "../components/Products"
 import EditProduct from "../components/EditProduct"
 import CreateProduct from "../components/CreateProduct"
+import Orders from "../components/Orders"
 
 
 
@@ -36,6 +37,7 @@ const App = () => {
           <Route exact path="/productslist" component={Products} />
           <Route exact path="/editproduct/:id" component={EditProduct} />
           <Route exact path="/createproduct/" component={CreateProduct} />
+          <Route exact path="/orders/:id" component={Orders} />
           <Redirect to={"/products"} />
         </Switch>
       </Layout>
