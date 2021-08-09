@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import axios from "axios"
+import API_URL from "../config/env";
 
 export default function CreateProduct() {
   const match = useRouteMatch();
@@ -26,7 +27,7 @@ export default function CreateProduct() {
     try {
       form.price = parseFloat(form.price);
       form.stock = parseInt(form.stock);
-      await axios.post(`/api/products/`, form);
+      await axios.post(`${API_URL}/api/products/`, form);
       alert("Product Created");
     } catch (error) {
       console.log({error});

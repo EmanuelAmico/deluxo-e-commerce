@@ -6,6 +6,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/user";
 import '../assets/styles/components/Register.scss'
+import API_URL from "../config/env";
 
 
 function  Register  ()  {
@@ -41,7 +42,7 @@ function  Register  ()  {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault()
-      await axios.post('/api/register', formRegisterValues)
+      await axios.post(API_URL + '/api/register', formRegisterValues)
       alert("El usuario se ha creado con éxito.")
       history.push('/login')
     } catch (error) {

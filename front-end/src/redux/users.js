@@ -1,5 +1,6 @@
 import { createReducer, createAction, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from 'axios';
+import API_URL from "../config/env";
 
 
 
@@ -7,15 +8,15 @@ export const setUsers = createAction('SET_USERS')
 
 
 export const showUsers = createAsyncThunk('SHOW_USERS', () => {
-  return axios.get('/api/users')
+  return axios.get(API_URL + '/api/users')
   .then(res => res.data)
 })
 
 export const setAdmin = createAsyncThunk ("SET_ADMIN", (userID,thunkAPI) => {
-  return axios.put(`/api/users/${userID}`, {is_admin: true})
+  return axios.put(`${API_URL}/api/users/${userID}`, {is_admin: true})
   .then(res => {
     const modifiedUser = res.data[1][0]
-    return axios.get('/api/users')
+    return axios.get(API_URL + '/api/users')
       .then(res => res.data)
       .then(users => {
         return users.map(user => {
@@ -31,10 +32,10 @@ export const setAdmin = createAsyncThunk ("SET_ADMIN", (userID,thunkAPI) => {
 })
 
 export const removeAdmin = createAsyncThunk ("REMOVE_ADMIN", (userID,thunkAPI) => {
-  return axios.put(`/api/users/${userID}`, {is_admin: false})
+  return axios.put(`${API_URL}/api/users/${userID}`, {is_admin: false})
   .then(res => {
     const modifiedUser = res.data[1][0]
-    return axios.get('/api/users')
+    return axios.get(API_URL + '/api/users')
       .then(res => res.data)
       .then(users => {
         return users.map(user => {

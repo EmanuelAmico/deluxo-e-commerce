@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { productsAddedToCartFromDb, setProductsAddedToCart } from "../redux/productsAdded";
 import { setOrder } from "../redux/order";
 import axios from 'axios'
+import API_URL from "../config/env";
 
 export default function ShoppingCart() {
   const productsInCart = useSelector((state) => state.productsAddedToCart);
@@ -59,7 +60,7 @@ export default function ShoppingCart() {
     try {
       const products = productsInCart.filter((product) => product.id !== id);
       if(productsInCart[0].shop_cart_items)
-        await axios.delete(`/api/shopcarts/${localStorage.getItem('shopcartId')}/products/${id}`)
+        await axios.delete(`${API_URL}/api/shopcarts/${localStorage.getItem('shopcartId')}/products/${id}`)
       dispatch(setProductsAddedToCart(products));
     } catch (error) {
       console.log(error)
@@ -71,12 +72,12 @@ export default function ShoppingCart() {
       if(!user.isLoggedIn)
         history.push("/login")
       if(localStorage.getItem('orderId')) {
-        await axios.put(`/api/shopcarts/${localStorage.getItem('shopcartId')}`, productsInCart)
+        await axios.put(`${API_URL}/api/shopcarts/${localStorage.getItem('shopcartId')}`, productsInCart)
         dispatch(setOrder({state: 'Payment pending', payment_method: "Cash", total_price: total(), products: productsInCart}))
         return history.push("/checkout")
       }
       /* Genera Carrito nuevo */
-      const res = await axios.post('/api/shopcarts', productsInCart)
+      const res = await axios.post(API_URL + '/api/shopcarts', productsInCart)
       const shopcart = res.data
       const shopcartId = shopcart[0].shopCartId
       localStorage.setItem('shopcartId', shopcartId)

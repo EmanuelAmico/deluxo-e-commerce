@@ -6,6 +6,7 @@ import { setUser } from "../redux/user";
 import "../assets/styles/components/Header.scss";
 import { setProductsAddedToCart } from "../redux/productsAdded";
 import {setOrders} from "../redux/orders"
+import API_URL from "../config/env";
 
 
 
@@ -18,7 +19,7 @@ function Header() {
     try {
       if (localStorage.getItem("token")) {
         const token = localStorage.getItem("token");
-        const res = await axios.get("/api/users/me", {
+        const res = await axios.get(API_URL + "/api/users/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

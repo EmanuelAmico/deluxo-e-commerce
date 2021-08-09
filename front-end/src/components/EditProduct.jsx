@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import axios from "axios"
+import API_URL from "../config/env";
 
 export default function EditProduct() {
   const match = useRouteMatch();
@@ -24,7 +25,7 @@ export default function EditProduct() {
     try {
       form.price = parseFloat(form.price);
       form.stock = parseInt(form.stock);
-      await axios.put(`/api/products/${id}`, form);
+      await axios.put(`${API_URL}/api/products/${id}`, form);
       alert("Product Edited");
     } catch (error) {
       console.log(error);

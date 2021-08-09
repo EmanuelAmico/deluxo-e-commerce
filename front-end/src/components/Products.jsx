@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { showProduct } from "../redux/products";
 import axios from "axios";
+import API_URL from "../config/env";
 
 const Products = () => {
   const { products } = useSelector((state) => state.products);
@@ -16,7 +17,7 @@ const Products = () => {
 
   const handleDeleteProduct = async (id) => {
     try {
-      await axios.delete(`/api/products/${id}`);
+      await axios.delete(`${API_URL}/api/products/${id}`);
       dispatch(showProduct());
     } catch (error) {
       console.log(error);

@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux"
 import { setUser } from '../redux/user';
 import axios from 'axios'
 import '../assets/styles/components/LogIn.scss'
+import API_URL from "../config/env";
 
 
 function LogIn() {
@@ -22,7 +23,7 @@ function LogIn() {
   const handleSubmit = async e => {
     try {
       e.preventDefault()
-      const res = await axios.post('/api/login', formLoginValues)
+      const res = await axios.post(API_URL + '/api/login', formLoginValues)
       const user = res.data
       localStorage.setItem('token', user.token)
       dispatch(setUser({...user, isLoggedIn: true}))

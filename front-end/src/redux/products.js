@@ -13,6 +13,7 @@ put-product // <--- modifica
 */
 import { createReducer, createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
+import API_URL from "../config/env";
 
 
 const initialState = {
@@ -22,12 +23,12 @@ const initialState = {
 
 
 export const selectProduct = createAsyncThunk('SELECT_PRODUCT', (param, thunkAPI)=>{
-    return axios.get(`/api/products/${param}`)
+    return axios.get(`${API_URL}/api/products/${param}`)
     .then(res => res.data)
 })
 
 export const selectProductsByCategory = createAsyncThunk('SELECT_PRODUCTS_BY_CATEGORY', (category)=>{
-    return axios.get(`/api/products/filter?category=${category}`)
+    return axios.get(`${API_URL}/api/products/filter?category=${category}`)
     .then(res => res.data)
     .then(filteredProducts => {
         const products = {
@@ -41,7 +42,7 @@ export const selectProductsByCategory = createAsyncThunk('SELECT_PRODUCTS_BY_CAT
 
 
 export const showProduct = createAsyncThunk('SHOW_PRODUCT', () => {
-    return axios.get('/api/products')
+    return axios.get(API_URL + '/api/products')
     .then(res => res.data)
 })
 

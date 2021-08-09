@@ -6,6 +6,7 @@ import logo from "../assets/static/img/deluxo-48.png"
 import { Link } from "react-router-dom"
 import axios from "axios";
 import { setOrder } from "../redux/order";
+import API_URL from '../config/env'
 
 const Checkout = () => {
 
@@ -18,7 +19,7 @@ const Checkout = () => {
 
   const handlePay = async () => {
     try {
-      axios.put(`/api/orders/${localStorage.getItem('orderId')}`, {
+      axios.put(`${API_URL}/api/orders/${localStorage.getItem('orderId')}`, {
         state: 'fulfilled'
       }, 
       {
@@ -38,7 +39,7 @@ const Checkout = () => {
 
   const handleCancel = async () => {
     try {
-      await axios.delete(`/api/orders/${localStorage.getItem('orderId')}`)
+      await axios.delete(`${API_URL}/api/orders/${localStorage.getItem('orderId')}`)
       localStorage.removeItem('orderId')
       localStorage.removeItem('shopcartId')
       alert("Order was cancelled.")

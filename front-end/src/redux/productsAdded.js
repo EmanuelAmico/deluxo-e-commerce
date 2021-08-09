@@ -4,11 +4,12 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 import axios from "axios";
+import API_URL from "../config/env";
 
 export const setProductsAddedToCart = createAction("SET_PRODUCT_ADDED");
 
 export const productsAddedToCartFromDb = createAsyncThunk('SET_PRODDUCT_ADDED_DB', (userId) => {
-  return axios.get(`/api/users/${userId}/orders/pending`)
+  return axios.get(`${API_URL}/api/users/${userId}/orders/pending`)
               .then(res => {
                 const order = res.data[0]
                 if(!order)
