@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-import logger from "redux-logger";
 
 //importacion de reducers
 import productReducer from './products';

@@ -74,7 +74,7 @@ module.exports = {
         liveReload: true,
         port: 3000,
         proxy: {
-            '/api': 'http://localhost:3001',
+            '/api': process.env.API_URL,
         },
     },
     plugins: [
