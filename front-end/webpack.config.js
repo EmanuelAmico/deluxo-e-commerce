@@ -1,7 +1,9 @@
+require('dotenv').config()
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const API_URL = process.env.API_URL
 
 module.exports = {
     entry: './src/index',
@@ -74,7 +76,7 @@ module.exports = {
         liveReload: true,
         port: 3000,
         proxy: {
-            '/api': process.env.API_URL,
+            '/api': API_URL,
         },
     },
     plugins: [
