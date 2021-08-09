@@ -1,8 +1,6 @@
-require('dotenv').config()
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
 const API_URL = process.env.API_URL
 
 module.exports = {
