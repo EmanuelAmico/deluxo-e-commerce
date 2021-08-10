@@ -81,7 +81,7 @@ export default function ShoppingCart() {
       const shopcart = res.data
       const shopcartId = shopcart[0].shopCartId
       localStorage.setItem('shopcartId', shopcartId)
-      const response = await axios.post('/api/orders', {payment_method: "Cash", state: 'Payment pending', shopcartId}, {
+      const response = await axios.post(API_URL + '/api/orders', {payment_method: "Cash", state: 'Payment pending', shopcartId}, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
