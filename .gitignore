@@ -80,3 +80,6 @@ dist/
 
 # Bash files
 *.bash
+
+# Certificates
+certs/
