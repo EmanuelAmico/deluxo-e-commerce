@@ -25,9 +25,9 @@
   },
   "homepage": "https://github.com/InevitableDesire/deluxo-e-commerce#readme",
   "dependencies": {
-    "@babel/runtime": "^7.14.8",
+    "@babel/runtime": "^7.15.3",
     "@reduxjs/toolkit": "^1.6.1",
-    "antd": "^4.16.11",
+    "antd": "^4.16.13",
     "axios": "^0.21.1",
     "json-server": "^0.16.3",
     "react": "^17.0.2",
@@ -44,8 +44,8 @@
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "babel-loader": "^8.2.2",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "css-loader": "^6.2.0",
+    "dotenv-webpack": "^7.0.3",
     "file-loader": "^6.2.0",
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.2",
@@ -53,8 +53,8 @@
     "node-sass": "^6.0.1",
     "sass-loader": "^12.1.0",
     "svg-url-loader": "^7.1.1",
-    "webpack": "^5.49.0",
-    "webpack-cli": "^4.7.2",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^3.11.2"
   }
 }

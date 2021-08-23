@@ -76,7 +76,7 @@ const Checkout = () => {
                 <td>
                   <button
                     onClick={handlePay}
-                    className="btn btn-danger btn-lg me-2"
+                    className="btn btn-success btn-lg me-2"
                   >
                     Pay
                   </button>
@@ -90,14 +90,6 @@ const Checkout = () => {
               </tr>
           </tbody>
         </table>
-      </div>
-      <div className="row">
-        <button
-            className="btn btn-danger btn-lg"
-            onClick={handlePay}
-          >
-            Pay
-          </button>
       </div>
       <div className="row">
         <div className="col text-center">

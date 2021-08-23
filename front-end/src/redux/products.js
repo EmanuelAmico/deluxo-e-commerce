@@ -1,24 +1,11 @@
-/* 
-//user actions
-
-add-product
-delete-product
-
-//admin actions
-
-add-product
-delete-product
-post-product
-put-product // <--- modifica
-*/
-import { createReducer, createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createReducer, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 import API_URL from "../config/env";
 
 
 const initialState = {
     products: [],
-    productSelected: {},
+    selectedProduct: {},
 }
 
 
@@ -33,7 +20,7 @@ export const selectProductsByCategory = createAsyncThunk('SELECT_PRODUCTS_BY_CAT
     .then(filteredProducts => {
         const products = {
             products: [],
-            productSelected: {}
+            selectedProduct: {}
         }
         products.products.push(...filteredProducts)
         return products
@@ -48,7 +35,7 @@ export const showProduct = createAsyncThunk('SHOW_PRODUCT', () => {
 
 const productReducer = createReducer(initialState, {
     [showProduct.fulfilled] : (state, action) => {state.products = action.payload},
-    [selectProduct.fulfilled] : (state, action) => {state.productSelected = action.payload},
+    [selectProduct.fulfilled] : (state, action) => {state.selectedProduct = action.payload},
     [selectProductsByCategory.fulfilled]: (state, action) => action.payload
 })
 

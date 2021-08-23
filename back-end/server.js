@@ -15,10 +15,10 @@ app.use(cors())
 
 
 // Https
-const key = fs.readFileSync(__dirname + "/certs/privkey.pem");
+/* const key = fs.readFileSync(__dirname + "/certs/privkey.pem");
 const cert = fs.readFileSync(__dirname + "/certs/fullchain.pem");
 const httpsOptions = { key, cert };
-const server = https.createServer(httpsOptions, app)
+const server = https.createServer(httpsOptions, app) */
 
 //Routes
 app.use("/api", routes);
@@ -30,11 +30,11 @@ app.use((error, req, res, next) => {
   res.sendStatus(500);
 });
 
-const deployServer = async () => {
+const startServer = async () => {
   try {
     await db.sync({ force: false });
     const port = 3001;
-    server.listen(port, () => {
+    app.listen(port, () => {
       console.log(`Server running on https://localhost:${port}`);
     });
   } catch (error) {
@@ -42,4 +42,4 @@ const deployServer = async () => {
   }
 };
 
-deployServer();
+startServer();

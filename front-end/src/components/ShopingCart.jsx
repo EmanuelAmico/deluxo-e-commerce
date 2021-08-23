@@ -2,21 +2,24 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { productsAddedToCartFromDb, setProductsAddedToCart } from "../redux/productsAdded";
+import {
+  productsAddedToCartFromDb,
+  setProductsAddedToCart,
+} from "../redux/productsAdded";
 import { setOrder } from "../redux/order";
-import axios from 'axios'
+import axios from "axios";
 import API_URL from "../config/env";
 
 export default function ShoppingCart() {
   const productsInCart = useSelector((state) => state.productsAddedToCart);
-  const user = useSelector((state) => state.user)
-  const history = useHistory()
+  const user = useSelector((state) => state.user);
+  const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!productsInCart.length && user.id)
-      dispatch(productsAddedToCartFromDb(user.id))
-  }, [user])
+    if (!productsInCart.length && user.id)
+      dispatch(productsAddedToCartFromDb(user.id));
+  }, [user]);
 
   const total = function total() {
     let totalPrice = 0;
@@ -24,77 +27,100 @@ export default function ShoppingCart() {
       totalPrice += product.price * product.quantity;
     });
     return totalPrice;
-  }
+  };
 
-  function decrease (product) {
-    const productsInCartCopy = []
-    productsInCart.forEach(product => {
-      productsInCartCopy.push({...product})
+  function decrease(product) {
+    const productsInCartCopy = [];
+    productsInCart.forEach((product) => {
+      productsInCartCopy.push({ ...product });
     });
-    productsInCartCopy.forEach(copyProduct => {
+    productsInCartCopy.forEach((copyProduct) => {
       if (copyProduct.id == product.id) {
-        if(copyProduct.quantity === 1)
-          handleRemoveCartItem(copyProduct.id)
+        if (copyProduct.quantity === 1) handleRemoveCartItem(copyProduct.id);
         if (copyProduct.quantity > 1) {
-          copyProduct.quantity -= 1
-          dispatch(setProductsAddedToCart(productsInCartCopy))
+          copyProduct.quantity -= 1;
+          dispatch(setProductsAddedToCart(productsInCartCopy));
         }
       }
-    })
+    });
   }
 
-  function increase (product) {
-    const productsInCartCopy = []
-    productsInCart.forEach(product => {
-      productsInCartCopy.push({...product})
+  function increase(product) {
+    const productsInCartCopy = [];
+    productsInCart.forEach((product) => {
+      productsInCartCopy.push({ ...product });
     });
-    productsInCartCopy.forEach(copyProduct => {
+    productsInCartCopy.forEach((copyProduct) => {
       if (copyProduct.id == product.id) {
-        copyProduct.quantity += 1
+        copyProduct.quantity += 1;
       }
-    })
-    dispatch(setProductsAddedToCart(productsInCartCopy))
+    });
+    dispatch(setProductsAddedToCart(productsInCartCopy));
   }
 
   const handleRemoveCartItem = async (id) => {
     try {
       const products = productsInCart.filter((product) => product.id !== id);
-      if(productsInCart[0].shop_cart_items)
-        await axios.delete(`${API_URL}/api/shopcarts/${localStorage.getItem('shopcartId')}/products/${id}`)
+      if (productsInCart[0].shop_cart_items)
+        await axios.delete(
+          `${API_URL}/api/shopcarts/${localStorage.getItem(
+            "shopcartId"
+          )}/products/${id}`
+        );
       dispatch(setProductsAddedToCart(products));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
   const handleOnClickCheckOut = async () => {
     try {
-      if(!user.isLoggedIn)
-        history.push("/login")
-      if(localStorage.getItem('orderId')) {
-        await axios.put(`${API_URL}/api/shopcarts/${localStorage.getItem('shopcartId')}`, productsInCart)
-        dispatch(setOrder({state: 'Payment pending', payment_method: "Cash", total_price: total(), products: productsInCart}))
-        return history.push("/checkout")
+      if (!user.isLoggedIn) history.push("/login");
+      if (localStorage.getItem("orderId")) {
+        await axios.put(
+          `${API_URL}/api/shopcarts/${localStorage.getItem("shopcartId")}`,
+          productsInCart
+        );
+        dispatch(
+          setOrder({
+            state: "Payment pending",
+            payment_method: "Cash",
+            total_price: total(),
+            products: productsInCart,
+          })
+        );
+        return history.push("/checkout");
       }
       /* Genera Carrito nuevo */
-      const res = await axios.post(API_URL + '/api/shopcarts', productsInCart)
-      const shopcart = res.data
-      const shopcartId = shopcart[0].shopCartId
-      localStorage.setItem('shopcartId', shopcartId)
-      const response = await axios.post(API_URL + '/api/orders', {payment_method: "Cash", state: 'Payment pending', shopcartId}, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      const order = response.data
-      localStorage.setItem('orderId', order.id)
-      dispatch(setProductsAddedToCart([]))
-      dispatch(setOrder({state: 'Payment pending', payment_method: "Cash", total_price: total(), products: productsInCart}))
-      history.push("/checkout")
+      const res = await axios.post(API_URL + "/api/shopcarts", productsInCart);
+      const shopcart = res.data;
+      const shopcartId = shopcart[0].shopCartId;
+      localStorage.setItem("shopcartId", shopcartId);
+      const response = await axios.post(
+        API_URL + "/api/orders",
+        { payment_method: "Cash", state: "Payment pending", shopcartId },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      const order = response.data;
+      localStorage.setItem("orderId", order.id);
+      dispatch(setProductsAddedToCart([]));
+      dispatch(
+        setOrder({
+          state: "Payment pending",
+          payment_method: "Cash",
+          total_price: total(),
+          products: productsInCart,
+        })
+      );
+      history.push("/checkout");
     } catch (error) {
-      console.log({error})
+      console.log({ error });
     }
-  }
+  };
 
   return (
     <div className="container mt-2 text-primary">
@@ -122,14 +148,14 @@ export default function ShoppingCart() {
                 <td>
                   <button
                     onClick={() => decrease(product)}
-                    className="btn btn-primary btn-lg"
+                    className="btn btn-primary btn-lg mx-3"
                   >
                     -
                   </button>
                   {product.quantity}
                   <button
                     onClick={() => increase(product)}
-                    className="btn btn-primary btn-lg"
+                    className="btn btn-primary btn-lg mx-3"
                     size="sm"
                   >
                     +
@@ -149,15 +175,18 @@ export default function ShoppingCart() {
           </tbody>
         </table>
       </div>
-      <div className="row">
+      <div className="d-flex justify-content-end pe-4 me-2">
         {productsInCart.length ? (
-          <button className="btn btn-danger btn-lg" onClick={handleOnClickCheckOut}>Checkout</button>
+          <>
+            <h4 className="w-100 mb-0 d-flex justify-content-end align-items-center pe-4">TOTAL: {`$ ${total()}`}</h4>
+            <button
+              className="btn btn-success btn-lg"
+              onClick={handleOnClickCheckOut}
+            >
+              Checkout
+            </button>
+          </>
         ) : null}
-      </div>
-      <div className="row">
-        <div className="col text-center">
-          <h4>TOTAL: {`$ ${total()}`}</h4>
-        </div>
       </div>
     </div>
   );
