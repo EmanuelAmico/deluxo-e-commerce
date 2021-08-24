@@ -14,7 +14,7 @@ export const showUserCompletedOrders = createAsyncThunk('SHOW_USER_COMPLETED_ORD
                   return []
                 return order
               })
-              .catch(error => console.log({error}))
+              .catch(error => console.log(error))
 })
 
 

@@ -30,7 +30,7 @@ export default function CreateProduct() {
       await axios.post(`${API_URL}/api/products/`, form);
       alert("Product Created");
     } catch (error) {
-      console.log({error});
+      console.log(error);
     }
   };
 

@@ -26,9 +26,9 @@ export const setAdmin = createAsyncThunk ("SET_ADMIN", (userID,thunkAPI) => {
           return user
         })
       })
-      .catch(error => console.log({error}))
+      .catch(error => console.log(error))
   })
-  .catch(error => console.log({error}))
+  .catch(error => console.log(error))
 })
 
 export const removeAdmin = createAsyncThunk ("REMOVE_ADMIN", (userID,thunkAPI) => {
@@ -45,9 +45,9 @@ export const removeAdmin = createAsyncThunk ("REMOVE_ADMIN", (userID,thunkAPI) =
           return user
         })
       })
-      .catch(error => console.log({error}))
+      .catch(error => console.log(error))
   })
-  .catch(error => console.log({error}))
+  .catch(error => console.log(error))
 })
 
 

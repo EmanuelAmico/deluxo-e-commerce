@@ -23,7 +23,7 @@ export const productsAddedToCartFromDb = createAsyncThunk('SET_PRODDUCT_ADDED_DB
                 localStorage.setItem('orderId', order.id)
                 return products
               })
-              .catch(error => console.log({error}))
+              .catch(error => console.log(error))
 })
 
 const productsAddedToCartReducer = createReducer([], {
