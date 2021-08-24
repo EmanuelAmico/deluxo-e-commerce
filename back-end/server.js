@@ -12,7 +12,7 @@ app.use(morgan("dev"));
 app.use(express.json()); //Para los GET no hace falta pero para los POST sí :)
 app.use(express.urlencoded({ extended: false })); //Para que funcionen los formularios del front
 app.use(cors())
-
+app.options('/', cors()) // Para que funcionen los méotodos OPTIONS en el cross-origin
 
 // Https
 const key = fs.readFileSync(__dirname + "/certs/privkey.pem");
@@ -32,8 +32,8 @@ app.use((error, req, res, next) => {
 
 const startServer = async () => {
   try {
-    await db.sync({ force: false });
-    const port = 3001;
+    await db.sync({ force: true });
+    const port = 443;
     server.listen(port, () => {
       console.log(`Server running on https://localhost:${port}`);
     });
