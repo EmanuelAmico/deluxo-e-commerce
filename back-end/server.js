@@ -32,7 +32,7 @@ app.use((error, req, res, next) => {
 
 const startServer = async () => {
   try {
-    await db.sync({ force: true });
+    await db.sync({ force: false });
     const port = 443;
     server.listen(port, () => {
       console.log(`Server running on https://localhost:${port}`);
