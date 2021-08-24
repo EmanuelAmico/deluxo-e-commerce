@@ -19,7 +19,7 @@ const Checkout = () => {
 
   const handlePay = async () => {
     try {
-      axios.put(`${API_URL}/api/orders/${localStorage.getItem('orderId')}`, {
+      await axios.put(`${API_URL}/api/orders/${localStorage.getItem('orderId')}`, {
         state: 'fulfilled'
       }, 
       {

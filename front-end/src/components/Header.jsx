@@ -5,15 +5,13 @@ import { Link, useHistory } from "react-router-dom";
 import { setUser } from "../redux/user";
 import "../assets/styles/components/Header.scss";
 import { setProductsAddedToCart } from "../redux/productsAdded";
-import {setOrders} from "../redux/orders"
+import { setOrders } from "../redux/orders";
 import API_URL from "../config/env";
-
-
 
 function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(async () => {
     try {
@@ -34,8 +32,8 @@ function Header() {
 
   const handleLogOut = (e) => {
     localStorage.removeItem("token");
-    localStorage.removeItem("shopcartId")
-    localStorage.removeItem("orderId")
+    localStorage.removeItem("shopcartId");
+    localStorage.removeItem("orderId");
     dispatch(
       setUser({
         id: null,
@@ -50,29 +48,28 @@ function Header() {
         isLoggedIn: false,
       })
     );
-    dispatch(setProductsAddedToCart([]))
-    dispatch(setOrders([]))
-    history.push('/products')
+    dispatch(setProductsAddedToCart([]));
+    dispatch(setOrders([]));
+    history.push("/products");
   };
 
   return (
     <header>
-      <div className="links">
+      <nav>
+        <Link to="/products">Products</Link>
+        <Link to="/cart">Shopping Cart</Link>
         {user.isLoggedIn ? (
-          <button onClick={handleLogOut}> Logout </button>
-          ) : (
+          <>
+            <Link to="/user">Welcome: {user.full_name}</Link>
+            <button onClick={handleLogOut}> Logout </button>
+          </>
+        ) : (
           <>
             <Link to="/login"> Login </Link>
             <Link to="/register">Register</Link>
           </>
         )}
-        <Link to="/products">Products</Link>
-        <Link to="/cart">Shopping Cart</Link>
-        
-        {user.isLoggedIn ? (
-          <Link to="/user">Welcome: {user.full_name}</Link>
-        ) : null}
-      </div>
+      </nav>
     </header>
   );
 }
