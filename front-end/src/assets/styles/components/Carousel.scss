@@ -1,25 +1,81 @@
+@import "../Vars.scss";
 
-.wrapper{
-  width: 100vw;
-  height: 100vh;
- }
- 
- .even-columns {
-   display: flex;
-   flex-flow: row wrap;
-   justify-content: center;
-   align-items: center;
-   
- }
- .col {
-   width: 371px;
-   height: 441px;
-   flex-basis: 100%;
-   padding: 2em;
- }
- 
 .categories {
   display: flex;
   justify-content: center;
-  padding: 32px;
+  padding: 3.2rem 0rem;
+}
+
+.categories button {
+  transition: all 0.25s;
+  padding: 1.2rem;
+  color: $text-color;
+  border-radius: 2rem;
+  border: none;
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+  margin: 0 1.6rem;
+  &:focus{
+    background-color: $detailsLila-color;
+  }
+  &:hover {
+    background-color: $detailsPink-color;
+  }
+}
+
+.categoryButton{
+  background-color: $main-color;
+}
+
+.focused {
+  background-color: $detailsLila-color;
+}
+
+.wrapper {
+  object-fit: cover;
+  object-position: center;
+  margin: 0 auto;
+  /* overflow-y: scroll; */
+}
+.wrapper::-webkit-scrollbar {
+  display: none;
+}
+.even-columns {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 3.2rem 3.4rem 6.4rem 6.4rem;
+}
+.col {
+  width: 371px;
+  height: 441px;
+  flex-basis: 100%;
+  padding-left: 1em;
+  padding-right: 1em;
+  justify-content: center;
+}
+
+.btnDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-2.4em);
+  font-family: inherit;
+}
+
+#prodBtn {
+  color: $detailsPink-color;
+  background-color: transparent;
+  border: 1.5px solid $detailsLila-color;
+  outline: none;
+  width: 92%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  padding: 0.6em;
+  font-family: inherit;
+}
+
+#prodBtn:hover {
+  color: $detailsOrange-color;
+  border: 1.5px solid $detailsGreen-color;
 }

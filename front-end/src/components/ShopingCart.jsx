@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   productsAddedToCartFromDb,
   setProductsAddedToCart,
 } from "../redux/productsAdded";
 import { setOrder } from "../redux/order";
 import axios from "axios";
+import '../assets/styles/components/ShoppingCart.scss'
 import API_URL from "../config/env";
 
 export default function ShoppingCart() {
@@ -123,7 +123,7 @@ export default function ShoppingCart() {
   };
 
   return (
-    <div className="container mt-2 text-primary">
+    <div className="container pt-2 text-primary shopcart">
       <div className="row mt-3">
         <table className="table  text-center text-light bg-dark">
           <thead>
@@ -178,7 +178,9 @@ export default function ShoppingCart() {
       <div className="d-flex justify-content-end pe-4 me-2">
         {productsInCart.length ? (
           <>
-            <h4 className="w-100 mb-0 d-flex justify-content-end align-items-center pe-4">TOTAL: {`$ ${total()}`}</h4>
+            <h4 className="w-100 mb-0 d-flex justify-content-end align-items-center pe-4">
+              TOTAL: {`$ ${total().toFixed(2)}`}
+            </h4>
             <button
               className="btn btn-success btn-lg"
               onClick={handleOnClickCheckOut}

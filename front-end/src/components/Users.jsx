@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { showUsers, setUsers , setAdmin, removeAdmin } from "../redux/users";
+import { showUsers, setUsers, setAdmin, removeAdmin } from "../redux/users";
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -14,13 +14,11 @@ const Users = () => {
     if (user.is_admin) {
       usersCopy[index].is_admin = false;
       dispatch(setUsers(usersCopy));
-      dispatch(removeAdmin(user.id))
-      
+      dispatch(removeAdmin(user.id));
     } else {
       usersCopy[index].is_admin = true;
       dispatch(setUsers(usersCopy));
-      dispatch(setAdmin(user.id))
-      
+      dispatch(setAdmin(user.id));
     }
   };
 
@@ -68,4 +66,3 @@ const Users = () => {
 };
 
 export default Users;
-

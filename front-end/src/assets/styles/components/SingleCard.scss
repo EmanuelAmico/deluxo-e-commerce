@@ -1,19 +1,13 @@
-.singleCardContainer{
-    display: flex;
-    flex-flow: row wrap;
-    
-    align-items: center;
-    justify-content: center;
-    
-}
-.cardImg {
-    height: 500px;
-}
-.cardDescription{
-    display: flex;
-    flex-flow: column wrap;
-    text-align: center;
-    justify-content: flex-start;
-    align-items: flex-start;
+.singleCard {
+  height: calc(100vh - 150px);
+  display: flex;
 }
 
+.cardImg {
+  width: auto;
+  height: 100%;
+}
+
+.singleCard__title {
+  text-shadow: 1.25px 1.25px 2.5px rgba(0, 0, 0, 0.75);
+}

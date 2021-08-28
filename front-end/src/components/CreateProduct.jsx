@@ -1,12 +1,8 @@
 import React from "react";
-import { useHistory, useRouteMatch } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import API_URL from "../config/env";
 
 export default function CreateProduct() {
-  const match = useRouteMatch();
-  const history = useHistory();
-
   const [form, setForm] = React.useState({
     name: "",
     description: "",
@@ -16,11 +12,9 @@ export default function CreateProduct() {
     color: "",
     size: "",
     genre: "",
-    thumbnail:"",
-    categories: ""
+    thumbnail: "",
+    categories: "",
   });
-
-//   const id = match.params.id;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,22 +1,47 @@
+@import "~antd/dist/antd.css"; // -> Para que funcione antd
 @import "./Vars.scss";
 @import "./Media.scss"; // -> Este es el archivo que contiene los media query's
 
-/* * {
-  //box-sizing: border-box;
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-} */
+}
 
 html {
   font-size: 62.5%;
   /*1 rem = 10px*/
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
 
 body {
-  margin: 0;
+  height: 100vg;
   font-family: $theme-font;
   background: $main-color;
-  color: white;
+  color: $text-color;
   font-size: 1.5em;
+  letter-spacing: 0.05em;
 }
+
+.ant-notification-notice-message {
+  color: white;
+}
+
+.ant-notification-close-icon {
+  color: white;
+}
+
+/* #app{
+  height: 100vh;
+} */

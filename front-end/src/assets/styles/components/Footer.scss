@@ -1,12 +1,57 @@
-/*  */footer{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    position:absolute;
-    left:0;
-    bottom:0;
-    right:0;
-    width: 100%;
-  }
-  
+@import "../Vars.scss";
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: $secondary-color;
+  height: 70px;
+  color: $detailsLila-color;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 15px 20px 10px;
+  z-index: 10;
+}
+
+.footerIcons {
+  margin-left: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.disclaimer {
+  margin-right: 2em;
+}
+
+.twitter,
+.facebook,
+.insta {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.svg-icon {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: $detailsLila-color;
+}
+
+.svg-icon circle {
+  stroke: $detailsLila-color;
+  stroke-width: 1;
+}
+
+.svg-icon path:hover,
+.svg-icon polygon:hover,
+.svg-icon rect:hover {
+  fill: $detailsGreen-color;
+}
