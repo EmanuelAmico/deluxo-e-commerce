@@ -1,17 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
 
 //importacion de reducers
-import productReducer from './products';
-import userReducer from './user';
-import productsAddedToCartReducer from './productsAdded'
-import orderReducer from './order';
-import ordersReducer from './orders';
-import usersReducer from './users';
-import categoriesReducer from './categories'
+import productReducer from "./products";
+import userReducer from "./user";
+import productsAddedToCartReducer from "./productsAdded";
+import orderReducer from "./order";
+import ordersReducer from "./orders";
+import usersReducer from "./users";
+import categoriesReducer from "./categories";
 
 const store = configureStore({
-  /* middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger), */
-  reducer: { 
+  reducer: {
     //esto representa a la store de estados
     user: userReducer,
     users: usersReducer,
@@ -23,4 +22,4 @@ const store = configureStore({
   },
 });
 
-export default store
+export default store;

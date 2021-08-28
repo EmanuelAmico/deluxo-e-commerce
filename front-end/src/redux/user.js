@@ -1,4 +1,4 @@
-import { createReducer, createAction} from "@reduxjs/toolkit";
+import { createReducer, createAction } from "@reduxjs/toolkit";
 
 const initialState = {
   id: null,
@@ -9,16 +9,15 @@ const initialState = {
   user_address: null,
   shipping_address: null,
   phone_number: null,
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem("token"),
   isLoggedIn: false,
   isAdmin: false,
-}
+};
 
-export const setUser = createAction('SETUSER')
+export const setUser = createAction("SETUSER");
 
 const userReducer = createReducer(initialState, {
-  [setUser] : (state, action) => action.payload
-})
-
+  [setUser]: (state, action) => action.payload,
+});
 
 export default userReducer;

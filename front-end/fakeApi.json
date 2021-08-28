@@ -1,151 +1,148 @@
 {
-    
-    "products": 
-    [
-      {
-        "id": 1,
-        "name": "Hola baby",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/40s-%26-Shorties-Angel-Logo-White-T-Shirt-_329564-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 2,
-        "name": "como estas",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/A-Lab-Minds-Expanded-Black-T-Shirt--_322319-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 3,
-        "name": "soy distinto",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/DGK-Trippin--Black-T-Shirt-_305127-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 4,
-        "name": "al anterior",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Dravus-Camping-Trippin-Black-T-Shirt-_318005-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 5,
-        "name": "Trippin",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Nike-SB-x-Samborghini-Black-Hoodie-_341019-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 6,
-        "name": "Trippin",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/DGK-Trippin--Black-T-Shirt-_305127-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 7,
-        "name": "Trippin",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/A-Lab-Stinky-s-Black-T-Shirt-_280171-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 8,
-        "name": "Trippin",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Empyre-Venom-Black-T-Shirt-_320708-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 9,
-        "name": "Trippin",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Empyre-Loose-Fit-Black-Corduroy-Skate-Pants-_334700-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 10,
-        "name": "Trippin",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Hypland-x-InuYasha-Black-%26-Red-Sweatpants-_347756-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 11,
-        "name": "Trippin",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Crysp-Pacific-Scribbles-Denim-Jeans-_317767-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      },
-      {
-        "id": 12,
-        "name": "Trippin",
-        "description": "Drugz r da best",
-        "price": 20,
-        "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Empyre-Chuck-Maroon-%26-White-Pinstripe-Baseball-Jersey-_328067-front-US.jpg",
-        "stock": 20,
-        "color": ["black", "white", "red", "green", "blue"],
-        "size": ["S", "M", "L"],
-        "gender": "male",
-        "thumbnail": "img"
-      }
-    ]
-  
+  "products": [
+    {
+      "id": 1,
+      "name": "Hola baby",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/40s-%26-Shorties-Angel-Logo-White-T-Shirt-_329564-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 2,
+      "name": "como estas",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/A-Lab-Minds-Expanded-Black-T-Shirt--_322319-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 3,
+      "name": "soy distinto",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/DGK-Trippin--Black-T-Shirt-_305127-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 4,
+      "name": "al anterior",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Dravus-Camping-Trippin-Black-T-Shirt-_318005-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 5,
+      "name": "Trippin",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Nike-SB-x-Samborghini-Black-Hoodie-_341019-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 6,
+      "name": "Trippin",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/DGK-Trippin--Black-T-Shirt-_305127-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 7,
+      "name": "Trippin",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/A-Lab-Stinky-s-Black-T-Shirt-_280171-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 8,
+      "name": "Trippin",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Empyre-Venom-Black-T-Shirt-_320708-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 9,
+      "name": "Trippin",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Empyre-Loose-Fit-Black-Corduroy-Skate-Pants-_334700-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 10,
+      "name": "Trippin",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Hypland-x-InuYasha-Black-%26-Red-Sweatpants-_347756-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 11,
+      "name": "Trippin",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Crysp-Pacific-Scribbles-Denim-Jeans-_317767-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    },
+    {
+      "id": 12,
+      "name": "Trippin",
+      "description": "Drugz r da best",
+      "price": 20,
+      "image": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Empyre-Chuck-Maroon-%26-White-Pinstripe-Baseball-Jersey-_328067-front-US.jpg",
+      "stock": 20,
+      "color": ["black", "white", "red", "green", "blue"],
+      "size": ["S", "M", "L"],
+      "gender": "male",
+      "thumbnail": "img"
+    }
+  ]
 }

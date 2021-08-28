@@ -1,11 +1,10 @@
 import React from "react";
-import { useHistory, useRouteMatch } from "react-router-dom";
-import axios from "axios"
+import { useRouteMatch } from "react-router-dom";
+import axios from "axios";
 import API_URL from "../config/env";
 
 export default function EditProduct() {
   const match = useRouteMatch();
-  const history = useHistory();
 
   const [form, setForm] = React.useState({
     name: "",

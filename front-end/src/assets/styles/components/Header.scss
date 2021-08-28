@@ -2,49 +2,66 @@
 @import "../Media.scss";
 
 header {
-  height: 70px;
-  background: $secondary-color;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: flex-start;
+  align-items: center;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 15px 20px -10px;
+  width: 100%;
+  height: 80px;
+  background: $secondary-color;
+  top: 0;
+  position: sticky;
+  z-index: 10;
 }
 
-.logo {
+#logoHeader {
+  width: 10em;
   flex-grow: 1;
   margin-left: 0.5em;
   padding: 1em;
 }
 
-.logo a {
-  text-transform: uppercase;
-  font-size: 1.25em;
-  font-weight: 200;
-  color: inherit;
-  text-decoration: none;
-}
-
-header nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  height: 100%;
+.links {
   margin-left: 1em;
   margin-right: 1em;
 }
 
-header nav a {
-  color: #dec7f1;
+.links a {
+  color: $detailsPink-color;
   padding: 1em;
   text-decoration: none;
   font-weight: 100;
 }
-header nav a:hover {
-  color: #9552cc;
+.links a:hover {
+  color: $detailsGreen-color;
 }
 
-header nav button {
-  color: #dec7f1;
+.hover-1 {
+  &:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: $detailsLila-color;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s;
+  }
+
+  &:hover {
+    &:after {
+      transform-origin: bottom left;
+      transform: scaleX(1);
+    }
+  }
+}
+
+.links button {
+  color: $detailsPink-color;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -52,6 +69,7 @@ header nav button {
   text-decoration: none;
   font-weight: 100;
 }
-header nav button:hover {
-  color: #9552cc;
+
+.links button:hover {
+  color: $detailsLila-color;
 }

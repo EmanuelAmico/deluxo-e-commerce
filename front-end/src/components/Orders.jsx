@@ -4,17 +4,13 @@ import { showUserCompletedOrders } from "../redux/orders";
 import { useEffect } from "react";
 
 const Orders = () => {
-
-  const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
-  const orders = useSelector(state => state.orders)
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const orders = useSelector((state) => state.orders);
 
   useEffect(() => {
-    console.log(user.id)
-    if(user.id)
-      dispatch(showUserCompletedOrders(user.id))
-  }, [user])
-
+    if (user.id) dispatch(showUserCompletedOrders(user.id));
+  }, [user]);
 
   return (
     <div className="container mt-2 text-primary">
@@ -30,12 +26,12 @@ const Orders = () => {
           </thead>
           <tbody>
             {orders.map((order) => (
-                <tr key={order.id}>
-                    <td scope="row">{order.id}</td>
-                    <td scope="row">{order.payment_method}</td>
-                    <td scope="row">{order.state}</td>
-                    <td scope="row">{order.createdAt}</td>
-                </tr>
+              <tr key={order.id}>
+                <td scope="row">{order.id}</td>
+                <td scope="row">{order.payment_method}</td>
+                <td scope="row">{order.state}</td>
+                <td scope="row">{order.createdAt}</td>
+              </tr>
             ))}
           </tbody>
         </table>

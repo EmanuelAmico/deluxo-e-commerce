@@ -1,7 +1,6 @@
 import React from "react";
 import "../assets/styles/components/SingleCard.scss";
 import { useSelector } from "react-redux";
-
 import { Link } from "react-router-dom";
 
 export default function User() {
@@ -23,7 +22,6 @@ export default function User() {
         </div>
       </div>
       <div>
-        
         {user.is_admin ? (
           <Link className="btn btn-primary btn-lg" to={"/userslist"}>
             Edit Users
@@ -43,7 +41,10 @@ export default function User() {
         ) : null}
         {!user.is_admin ? (
           <td>
-            <Link className="btn btn-secondary btn-lg" to={`/orders/${user.id}`}>
+            <Link
+              className="btn btn-secondary btn-lg"
+              to={`/orders/${user.id}`}
+            >
               Order History
             </Link>
           </td>

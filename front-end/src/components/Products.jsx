@@ -7,9 +7,8 @@ import API_URL from "../config/env";
 
 const Products = () => {
   const { products } = useSelector((state) => state.products);
-
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(showProduct());
@@ -25,9 +24,8 @@ const Products = () => {
   };
 
   const handleEditProduct = (id) => {
-    return history.push(`/editproduct/${id}`)
+    return history.push(`/editproduct/${id}`);
   };
-
 
   return (
     <div className="container mt-2 text-primary">
