@@ -57,9 +57,9 @@ function Header() {
   };
 
   return (
-    <header id="headerBody">
+    <header>
       <div className="logo">
-        <Link to="/">
+        <Link to="/" title="home">
           <svg
             id="logoHeader"
             xmlns="http://www.w3.org/2000/svg"

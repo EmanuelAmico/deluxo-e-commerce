@@ -3,12 +3,38 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
 import "../assets/styles/components/SingleCard.scss";
 import { selectProduct } from "../redux/products";
+import { setProductsAddedToCart } from "../redux/productsAdded";
+import generateNotification from "../utils/generateNotification";
 
 function SingleCard() {
   const { selectedProduct } = useSelector((store) => store.products);
-
+  const productsInCart = useSelector((state) => state.productsAddedToCart);
   const match = useRouteMatch();
   const dispatch = useDispatch();
+
+  function addProduct(product) {
+    const alreadyInCart = productsInCart.map(
+      (productInCart) => productInCart.id == product.id
+    );
+    // alreadyInCart -> [false, false, false, true, false]
+    if (alreadyInCart.includes(true)) {
+      const i = alreadyInCart.indexOf(true);
+      const productsInCartCopy = [];
+      productsInCart.forEach((product) => {
+        productsInCartCopy.push({ ...product });
+      });
+      productsInCartCopy[i].quantity++;
+      dispatch(setProductsAddedToCart(productsInCartCopy));
+    } else {
+      const productCopy = { ...product, quantity: 1 };
+      dispatch(setProductsAddedToCart([...productsInCart, productCopy]));
+    }
+    generateNotification(
+      "success",
+      "Success!",
+      "The product was added to cart"
+    );
+  }
 
   useEffect(() => {
     if (!Object.keys(selectedProduct).length) {
@@ -18,7 +44,7 @@ function SingleCard() {
   }, []);
 
   return (
-    <div className="container text-dark singleCard p-3">
+    <div className="container text-dark singleCard p-5">
       <div className="row d-flex align-items-center w-100 g-0">
         <div className="col-md-4 h-100">
           <img
@@ -27,7 +53,7 @@ function SingleCard() {
             alt="t-shirt"
           ></img>
         </div>
-        <div className="col-md-8 h-100 d-flex align-items-center">
+        <div className="col-md-8 h-100 d-flex flex-column justify-content-center align-items-center">
           <div>
             <h2 className="mb-4 text-light outline-dark singleCard__title">
               {selectedProduct.name}
@@ -43,6 +69,15 @@ function SingleCard() {
                 <strong>Description:</strong> {selectedProduct.description}
               </li>
             </ul>
+          </div>
+          <div className="align-self-end mt-4 w-25 d-flex justify-content-end">
+            <button
+              onClick={() => addProduct(selectedProduct)}
+              type="submit"
+              className="prodBtn ms-0 me-0"
+            >
+              Add to cart
+            </button>
           </div>
         </div>
       </div>

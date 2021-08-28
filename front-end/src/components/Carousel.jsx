@@ -17,7 +17,7 @@ const Carousel = () => {
   const dispatch = useDispatch();
   const productsInCart = useSelector((state) => state.productsAddedToCart);
   const categories = useSelector((state) => state.categories);
-  const categoriesDivRef = useRef(null)
+  const categoriesDivRef = useRef(null);
 
   useEffect(() => {
     dispatch(showProduct());
@@ -51,11 +51,11 @@ const Carousel = () => {
   function handleClick(e) {
     // Style
     for (const categoryButton of categoriesDivRef.current.children) {
-      if(categoryButton !== e.target) {
-        categoryButton.classList.remove("focused")
+      if (categoryButton !== e.target) {
+        categoryButton.classList.remove("focused");
       } else {
-        console.log(categoryButton.classList)
-        categoryButton.classList.add("focused")
+        console.log(categoryButton.classList);
+        categoryButton.classList.add("focused");
       }
     }
     const category = e.target.textContent;
@@ -66,7 +66,12 @@ const Carousel = () => {
     <div className={products.length ? null : "vh-100"}>
       <div className="categories" ref={categoriesDivRef}>
         {categories.map((category) => (
-          <button key={category} name={category} onClick={handleClick} className="categoryButton">
+          <button
+            key={category}
+            name={category}
+            onClick={handleClick}
+            className="categoryButton"
+          >
             {category}
           </button>
         ))}
@@ -89,7 +94,7 @@ const Carousel = () => {
                 <button
                   onClick={() => addProduct(product)}
                   type="submit"
-                  id="prodBtn"
+                  className="prodBtn"
                 >
                   Add to cart
                 </button>

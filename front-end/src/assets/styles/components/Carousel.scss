@@ -63,7 +63,7 @@
   font-family: inherit;
 }
 
-#prodBtn {
+.prodBtn {
   color: $detailsPink-color;
   background-color: transparent;
   border: 1.5px solid $detailsLila-color;
@@ -75,7 +75,8 @@
   font-family: inherit;
 }
 
-#prodBtn:hover {
+.prodBtn:hover {
+  transition: all 0.5s;
   color: $detailsOrange-color;
   border: 1.5px solid $detailsGreen-color;
 }
