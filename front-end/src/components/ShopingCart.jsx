@@ -123,7 +123,7 @@ export default function ShoppingCart() {
   };
 
   return (
-    <div className="container pt-2 text-primary shopcart">
+    <div className="container pt-5 text-primary shopcart">
       <div className="row mt-3">
         <table className="table  text-center text-light bg-dark">
           <thead>
@@ -148,14 +148,14 @@ export default function ShoppingCart() {
                 <td>
                   <button
                     onClick={() => decrease(product)}
-                    className="btn btn-primary btn-lg mx-3"
+                    className="btn btn-outline-primary border-circle btn-lg mx-3"
                   >
                     -
                   </button>
                   {product.quantity}
                   <button
                     onClick={() => increase(product)}
-                    className="btn btn-primary btn-lg mx-3"
+                    className="btn btn-outline-primary btn-lg mx-3"
                     size="sm"
                   >
                     +
@@ -165,7 +165,7 @@ export default function ShoppingCart() {
                 <td>
                   <button
                     onClick={() => handleRemoveCartItem(product.id)}
-                    className="btn btn-danger btn-lg"
+                    className="btn btn-outline-danger btn-lg"
                   >
                     Remove
                   </button>
@@ -175,14 +175,14 @@ export default function ShoppingCart() {
           </tbody>
         </table>
       </div>
-      <div className="d-flex justify-content-end pe-4 me-2">
+      <div className="d-flex justify-content-end pe-4 me-3">
         {productsInCart.length ? (
           <>
             <h4 className="w-100 mb-0 d-flex justify-content-end align-items-center pe-4">
               TOTAL: {`$ ${total().toFixed(2)}`}
             </h4>
             <button
-              className="btn btn-success btn-lg"
+              className="btn btn-outline-success btn-lg"
               onClick={handleOnClickCheckOut}
             >
               Checkout

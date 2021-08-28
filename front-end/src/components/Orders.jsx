@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showUserCompletedOrders } from "../redux/orders";
 import { useEffect } from "react";
+import '../assets/styles/components/Orders.scss'
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const Orders = () => {
   }, [user]);
 
   return (
-    <div className="container mt-2 text-primary">
+    <div className="container pt-5 text-primary orders">
       <div className="row mt-3">
         <table className="table  text-center text-light bg-dark">
           <thead>

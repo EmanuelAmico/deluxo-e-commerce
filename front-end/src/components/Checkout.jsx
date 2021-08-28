@@ -53,7 +53,7 @@ const Checkout = () => {
   };
 
   return (
-    <div className="container mt-2 text-primary">
+    <div className="container pt-5 text-primary">
       <div className="row mt-3">
         <table className="table  text-center text-light bg-dark">
           <thead>
