@@ -80,3 +80,22 @@
   color: $detailsOrange-color;
   border: 1.5px solid $detailsGreen-color;
 }
+
+
+.item-enter {
+  opacity: 0.60;
+}
+
+.item-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.item-exit {
+  opacity: 1;
+}
+
+.item-exit-active {
+  opacity: 0.60;
+  transition: opacity 500ms ease-out;
+}
