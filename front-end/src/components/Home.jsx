@@ -1,11 +1,71 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import "../assets/styles/components/Home.scss";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { showCategories } from "../redux/categories";
 
 const Home = () => {
+  const scrollRef = useRef(null);
+  const homeBodyRef = useRef(null);
+  const svgRef = useRef(null);
+  const bannerRef = useRef(null);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.categories);
+
+  useEffect(() => {
+    const headerHeight = 80;
+    window.scroll(0, -headerHeight);
+    setTimeout(() => {
+      if (window.location.pathname === "/") {
+        scrollRef.current.scrollIntoView();
+        disableBodyScroll(homeBodyRef, {
+          reserveScrollBarGap: true,
+        });
+      }
+    }, 4000);
+    // Restart svg animation
+    restartAnimation();
+  });
+
+  useEffect(() => {
+    dispatch(showCategories());
+    return () => {
+      enableBodyScroll(homeBodyRef);
+    };
+  }, []);
+
+  const restartAnimation = () => {
+    bannerRef.current.classList.toggle("d-none");
+    // La línea de abajo hace que el browser haga un reflow del DOM, reiniciando la animacion de ese elemento (es como si volviera a calcular todo del elemento para mostrarlo en pantalla)
+    void bannerRef.current.offsetWidth;
+    bannerRef.current.classList.toggle("d-none");
+  };
+
+  const handleMouseEnter = (e) => {
+    const div = e.target.parentNode.children[1];
+    div.classList.add("btnImgBox-focused");
+  };
+
+  const handleMouseLeave = (e) => {
+    const div = e.target.parentNode.children[1];
+    div.classList.remove("btnImgBox-focused");
+  };
+
+  const selectCategory = (e) => {
+    const category = e.target.parentNode.children[1].textContent;
+    history.push(`/products?category=${category}`);
+  };
+
+  const searchProduct = (e) => {};
+
   return (
-    <div className="homeBody" /* transition-style="in:custom:swoopy" */>
-      <section className="banner">
+    <div
+      className="homeBody"
+      ref={homeBodyRef} /* transition-style="in:custom:swoopy" */
+    >
+      <section className="banner" ref={bannerRef}>
         <div>
           <svg
             id="logo-deluxo"
@@ -13,6 +73,7 @@ const Home = () => {
             width="387.1499938964844"
             height="180.1199951171875"
             viewBox="0 0 387.15 180.12"
+            ref={svgRef}
           >
             <ellipse
               id="elipse"
@@ -228,46 +289,57 @@ const Home = () => {
           <div className="sidebarLinks">
             <div className="sidebarCat">
               <div className="sidebarTitle">Shop by Category</div>
-              <div className="sidebarItems">
-                <Link>T-Shirts</Link>
-              </div>
-              <div className="sidebarItems">
-                <Link>T-Shirts</Link>
-              </div>
-              <div className="sidebarItems">
-                <Link>T-Shirts</Link>
-              </div>
-              <div className="sidebarItems">
-                <Link>T-Shirts</Link>
-              </div>
-              <div className="sidebarItems">
-                <Link>T-Shirts</Link>
-              </div>
+              {categories.map((category, i) => (
+                <div className="sidebarItems" key={i}>
+                  <Link to={`/products?category=${category}`}>{category}</Link>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         <section className="mainContent">
           <div className="col-1">
-            <div className="imgBox-2">
+            <div
+              className="imgBox-2"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={selectCategory}
+            >
               <img src="https://static.zumiez.com/skin/frontend/delorum/default/images/crunchyroll-godzilla-collection-us-june2021-444x500.jpg" />
               <div className="btnImgBox">Hoodies</div>
             </div>
             <div className="separator"></div>
-            <div className="imgBox-1">
+            <div
+              className="imgBox-1"
+              onMouseOver={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={selectCategory}
+            >
               <img src="https://static.zumiez.com/skin/frontend/delorum/default/images/multibrand-mens-board-shorts-may2021-444x500.jpg" />
               <div className="btnImgBox">Shorts</div>
             </div>
           </div>
 
           <div className="col-2">
-            <div className="imgBox-1">
+            <div
+              className="imgBox-1"
+              onMouseOver={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={selectCategory}
+            >
               <img src="https://static.zumiez.com/skin/frontend/delorum/default/images/multibrand-mens-denim-pants-june2021-444x360.jpg" />
-              <div className="btnImgBox">Denim</div>
+              <div className="btnImgBox">Jeans</div>
             </div>
             <div className="separator"></div>
 
-            <div className="imgBox-2">
+            <div
+              className="imgBox-2"
+              ref={scrollRef}
+              onMouseOver={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={selectCategory}
+            >
               <img src="https://static.zumiez.com/skin/frontend/delorum/default/images/vans-womens-pink-windbreaker-jacket-spring-catalog-mar2021-444x500.jpg" />
               <div className="btnImgBox">Jackets</div>
             </div>

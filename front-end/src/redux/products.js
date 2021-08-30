@@ -19,14 +19,20 @@ export const selectProduct = createAsyncThunk(
 export const selectProductsByCategory = createAsyncThunk(
   "SELECT_PRODUCTS_BY_CATEGORY",
   (category) => {
+    const products = {
+      products: [],
+      selectedProduct: {},
+    };
+    if (category === "All") {
+      return axios.get(API_URL + "/api/products").then((res) => {
+        products.products = res.data
+        return products
+      });
+    }
     return axios
       .get(`${API_URL}/api/products/filter?category=${category}`)
       .then((res) => res.data)
       .then((filteredProducts) => {
-        const products = {
-          products: [],
-          selectedProduct: {},
-        };
         products.products.push(...filteredProducts);
         return products;
       });

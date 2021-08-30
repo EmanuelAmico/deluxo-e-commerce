@@ -54,7 +54,6 @@ html {
   scrollbar-track-color: $main-color;
   scrollbar-arrow-color: $main-color;
   scrollbar-shadow-color: $secondary-color;
-  scrollbar-dark-shadow-color: $secondary-color;
 }
 
 ::-webkit-scrollbar {
@@ -82,7 +81,7 @@ html {
   background-color: $secondary-color;
 }
 
-::-webkit-scrollbar-button:vertical:decrement{
+::-webkit-scrollbar-button:vertical:decrement {
   height: 80px;
 }
 

@@ -218,6 +218,7 @@ function Header() {
         {user.isLoggedIn ? (
           <Link to="/user">Welcome: {user.full_name}</Link>
         ) : null}
+        <Link to="/">Home</Link>
         <Link to="/products">Products</Link>
         <Link to="/cart">Shopping Cart</Link>
         {user.isLoggedIn ? (

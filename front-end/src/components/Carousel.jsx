@@ -5,12 +5,13 @@ import {
   selectProduct,
   selectProductsByCategory,
 } from "../redux/products";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Card from "./Card";
 import "../assets/styles/components/Carousel.scss";
 import { setProductsAddedToCart } from "../redux/productsAdded";
 import { showCategories } from "../redux/categories";
 import generateNotification from "../utils/generateNotification";
+import queryString from "query-string";
 
 const Carousel = () => {
   const { products } = useSelector((state) => state.products);
@@ -18,10 +19,19 @@ const Carousel = () => {
   const productsInCart = useSelector((state) => state.productsAddedToCart);
   const categories = useSelector((state) => state.categories);
   const categoriesDivRef = useRef(null);
+  const location = useLocation();
+  const query = queryString.parse(location.search);
 
   useEffect(() => {
-    dispatch(showProduct());
-    dispatch(showCategories());
+    if (!categories.length) {
+      dispatch(showCategories());
+    }
+    if (query.category === "All" || !Object.keys(query).length) {
+      dispatch(showProduct());
+    } else {
+      dispatch(selectProductsByCategory(query.category));
+    }
+    window.scroll({ top: 0 });
   }, []);
 
   function addProduct(product) {
@@ -54,23 +64,37 @@ const Carousel = () => {
       if (categoryButton !== e.target) {
         categoryButton.classList.remove("focused");
       } else {
-        console.log(categoryButton.classList);
         categoryButton.classList.add("focused");
       }
     }
-    const category = e.target.textContent;
+    const category = e.target.name;
     dispatch(selectProductsByCategory(category));
   }
 
   return (
     <div className={products.length ? null : "vh-100"}>
       <div className="categories" ref={categoriesDivRef}>
+        <button
+          name="All"
+          onClick={handleClick}
+          className={
+            query.category === "All" || !Object.keys(query).length
+              ? "categoryButton focused"
+              : "categoryButton"
+          }
+        >
+          All
+        </button>
         {categories.map((category) => (
           <button
             key={category}
             name={category}
             onClick={handleClick}
-            className="categoryButton"
+            className={
+              query.category === category
+                ? "categoryButton focused"
+                : "categoryButton"
+            }
           >
             {category}
           </button>

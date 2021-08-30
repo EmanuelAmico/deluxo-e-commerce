@@ -24,8 +24,7 @@
   padding-bottom: 3em;
 }
 #content {
-  width: 100vw;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 150px);
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -92,16 +91,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1em;
+  padding: 3.2rem;
 }
 .imgBox-1 {
   height: 38%;
   width: 100%;
+  cursor: pointer;
   /* border: 3px solid blue; */
 }
 .imgBox-2 {
   height: 58%;
   width: 100%;
+  cursor: pointer;
+  /* border-bottom: 2em solid $detailsLila-color; */
   /* border: 3px solid green; */
 }
 .imgBox-1 img,
@@ -114,6 +116,7 @@
   height: 4%;
 }
 .btnImgBox {
+  transition: all 0.25s;
   position: relative;
   transform: translateY(-1.5em);
   /* border: 2px solid purple; */
@@ -126,7 +129,7 @@
   justify-content: center;
 }
 
-.btnImgBox:hover {
+.btnImgBox-focused {
   background-color: $detailsPink-color;
 }
 
@@ -138,6 +141,9 @@
 .searchBox {
   margin-top: 1em;
   width: 80%;
+}
+.searchBtn {
+  cursor: pointer;
 }
 .input-wrapper {
   display: flex;

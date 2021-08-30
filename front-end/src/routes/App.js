@@ -14,12 +14,14 @@ import Products from "../components/Products";
 import EditProduct from "../components/EditProduct";
 import CreateProduct from "../components/CreateProduct";
 import Orders from "../components/Orders";
+import Home from "../components/Home.jsx"
 
 const App = () => {
   return (
     <BrowserRouter>
       <Layout>
         <Switch>
+          <Route exact path="/" component={Home} />
           <Route exact path="/login" component={LogIn} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/products" component={Carousel} />
@@ -32,7 +34,7 @@ const App = () => {
           <Route exact path="/editproduct/:id" component={EditProduct} />
           <Route exact path="/createproduct/" component={CreateProduct} />
           <Route exact path="/orders/:id" component={Orders} />
-          <Redirect to={"/products"} />
+          <Redirect to={"/"} />
         </Switch>
       </Layout>
     </BrowserRouter>
