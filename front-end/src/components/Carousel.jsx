@@ -12,6 +12,7 @@ import { setProductsAddedToCart } from "../redux/productsAdded";
 import { showCategories } from "../redux/categories";
 import generateNotification from "../utils/generateNotification";
 import queryString from "query-string";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const Carousel = () => {
   const { products } = useSelector((state) => state.products);
@@ -102,30 +103,36 @@ const Carousel = () => {
       </div>
 
       <div className="wrapper">
-        <div className="even-columns">
-          {products.map((product) => (
-            <div className="prodCard" key={product.id}>
-              <Link
-                onClick={() => dispatch(selectProduct(product.id))}
-                to={`/products/${product.id}`}
+          <TransitionGroup className="even-columns">
+            {products.length && products.map((product) => (
+              <CSSTransition
+                key={product.id}
+                timeout={1000}
+                classNames="item"
               >
-                <div className="col">
-                  <Card product={product} />
-                </div>
-              </Link>
+                <div className="prodCard">
+                  <Link
+                    onClick={() => dispatch(selectProduct(product.id))}
+                    to={`/products/${product.id}`}
+                  >
+                    <div className="col">
+                      <Card product={product} />
+                    </div>
+                  </Link>
 
-              <div className="btnDiv">
-                <button
-                  onClick={() => addProduct(product)}
-                  type="submit"
-                  className="prodBtn"
-                >
-                  Add to cart
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+                  <div className="btnDiv">
+                    <button
+                      onClick={() => addProduct(product)}
+                      type="submit"
+                      className="prodBtn"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
+                </div>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
       </div>
     </div>
   );
