@@ -27,7 +27,6 @@ const Checkout = () => {
       );
       localStorage.removeItem("shopcartId");
       localStorage.removeItem("orderId");
-      alert("Order Completed");
       history.push("/products");
       dispatch(setOrder({}));
       generateNotification("success", "Success!", "Order is completed.");
@@ -43,7 +42,6 @@ const Checkout = () => {
       );
       localStorage.removeItem("orderId");
       localStorage.removeItem("shopcartId");
-      alert("Order was cancelled.");
       history.push("/products");
       dispatch(setOrder({}));
       generateNotification("success", "Success!", "Order was cancelled.");
