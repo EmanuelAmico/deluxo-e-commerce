@@ -8,6 +8,7 @@ import { setProductsAddedToCart } from "../redux/productsAdded";
 import { setOrders } from "../redux/orders";
 import API_URL from "../config/env";
 import generateNotification from "../utils/generateNotification";
+import { clearProducts } from "../redux/products";
 
 function Header() {
   const dispatch = useDispatch();
@@ -52,7 +53,8 @@ function Header() {
     );
     dispatch(setProductsAddedToCart([]));
     dispatch(setOrders([]));
-    history.push("/products");
+    dispatch(clearProducts());
+    history.push("/");
     generateNotification("success", "Success!", "You logged out.");
   };
 
@@ -219,7 +221,7 @@ function Header() {
           <Link to="/user">Welcome: {user.full_name}</Link>
         ) : null}
         <Link to="/">Home</Link>
-        <Link to="/products">Products</Link>
+        <Link to="/products?category=All">Products</Link>
         <Link to="/cart">Shopping Cart</Link>
         {user.isLoggedIn ? (
           <button onClick={handleLogOut}> Logout </button>

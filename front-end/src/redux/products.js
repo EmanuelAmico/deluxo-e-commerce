@@ -1,4 +1,8 @@
-import { createReducer, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createReducer,
+  createAsyncThunk,
+  createAction,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 import API_URL from "../config/env";
 
@@ -25,8 +29,8 @@ export const selectProductsByCategory = createAsyncThunk(
     };
     if (category === "All") {
       return axios.get(API_URL + "/api/products").then((res) => {
-        products.products = res.data
-        return products
+        products.products = res.data;
+        return products;
       });
     }
     return axios
@@ -35,13 +39,36 @@ export const selectProductsByCategory = createAsyncThunk(
       .then((filteredProducts) => {
         products.products.push(...filteredProducts);
         return products;
-      });
+      })
+      .catch((error) => console.log(error));
+  }
+);
+
+export const selectProductsBySearch = createAsyncThunk(
+  "SELECT_PRODUCTS_BY_SEARCH",
+  (search) => {
+    const products = {
+      products: [],
+      selectedProduct: {},
+    };
+    return axios
+      .get(`${API_URL}/api/products/search?key=${search}`)
+      .then((res) => res.data)
+      .then((searchProducts) => {
+        products.products.push(...searchProducts);
+        return products;
+      })
+      .catch((error) => console.log(error));
   }
 );
 
 export const showProduct = createAsyncThunk("SHOW_PRODUCT", () => {
   return axios.get(API_URL + "/api/products").then((res) => res.data);
 });
+
+export const clearSelectedProduct = createAction("CLEAR_SELECTED_PRODUCT");
+
+export const clearProducts = createAction("CLEAR_PRODUCTS");
 
 const productReducer = createReducer(initialState, {
   [showProduct.fulfilled]: (state, action) => {
@@ -51,6 +78,14 @@ const productReducer = createReducer(initialState, {
     state.selectedProduct = action.payload;
   },
   [selectProductsByCategory.fulfilled]: (state, action) => action.payload,
+  [selectProductsBySearch.fulfilled]: (state, action) => action.payload,
+  [clearSelectedProduct]: (state, action) => {
+    state.selectedProduct = {};
+  },
+  [clearProducts]: (state, action) => ({
+    products: [],
+    selectedProduct: {},
+  }),
 });
 
 export default productReducer;

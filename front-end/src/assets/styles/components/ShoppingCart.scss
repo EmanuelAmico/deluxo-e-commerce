@@ -1,3 +1,21 @@
-.shopcart{
+.shopcart {
   height: calc(100vh - 150px);
+}
+
+.no-products {
+  height: calc(100vh - 150px);
+}
+
+.no-products-text {
+  font-size: 4.8rem;
+}
+
+.no-products-bg {
+  background-image: url("https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-10-512.png");
+  background-repeat: no-repeat;
+  background-position: top;
+}
+
+.no-products-match {
+  height: calc(100vh - 160px);
 }

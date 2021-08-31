@@ -10,17 +10,20 @@ const Home = () => {
   const homeBodyRef = useRef(null);
   const svgRef = useRef(null);
   const bannerRef = useRef(null);
+  const inputRef = useRef(null);
   const history = useHistory();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
-    if(categories.length) {
+    if (categories.length) {
       const headerHeight = 80;
       window.scroll(0, -headerHeight);
       setTimeout(() => {
         if (window.location.pathname === "/") {
-          scrollRef.current.scrollIntoView();
+          if (scrollRef) {
+            scrollRef.current.scrollIntoView();
+          }
           disableBodyScroll(homeBodyRef, {
             reserveScrollBarGap: true,
           });
@@ -30,16 +33,18 @@ const Home = () => {
       restartAnimation();
     }
   });
-  
+
   useEffect(() => {
-    dispatch(showCategories());
+    if (!categories.length) {
+      dispatch(showCategories());
+    }
     return () => {
       enableBodyScroll(homeBodyRef);
     };
   }, []);
 
   const restartAnimation = () => {
-    if(bannerRef.current.classList.contains("opacity-0")) {
+    if (bannerRef.current.classList.contains("opacity-0")) {
       bannerRef.current.classList.remove("opacity-0");
       bannerRef.current.classList.add("opacity-100");
     }
@@ -64,7 +69,15 @@ const Home = () => {
     history.push(`/products?category=${category}`);
   };
 
-  const searchProduct = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const searchProduct = (e) => {
+    if (e.key === "Enter" || e.target.attributes.name.value === "magnifier") {
+      history.push(`/products?search=${inputRef.current.value}`);
+    }
+  };
 
   return (
     <div
@@ -204,42 +217,42 @@ const Home = () => {
                 transform="translate(-25 -29.83)"
                 fill="#9595e9"
                 className={categories.length ? "svg-elem-12" : null}
-                ></path>
+              ></path>
               <path
                 id="E"
                 d="M160.37,158.16H85.2L98.56,86.09h73.83l-3.71,20H119.53l-1.16,6.31H167.7l-3.53,19H114.85l-1.3,7.1H164Z"
                 transform="translate(-25 -29.83)"
                 fill="#9595e9"
                 className={categories.length ? "svg-elem-13" : null}
-                ></path>
+              ></path>
               <path
                 id="L"
                 d="M221.85,158.16l-58.42-.37L176.8,85.72l35.17.37-9.7,52.11h23.3Z"
                 transform="translate(-25 -29.83)"
                 fill="#9595e9"
                 className={categories.length ? "svg-elem-14" : null}
-                ></path>
+              ></path>
               <path
                 id="U"
                 d="M251.92,159a38.75,38.75,0,0,1-13.92-2.3,16.33,16.33,0,0,1-8.77-7.26,15.91,15.91,0,0,1-1.85-7.94,28.7,28.7,0,0,1,.46-5l9.37-50.4H262l-1,5.29q-3.06,16.71-5.25,28.26l-2.69,14.62c-.31,1.73-.49,2.68-.55,2.83a6.26,6.26,0,0,0-.1,1.07,2.38,2.38,0,0,0,.51,1.58,2.49,2.49,0,0,0,1.95.6,3.3,3.3,0,0,0,3.62-3.16c.13-.58.66-3.43,1.6-8.53l3.25-17.5q1.83-9.84,3.23-17.45L268,86.09h25.1l-9.42,50.72q-2.22,11.06-10.74,16.59T251.92,159Z"
                 transform="translate(-25 -29.83)"
                 fill="#9595e9"
                 className={categories.length ? "svg-elem-15" : null}
-                ></path>
+              ></path>
               <path
                 id="X"
                 d="M344.13,158.16H317.3l-2.73-10.3-6.45,10.3H281.3l25.1-37.4L295.54,86.09h26.78l2.73,11.84,7.24-11.84H357.4l-24.18,38.1Z"
                 transform="translate(-25 -29.83)"
                 fill="#9595e9"
                 className={categories.length ? "svg-elem-16" : null}
-                ></path>
+              ></path>
               <path
                 id="O"
                 d="M373.55,159.23q-8.69,0-14.11-2-10.53-3.84-10.53-14.57v-1q0-5.1,2.78-19.77,1.21-6.87,2.14-11a48.46,48.46,0,0,1,2.08-7.15,26.88,26.88,0,0,1,10-12.85q8-5.52,21.35-5.53,16.47,0,22.08,8.08a16.87,16.87,0,0,1,2.83,9.79,49.77,49.77,0,0,1-.55,6.89c-.37,2.62-1,6.3-1.9,11.07q-1.49,7.84-2.63,12.34a62.67,62.67,0,0,1-2.29,7.43Q398.65,159.23,373.55,159.23Zm3.66-18.8a3.45,3.45,0,0,0,3.62-2.6q2.42-7.23,5.2-24.4a50.75,50.75,0,0,0,.7-6,4.77,4.77,0,0,0-.52-2.32c-.34-.62-1.09-.93-2.27-.93a3.33,3.33,0,0,0-2.57.93,7.53,7.53,0,0,0-1.47,2.79q-1.15,3.94-3.11,14.34a103.8,103.8,0,0,0-2.18,15.73v.18a2.7,2.7,0,0,0,.51,1.6A2.44,2.44,0,0,0,377.21,140.43Z"
                 transform="translate(-25 -29.83)"
                 fill="#9595e9"
                 className={categories.length ? "svg-elem-17" : null}
-                ></path>
+              ></path>
             </g>
             <path
               id="star-top-small"
@@ -275,17 +288,27 @@ const Home = () => {
 
       <div id="content">
         <section className="sidebar">
-          <form className="formContainer">
+          <form className="formContainer" onSubmit={handleSubmit}>
             <div className="searchBox">
               <div className="input-wrapper">
                 <input
                   className="inputStyle"
                   type="text"
                   placeholder="Search..."
+                  name="search"
+                  onKeyPress={searchProduct}
+                  ref={inputRef}
                 />
-                <div className="searchBtn">
-                  <svg className="svg-icon" viewBox="0 0 20 20">
-                    <path d="M18.125,15.804l-4.038-4.037c0.675-1.079,1.012-2.308,1.01-3.534C15.089,4.62,12.199,1.75,8.584,1.75C4.815,1.75,1.982,4.726,2,8.286c0.021,3.577,2.908,6.549,6.578,6.549c1.241,0,2.417-0.347,3.44-0.985l4.032,4.026c0.167,0.166,0.43,0.166,0.596,0l1.479-1.478C18.292,16.234,18.292,15.968,18.125,15.804 M8.578,13.99c-3.198,0-5.716-2.593-5.733-5.71c-0.017-3.084,2.438-5.686,5.74-5.686c3.197,0,5.625,2.493,5.64,5.624C14.242,11.548,11.621,13.99,8.578,13.99 M16.349,16.981l-3.637-3.635c0.131-0.11,0.721-0.695,0.876-0.884l3.642,3.639L16.349,16.981z"></path>
+                <div className="searchBtn" onClick={searchProduct}>
+                  <svg
+                    className="svg-icon"
+                    viewBox="0 0 20 20"
+                    name="magnifier"
+                  >
+                    <path
+                      name="magnifier"
+                      d="M18.125,15.804l-4.038-4.037c0.675-1.079,1.012-2.308,1.01-3.534C15.089,4.62,12.199,1.75,8.584,1.75C4.815,1.75,1.982,4.726,2,8.286c0.021,3.577,2.908,6.549,6.578,6.549c1.241,0,2.417-0.347,3.44-0.985l4.032,4.026c0.167,0.166,0.43,0.166,0.596,0l1.479-1.478C18.292,16.234,18.292,15.968,18.125,15.804 M8.578,13.99c-3.198,0-5.716-2.593-5.733-5.71c-0.017-3.084,2.438-5.686,5.74-5.686c3.197,0,5.625,2.493,5.64,5.624C14.242,11.548,11.621,13.99,8.578,13.99 M16.349,16.981l-3.637-3.635c0.131-0.11,0.721-0.695,0.876-0.884l3.642,3.639L16.349,16.981z"
+                    ></path>
                   </svg>
                 </div>
               </div>
