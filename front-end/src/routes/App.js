@@ -33,8 +33,8 @@ const App = () => {
           <Route exact path="/productslist" component={Products} />
           <Route exact path="/editproduct/:id" component={EditProduct} />
           <Route exact path="/createproduct/" component={CreateProduct} />
-          <Route exact path="/orders/:id" component={Orders} />
-          <Redirect to={"/"} />
+          <Route exact path="/orders/user/:id" component={Orders} />
+          <Redirect to="/" />
         </Switch>
       </Layout>
     </BrowserRouter>

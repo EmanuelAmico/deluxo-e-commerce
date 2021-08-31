@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
+import { useLocation, useRouteMatch } from "react-router-dom";
 import "../assets/styles/components/SingleCard.scss";
 import { selectProduct } from "../redux/products";
 import { setProductsAddedToCart } from "../redux/productsAdded";
@@ -11,6 +11,7 @@ function SingleCard() {
   const productsInCart = useSelector((state) => state.productsAddedToCart);
   const match = useRouteMatch();
   const dispatch = useDispatch();
+  const { productId } = match.params;
 
   function addProduct(product) {
     const alreadyInCart = productsInCart.map(
@@ -37,23 +38,20 @@ function SingleCard() {
   }
 
   useEffect(() => {
-    if (!Object.keys(selectedProduct).length) {
-      const { productId } = match.params;
-      dispatch(selectProduct(productId));
-    }
-  }, []);
+    dispatch(selectProduct(productId));
+  }, [productId]);
 
   return (
-    <div className="container text-dark singleCard p-5">
-      <div className="row d-flex align-items-center w-100 g-0">
-        <div className="col-md-4 h-100">
+    <div className="container text-dark singleCard">
+      <div className="row d-flex justify-content-center align-items-center w-100 g-0">
+        <div className="col-md-6 h-100 d-flex align-items-center p-5">
           <img
             className="cardImg"
             src={selectedProduct.image}
             alt="t-shirt"
           ></img>
         </div>
-        <div className="col-md-8 h-100 d-flex flex-column justify-content-center align-items-center">
+        <div className="col-md-6 h-100 d-flex flex-column justify-content-center align-items-center">
           <div>
             <h2 className="mb-4 text-light outline-dark singleCard__title">
               {selectedProduct.name}
@@ -63,7 +61,7 @@ function SingleCard() {
                 <strong>Price:</strong> ${selectedProduct.price}
               </li>
               <li className="list-group-item">
-                <strong>Stock:</strong> {selectedProduct.stock}
+                <strong>Stock:</strong> {selectedProduct.stock} units left
               </li>
               <li className="list-group-item">
                 <strong>Description:</strong> {selectedProduct.description}

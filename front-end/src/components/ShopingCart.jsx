@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -7,7 +7,7 @@ import {
 } from "../redux/productsAdded";
 import { setOrder } from "../redux/order";
 import axios from "axios";
-import '../assets/styles/components/ShoppingCart.scss'
+import "../assets/styles/components/ShoppingCart.scss";
 import API_URL from "../config/env";
 
 export default function ShoppingCart() {
@@ -15,6 +15,7 @@ export default function ShoppingCart() {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const dispatch = useDispatch();
+  const [disableButtons, setDisableButtons] = useState(false);
 
   useEffect(() => {
     if (!productsInCart.length && user.id)
@@ -75,7 +76,8 @@ export default function ShoppingCart() {
 
   const handleOnClickCheckOut = async () => {
     try {
-      if (!user.isLoggedIn) history.push("/login");
+      setDisableButtons(true);
+      if (!user.isLoggedIn) return history.push("/login");
       if (localStorage.getItem("orderId")) {
         await axios.put(
           `${API_URL}/api/shopcarts/${localStorage.getItem("shopcartId")}`,
@@ -118,11 +120,11 @@ export default function ShoppingCart() {
       );
       history.push("/checkout");
     } catch (error) {
-      console.log({ error });
+      console.log(error);
     }
   };
 
-  return (
+  return productsInCart.length ? (
     <div className="container pt-5 text-primary shopcart">
       <div className="row mt-3">
         <table className="table  text-center text-light bg-dark">
@@ -166,6 +168,7 @@ export default function ShoppingCart() {
                   <button
                     onClick={() => handleRemoveCartItem(product.id)}
                     className="btn btn-outline-danger btn-lg"
+                    disabled={disableButtons}
                   >
                     Remove
                   </button>
@@ -175,7 +178,7 @@ export default function ShoppingCart() {
           </tbody>
         </table>
       </div>
-      <div className="d-flex justify-content-end pe-4 me-3">
+      <div className="d-flex justify-content-end pe-4 me-2">
         {productsInCart.length ? (
           <>
             <h4 className="w-100 mb-0 d-flex justify-content-end align-items-center pe-4">
@@ -184,11 +187,21 @@ export default function ShoppingCart() {
             <button
               className="btn btn-outline-success btn-lg"
               onClick={handleOnClickCheckOut}
+              disabled={disableButtons}
             >
               Checkout
             </button>
           </>
         ) : null}
+      </div>
+    </div>
+  ) : (
+    <div className="container no-products d-flex justify-content-center align-items-center">
+      <div className="row-md-12 d-flex flex-column justify-content-center h-75 no-products-bg">
+        <h2 className="fs-1 py-2">Oops!..</h2>
+        <h2 className="no-products-text">
+          The are no products in your cart right now.
+        </h2>
       </div>
     </div>
   );

@@ -4,8 +4,10 @@ import {
   showProduct,
   selectProduct,
   selectProductsByCategory,
+  selectProductsBySearch,
+  clearSelectedProduct,
 } from "../redux/products";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import Card from "./Card";
 import "../assets/styles/components/Carousel.scss";
 import { setProductsAddedToCart } from "../redux/productsAdded";
@@ -16,24 +18,32 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const Carousel = () => {
   const { products } = useSelector((state) => state.products);
+  const { selectedProduct } = useSelector((store) => store.products);
   const dispatch = useDispatch();
   const productsInCart = useSelector((state) => state.productsAddedToCart);
   const categories = useSelector((state) => state.categories);
   const categoriesDivRef = useRef(null);
   const location = useLocation();
   const query = queryString.parse(location.search);
+  const history = useHistory();
+  const [searchString, setSearchString] = useState(query.search);
 
   useEffect(() => {
+    if (Object.keys(selectProduct).length) {
+      dispatch(clearSelectedProduct());
+    }
     if (!categories.length) {
       dispatch(showCategories());
     }
     if (query.category === "All" || !Object.keys(query).length) {
       dispatch(showProduct());
+    } else if (query.search) {
+      dispatch(selectProductsBySearch(query.search));
     } else {
       dispatch(selectProductsByCategory(query.category));
     }
     window.scroll({ top: 0 });
-  }, []);
+  }, [query.category]);
 
   function addProduct(product) {
     const alreadyInCart = productsInCart.map(
@@ -68,16 +78,30 @@ const Carousel = () => {
         categoryButton.classList.add("focused");
       }
     }
-    const category = e.target.name;
-    dispatch(selectProductsByCategory(category));
+    const type = e.target.attributes.btn_type.value;
+    const filter = e.target.name;
+    history.push(`/products?${type}=${filter}`);
   }
 
   return (
     <div className={products.length ? null : "vh-100"}>
       <div className="categories" ref={categoriesDivRef}>
+        {searchString && (
+          <button
+            name={searchString}
+            btn_type="search"
+            onClick={handleClick}
+            className={
+              query.search ? "categoryButton focused" : "categoryButton"
+            }
+          >
+            Search
+          </button>
+        )}
         <button
           name="All"
           onClick={handleClick}
+          btn_type="category"
           className={
             query.category === "All" || !Object.keys(query).length
               ? "categoryButton focused"
@@ -90,6 +114,7 @@ const Carousel = () => {
           <button
             key={category}
             name={category}
+            btn_type="category"
             onClick={handleClick}
             className={
               query.category === category
@@ -103,18 +128,12 @@ const Carousel = () => {
       </div>
 
       <div className="wrapper">
-          <TransitionGroup className="even-columns">
-            {products.length && products.map((product) => (
-              <CSSTransition
-                key={product.id}
-                timeout={1000}
-                classNames="item"
-              >
+        <TransitionGroup className="even-columns">
+          {products.length ? (
+            products.map((product) => (
+              <CSSTransition key={product.id} timeout={1000} classNames="item">
                 <div className="prodCard">
-                  <Link
-                    onClick={() => dispatch(selectProduct(product.id))}
-                    to={`/products/${product.id}`}
-                  >
+                  <Link to={`/products/${product.id}`}>
                     <div className="col">
                       <Card product={product} />
                     </div>
@@ -131,8 +150,20 @@ const Carousel = () => {
                   </div>
                 </div>
               </CSSTransition>
-            ))}
-          </TransitionGroup>
+            ))
+          ) : (
+            <CSSTransition timeout={1000} classNames="item">
+              <div className="container no-products-match d-flex justify-content-center align-items-center">
+                <div className="row-md-12 d-flex flex-column justify-content-center h-75 no-products-bg">
+                  <h2 className="fs-1 py-2">Oops!..</h2>
+                  <h2 className="no-products-text">
+                    No product matched with that filter
+                  </h2>
+                </div>
+              </div>
+            </CSSTransition>
+          )}
+        </TransitionGroup>
       </div>
     </div>
   );

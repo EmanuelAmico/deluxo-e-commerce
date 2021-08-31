@@ -56,7 +56,10 @@ const getProductsBySearch = async (req, res, next) => {
     const products = await Products.findAll({
       where: {
         name: {
-          [Op.substring]: key,
+          [Op.or]: {
+            [Op.iLike]: `%${key}%`,
+            [Op.substring]: key,
+          }
         },
       },
     });

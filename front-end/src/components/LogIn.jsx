@@ -27,7 +27,7 @@ function LogIn() {
       localStorage.setItem("token", user.token);
       dispatch(setUser({ ...user, isLoggedIn: true }));
       generateNotification("success", "Success!", "You are logged in.");
-      history.push("/products");
+      history.push("/");
     } catch (error) {
       if (error.response.status === 400 || 401)
         generateNotification("error", "Error!", "Invalid credentials.");

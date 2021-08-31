@@ -12,9 +12,9 @@
   color: $text-color;
   border-radius: 2rem;
   border: none;
-  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
   margin: 0 1.6rem;
-  &:focus{
+  &:focus {
     background-color: $detailsLila-color;
   }
   &:hover {
@@ -22,7 +22,7 @@
   }
 }
 
-.categoryButton{
+.categoryButton {
   background-color: $main-color;
 }
 
@@ -81,9 +81,8 @@
   border: 1.5px solid $detailsGreen-color;
 }
 
-
 .item-enter {
-  opacity: 0.60;
+  opacity: 0.6;
 }
 
 .item-enter-active {
@@ -96,6 +95,6 @@
 }
 
 .item-exit-active {
-  opacity: 0.60;
+  opacity: 0.6;
   transition: opacity 500ms ease-out;
 }

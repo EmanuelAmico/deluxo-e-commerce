@@ -25,7 +25,9 @@ export const productsAddedToCartFromDb = createAsyncThunk(
         localStorage.setItem("orderId", order.id);
         return products;
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        error.response.status !== 404 && console.log(error);
+      });
   }
 );
 

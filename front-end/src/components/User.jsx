@@ -20,30 +20,28 @@ export default function User() {
             </li>
           </ul>
           {!user.is_admin ? (
-            <td>
-              <Link
-                className="btn btn-outline-primary btn-lg mt-3"
-                to={`/orders/${user.id}`}
-              >
-                Order History
-              </Link>
-            </td>
+            <Link
+              className="btn btn-outline-primary btn-lg mt-3"
+              to={`/orders/user/${user.id}`}
+            >
+              Order History
+            </Link>
           ) : null}
         </div>
       </div>
       <div>
         {user.is_admin ? (
           <>
-          <Link className="btn btn-primary btn-lg" to={"/userslist"}>
-            Edit Users
-          </Link>
-          <Link className="btn btn-success btn-lg" to={"/productslist"}>
-            Edit Product
-          </Link>
+            <Link className="btn btn-primary btn-lg" to={"/userslist"}>
+              Edit Users
+            </Link>
+            <Link className="btn btn-success btn-lg" to={"/productslist"}>
+              Edit Product
+            </Link>
             <Link className="btn btn-secondary btn-lg" to={"/createproduct"}>
               Create Product
             </Link>
-            </>
+          </>
         ) : null}
       </div>
     </div>
