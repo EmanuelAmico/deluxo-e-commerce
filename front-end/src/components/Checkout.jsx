@@ -38,7 +38,6 @@ const Checkout = () => {
       localStorage.removeItem("orderId");
       history.push(`/orders/user/${user.id}`);
       dispatch(setOrder({}));
-      dispatch(setProductsAddedToCart([]));
       generateNotification("success", "Success!", "Order is completed.");
     } catch (error) {
       console.log(error);
@@ -55,7 +54,6 @@ const Checkout = () => {
       localStorage.removeItem("orderId");
       history.push("/");
       dispatch(setOrder({}));
-      dispatch(setProductsAddedToCart([]));
       generateNotification("success", "Success!", "Order was cancelled.");
     } catch (error) {
       console.log(error);
