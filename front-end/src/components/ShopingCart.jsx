@@ -151,6 +151,7 @@ export default function ShoppingCart() {
                   <button
                     onClick={() => decrease(product)}
                     className="btn btn-outline-primary border-circle btn-lg mx-3"
+                    disabled={disableButtons}
                   >
                     -
                   </button>
@@ -159,6 +160,7 @@ export default function ShoppingCart() {
                     onClick={() => increase(product)}
                     className="btn btn-outline-primary btn-lg mx-3"
                     size="sm"
+                    disabled={disableButtons}
                   >
                     +
                   </button>
