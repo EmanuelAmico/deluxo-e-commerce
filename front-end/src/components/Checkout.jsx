@@ -6,16 +6,14 @@ import { setOrder } from "../redux/order";
 import API_URL from "../config/env";
 import generateNotification from "../utils/generateNotification";
 import "../assets/styles/components/Checkout.scss";
+import { setProductsAddedToCart } from "../redux/productsAdded";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order);
   const user = useSelector((state) => state.user);
   const history = useHistory();
-  const [disableButtons, setDisableButtons] = useState({
-    pay: false,
-    cancel: false,
-  });
+  const [disableButtons, setDisableButtons] = useState(false);
 
   if (!order.products) {
     history.push("/cart");
@@ -24,7 +22,7 @@ const Checkout = () => {
 
   const handlePay = async () => {
     try {
-      setDisableButtons({ ...disableButtons, cancel: true });
+      setDisableButtons(true);
       await axios.put(
         `${API_URL}/api/orders/${localStorage.getItem("orderId")}`,
         {
@@ -40,6 +38,7 @@ const Checkout = () => {
       localStorage.removeItem("orderId");
       history.push(`/orders/user/${user.id}`);
       dispatch(setOrder({}));
+      dispatch(setProductsAddedToCart([]));
       generateNotification("success", "Success!", "Order is completed.");
     } catch (error) {
       console.log(error);
@@ -48,14 +47,15 @@ const Checkout = () => {
 
   const handleCancel = async () => {
     try {
-      setDisableButtons({ ...disableButtons, pay: true });
+      setDisableButtons(true);
       await axios.delete(
         `${API_URL}/api/orders/${localStorage.getItem("orderId")}`
       );
       localStorage.removeItem("shopcartId");
       localStorage.removeItem("orderId");
-      history.push("/products");
+      history.push("/");
       dispatch(setOrder({}));
+      dispatch(setProductsAddedToCart([]));
       generateNotification("success", "Success!", "Order was cancelled.");
     } catch (error) {
       console.log(error);
@@ -87,14 +87,14 @@ const Checkout = () => {
                 <button
                   onClick={handlePay}
                   className="btn btn-outline-success btn-lg me-2"
-                  disabled={disableButtons.pay}
+                  disabled={disableButtons}
                 >
                   Pay Order
                 </button>
                 <button
                   onClick={handleCancel}
                   className="btn btn-outline-danger btn-lg"
-                  disabled={disableButtons.cancel}
+                  disabled={disableButtons}
                 >
                   Cancel
                 </button>
