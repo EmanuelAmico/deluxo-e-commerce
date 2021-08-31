@@ -91,6 +91,7 @@ export default function ShoppingCart() {
             products: productsInCart,
           })
         );
+        dispatch(setProductsAddedToCart([]));
         return history.push("/checkout");
       }
       /* Genera Carrito nuevo */
