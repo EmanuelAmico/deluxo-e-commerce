@@ -57,7 +57,7 @@ const getProductsBySearch = async (req, res, next) => {
       where: {
         name: {
           [Op.or]: {
-            [Op.iLike]: `%${key}%`,
+            [Op.iLike]: `%${key.endsWith("s") ? key.slice(0, key.length - 1) : key}%`,
             [Op.substring]: key,
           }
         },
