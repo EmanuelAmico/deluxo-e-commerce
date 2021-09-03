@@ -87,10 +87,6 @@ const getUserPendingOrders = async (req, res, next) => {
         },
       },
     });
-    if (!orders.length)
-      return res
-        .status(404)
-        .send("There are not pending orders for this user!.");
     res.status(200).send(orders);
   } catch (error) {
     next(error);

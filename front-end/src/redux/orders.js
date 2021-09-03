@@ -14,11 +14,11 @@ export const showUserCompletedOrders = createAsyncThunk(
   "SHOW_USER_COMPLETED_ORDERS",
   (userId) => {
     return axios
-      .get(`${API_URL}/api/users/${userId}/orders/completed`)
+      .get(`${API_URL}/api/users/${userId}/orders`)
       .then((res) => {
-        const order = res.data;
-        if (!order) return [];
-        return order;
+        const orders = res.data;
+        if (!orders) return [];
+        return orders;
       })
       .catch((error) => console.log(error));
   }

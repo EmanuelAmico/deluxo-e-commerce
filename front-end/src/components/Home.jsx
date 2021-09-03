@@ -4,6 +4,7 @@ import "../assets/styles/components/Home.scss";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { showCategories } from "../redux/categories";
+import { clearProducts } from "../redux/products";
 
 const Home = () => {
   const scrollRef = useRef(null);
@@ -14,6 +15,7 @@ const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
+  const { products } = useSelector((state) => state.products);
 
   useEffect(() => {
     if (categories.length) {
@@ -35,6 +37,9 @@ const Home = () => {
   });
 
   useEffect(() => {
+    if(products.length) {
+      dispatch(clearProducts())
+    }
     if (!categories.length) {
       dispatch(showCategories());
     }

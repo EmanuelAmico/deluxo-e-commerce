@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { setUser } from "../redux/user";
 import "../assets/styles/components/Header.scss";
-import { setProductsAddedToCart } from "../redux/productsAdded";
+import { productsAddedToCartFromDb, setProductsAddedToCart } from "../redux/productsAdded";
 import { setOrders } from "../redux/orders";
 import API_URL from "../config/env";
 import generateNotification from "../utils/generateNotification";
@@ -14,6 +14,7 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const history = useHistory();
+  const productsInCart = useSelector((state) => state.productsAddedToCart);
 
   useEffect(async () => {
     try {
@@ -31,6 +32,11 @@ function Header() {
       console.log(error);
     }
   }, []);
+
+  useEffect(() => {
+    if (!productsInCart.length && user.id)
+      dispatch(productsAddedToCartFromDb(user.id));
+  }, [user]);
 
   const handleLogOut = (e) => {
     localStorage.removeItem("token");

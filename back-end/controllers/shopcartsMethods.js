@@ -97,6 +97,37 @@ const putShopCartProduct = async (req, res, next) => {
   }
 };
 
+const putShopCartProduct = async (req, res, next) => {
+  try {
+    const { shopcartId, productId } = req.params;
+    const { quantity } = req.body;
+    if (quantity <= 0)
+      return res.status(400).send("Quantity cannot be zero or negative");
+    const product = await Products.findByPk(productId);
+    if (!product) return res.status(400).send("Product not found");
+    const shopCart = await Shopcarts.findByPk(shopcartId);
+    if (!shopCart) return res.status(400).send("Shopcart not found");
+    const shopcart_item = await ShopcartItems.findOne({
+      where: { productId },
+    });
+    if (quantity === shopcart_item.quantity)
+      return res.status(304).send("Quantity was not modified");
+    const total_price =
+      shopcart_item.quantity > quantity
+        ? shopCart.total_price -
+          product.price * (shopcart_item.quantity - quantity)
+        : shopCart.total_price +
+          product.price * (quantity - shopcart_item.quantity);
+    shopCart.total_price = total_price;
+    await shopCart.save();
+    shopcart_item.quantity = quantity;
+    await shopcart_item.save();
+    res.status(200).send(shopcart_item);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const putShopcart = async (req, res, next) => {
   try {
     const { shopCartId } = req.params;
@@ -106,30 +137,65 @@ const putShopcart = async (req, res, next) => {
     const shopcartItems = await ShopcartItems.findAll({
       where: { shopCartId },
     });
-    shopcartItems.forEach(async (shopcartItem, i) => {
-      try {
-        const product = await Products.findByPk(shopcartItem.productId);
-        const total_price =
-          shopcartItem.quantity > modifications[i].quantity
-            ? shopcart.total_price -
-              product.price *
-                (shopcartItem.quantity - modifications[i].quantity)
-            : shopcart.total_price +
-              product.price *
-                (modifications[i].quantity - shopcartItem.quantity);
-        if (modifications[i].quantity === 0) {
+    for (const shopcartItem of shopcartItems) {
+      const product = await Products.findByPk(shopcartItem.productId);
+      const modifiedProduct = modifications.find(
+        (product) => product.id === shopcartItem.productId
+      );
+      if (modifiedProduct) {
+        if (modifiedProduct.quantity === 0) {
           await shopcart.removeProduct(product);
         } else {
-          shopcartItem.quantity = modifications[i].quantity;
+          shopcartItem.quantity = modifiedProduct.quantity;
         }
-        shopcart.total_price = total_price;
-        await shopcart.save();
         await shopcartItem.save();
-      } catch (error) {
-        next(error);
       }
+    }
+    if (shopcartItems.length < modifications.length) {
+      const modifiedProducts = modifications.filter((product) => {
+        const truthArr = shopcartItems.map(
+          (shopcartItem) => shopcartItem.productId === product.id
+        );
+        return !truthArr.includes(true);
+      });
+      const productsIds = modifiedProducts.map((product) =>
+        product.id && product.quantity ? product.id : null
+      );
+      const newProducts = await Products.findAll({
+        where: {
+          id: {
+            [Op.or]: productsIds,
+          },
+        },
+      });
+      if (newProducts.length) {
+        await shopcart.addProducts(newProducts);
+      }
+      const updatedShopcartItems = await ShopcartItems.findAll({
+        where: { shopCartId },
+      });
+      for (const product of modifiedProducts) {
+        const shopcartItem = updatedShopcartItems.find(
+          (shopcartItem) => shopcartItem.productId === product.id
+        );
+        if (shopcartItem && shopcartItem.quantity !== product.quantity) {
+          shopcartItem.quantity = product.quantity;
+          await shopcartItem.save();
+        }
+      }
+    }
+    const updatedShopcartItems = await ShopcartItems.findAll({
+      where: { shopCartId },
     });
-    res.status(200).send(shopcartItems);
+    let total_price = 0;
+    for (const shopcartItem of updatedShopcartItems) {
+      const product = await Products.findByPk(shopcartItem.productId);
+      total_price += product.price * shopcartItem.quantity;
+    }
+    shopcart.total_price = total_price;
+    await shopcart.save();
+    const finalShopcart = await shopcart.getProducts();
+    res.status(200).send(finalShopcart);
   } catch (error) {
     next(error);
   }
@@ -142,7 +208,7 @@ const deleteShopcartProduct = async (req, res, next) => {
     const shopCart = await Shopcarts.findByPk(shopcartId);
     if (!shopCart) return res.status(400).send("Shopcart not found");
     const product = await shopCart.getProducts({ where: { id: productId } });
-    if (!product.length) return res.status(400).send("Product not found");
+    if (!product.length) return res.status(404).send("Product not found");
     await shopCart.removeProduct(product);
     res.sendStatus(204);
   } catch (error) {

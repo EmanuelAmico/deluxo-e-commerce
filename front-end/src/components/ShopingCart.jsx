@@ -20,7 +20,31 @@ export default function ShoppingCart() {
   useEffect(() => {
     if (!productsInCart.length && user.id)
       dispatch(productsAddedToCartFromDb(user.id));
-  }, [user]);
+    if (
+      productsInCart.length &&
+      productsInCart
+        .map((product) =>
+          Object.keys(product)
+            .map((property) => property === "shop_cart_items")
+            .includes(true)
+        )
+        .includes(true)
+    ) {
+      (async () => {
+        try {
+          setDisableButtons(true);
+          await axios.put(
+            `${API_URL}/api/shopcarts/${localStorage.getItem("shopcartId")}`,
+            productsInCart
+          );
+          dispatch(productsAddedToCartFromDb(user.id));
+          setDisableButtons(false);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  }, []);
 
   const total = function total() {
     let totalPrice = 0;
@@ -37,9 +61,25 @@ export default function ShoppingCart() {
     });
     productsInCartCopy.forEach((copyProduct) => {
       if (copyProduct.id == product.id) {
-        if (copyProduct.quantity === 1) handleRemoveCartItem(copyProduct.id);
+        if (copyProduct.quantity === 1) handleRemoveCartItem(copyProduct);
         if (copyProduct.quantity > 1) {
           copyProduct.quantity -= 1;
+          if (product.shop_cart_items) {
+            (async () => {
+              try {
+                setDisableButtons(true);
+                await axios.put(
+                  `${API_URL}/api/shopcarts/${localStorage.getItem(
+                    "shopcartId"
+                  )}`,
+                  productsInCartCopy
+                );
+                setDisableButtons(false);
+              } catch (error) {
+                console.log(error);
+              }
+            })();
+          }
           dispatch(setProductsAddedToCart(productsInCartCopy));
         }
       }
@@ -56,19 +96,65 @@ export default function ShoppingCart() {
         copyProduct.quantity += 1;
       }
     });
+    if (product.shop_cart_items) {
+      (async () => {
+        try {
+          setDisableButtons(true);
+          await axios.put(
+            `${API_URL}/api/shopcarts/${localStorage.getItem("shopcartId")}`,
+            productsInCartCopy
+          );
+          setDisableButtons(false);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
     dispatch(setProductsAddedToCart(productsInCartCopy));
   }
 
-  const handleRemoveCartItem = async (id) => {
+  const handleRemoveCartItem = async (product) => {
     try {
-      const products = productsInCart.filter((product) => product.id !== id);
-      if (productsInCart[0].shop_cart_items)
+      const filteredProducts = productsInCart.filter(
+        (productInCart) => productInCart.id !== product.id
+      );
+      if (product.shop_cart_items) {
+        setDisableButtons(true);
         await axios.delete(
           `${API_URL}/api/shopcarts/${localStorage.getItem(
             "shopcartId"
-          )}/products/${id}`
+          )}/products/${product.id}`
         );
-      dispatch(setProductsAddedToCart(products));
+        setDisableButtons(false);
+      }
+      dispatch(setProductsAddedToCart(filteredProducts));
+      if (!filteredProducts.length) {
+        await cancelOrder();
+      }
+    } catch (error) {
+      if (error.response.status === 404) {
+        setDisableButtons(false);
+        dispatch(setProductsAddedToCart(filteredProducts));
+      }
+      console.log(error);
+    }
+  };
+
+  const cancelOrder = async () => {
+    try {
+      setDisableButtons(true);
+      await axios.delete(
+        `${API_URL}/api/orders/${localStorage.getItem("orderId")}`
+      );
+      localStorage.removeItem("shopcartId");
+      localStorage.removeItem("orderId");
+      dispatch(setOrder({}));
+      generateNotification(
+        "info",
+        "Information!",
+        "Order pending was cancelled."
+      );
+      setDisableButtons(false);
     } catch (error) {
       console.log(error);
     }
@@ -169,7 +255,7 @@ export default function ShoppingCart() {
 
                 <td>
                   <button
-                    onClick={() => handleRemoveCartItem(product.id)}
+                    onClick={() => handleRemoveCartItem(product)}
                     className="btn btn-outline-danger btn-lg"
                     disabled={disableButtons}
                   >
@@ -203,7 +289,7 @@ export default function ShoppingCart() {
       <div className="row-md-12 d-flex flex-column justify-content-center h-75 no-products-bg">
         <h2 className="fs-1 py-2">Oops!..</h2>
         <h2 className="no-products-text">
-          The are no products in your cart right now.
+          There are no products in your cart right now.
         </h2>
       </div>
     </div>
