@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { useHistory, Link } from "react-router-dom";
 import validator from "validator";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../redux/user";
 import axios from "axios";
 import "../assets/styles/components/LogIn.scss";
 import API_URL from "../config/env";
 import generateNotification from "../utils/generateNotification";
+import { setProductsAddedToCart } from "../redux/productsAdded";
 
 function LogIn() {
   const history = useHistory();
@@ -18,12 +19,18 @@ function LogIn() {
   });
   const { email, password } = formLoginValues;
   const [emailMsg, setEmailMsg] = useState("");
+  const productsAddedToCart = useSelector(state => state.productsAddedToCart)
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       const res = await axios.post(API_URL + "/api/login", formLoginValues);
       const user = res.data;
+      const pendingOrders = (await axios
+      .get(`${API_URL}/api/users/${user.id}/orders/pending`)).data
+      if(pendingOrders.length && productsAddedToCart.length) {
+        dispatch(setProductsAddedToCart([]))
+      }
       localStorage.setItem("token", user.token);
       dispatch(setUser({ ...user, isLoggedIn: true }));
       generateNotification("success", "Success!", "You are logged in.");

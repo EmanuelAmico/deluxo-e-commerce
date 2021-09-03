@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   showProduct,
-  selectProduct,
   selectProductsByCategory,
   selectProductsBySearch,
   clearSelectedProduct,
@@ -29,7 +28,7 @@ const Carousel = () => {
   const [searchString, setSearchString] = useState(query.search);
 
   useEffect(() => {
-    if (Object.keys(selectProduct).length) {
+    if (Object.keys(selectedProduct).length) {
       dispatch(clearSelectedProduct());
     }
     if (!categories.length) {
@@ -84,7 +83,7 @@ const Carousel = () => {
   }
 
   return (
-    <div className={products.length ? null : "vh-100"}>
+    <div className={products.length > 5 ? null : "vh-100"}>
       <div className="categories" ref={categoriesDivRef}>
         {searchString && (
           <button
