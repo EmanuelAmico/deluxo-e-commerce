@@ -60,7 +60,7 @@ const deleteSpecificOrder = async (req, res, next) => {
     const { orderId } = req.params;
     const order = await Orders.findByPk(orderId);
     if (!order) return res.status(400).send("Order not found!");
-    order.status = "cancelled"
+    order.state = "cancelled"
     await order.save()
     /* const shopcart = await order.getShop_cart();
     if (!shopcart)
