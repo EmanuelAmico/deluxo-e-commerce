@@ -10,7 +10,7 @@ import ContentLoader from "react-content-loader";
 const LogoLoader = (props) => {
   const [shouldShow, setShouldShow] = useState(false);
 
-  setTimeout(() => setShouldShow(true), 500);
+  setTimeout(() => setShouldShow(true), 1000);
 
   return shouldShow ? (
     <ContentLoader
