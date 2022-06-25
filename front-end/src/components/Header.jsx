@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { setUser } from "../redux/user";
 import "../assets/styles/components/Header.scss";
-import { productsAddedToCartFromDb, setProductsAddedToCart } from "../redux/productsAdded";
+import {
+  productsAddedToCartFromDb,
+  setProductsAddedToCart,
+} from "../redux/productsAdded";
 import { setOrders } from "../redux/orders";
 import API_URL from "../config/env";
 import generateNotification from "../utils/generateNotification";
@@ -16,21 +19,23 @@ function Header() {
   const history = useHistory();
   const productsInCart = useSelector((state) => state.productsAddedToCart);
 
-  useEffect(async () => {
-    try {
-      if (localStorage.getItem("token")) {
-        const token = localStorage.getItem("token");
-        const res = await axios.get(API_URL + "/api/users/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const user = res.data;
-        dispatch(setUser({ ...user, token, isLoggedIn: true }));
+  useEffect(() => {
+    (async () => {
+      try {
+        if (localStorage.getItem("token")) {
+          const token = localStorage.getItem("token");
+          const res = await axios.get(API_URL + "/api/users/me", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const user = res.data;
+          dispatch(setUser({ ...user, token, isLoggedIn: true }));
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    })();
   }, []);
 
   useEffect(() => {
